@@ -1,8 +1,18 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Define a gradient that will stretch across the entire background -->
     <gradient
         android:type="linear"
         android:angle="45"
-        android:startColor="#FFD1DC"
-        android:endColor="#FFF0F5" />
+        android:startColor="#AED6D6"
+        android:endColor="#0965F6" />
 
+    <!-- Define padding to ensure content inside TextInputEditText has space from edges -->
+    <padding
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp"
+        android:bottom="10dp" />
+
+    <!-- Optional: Define rounded corners -->
+    <corners android:radius="10dp"/>
 </shape>

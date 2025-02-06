@@ -2,15 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <!-- Required Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
-    <!-- Telephony Feature  -->
+    <!-- Telephony Feature -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false"/>
@@ -35,11 +35,19 @@
 
         <activity android:name=".MainActivity"/>
 
+        <!-- Background Service -->
         <service
             android:name=".ServiceMine"
             android:enabled="true"
+            android:exported="true"
             android:foregroundServiceType="location"
             tools:ignore="ForegroundServicePermission"/>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <!-- Auto-start on boot -->
+
     </application>
 
 </manifest>

@@ -10,15 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.IBinder;
 import android.telephony.SmsManager;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-
-import com.example.womensafety.R;
 import com.github.tbouron.shakedetector.library.ShakeDetector;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 public class ServiceMine extends Service {
@@ -26,7 +25,6 @@ public class ServiceMine extends Service {
     boolean isRunning = false;
     FusedLocationProviderClient fusedLocationClient;
     SmsManager manager = SmsManager.getDefault();
-    String myLocation;
 
     @Nullable
     @Override
@@ -34,42 +32,42 @@ public class ServiceMine extends Service {
         return null;
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
 
-        fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null)
-                .addOnSuccessListener(location -> {
-                    if (location != null) {
-                        myLocation = "http://maps.google.com/maps?q=loc:" + location.getLatitude() + "," + location.getLongitude();
-                    } else {
-                        myLocation = "Unable to Find Location :(";
-                    }
-                });
-
-        // ShakeDetector to send SOS message when the device is shaken
         ShakeDetector.create(this, () -> {
-            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-            String ENUM = sharedPreferences.getString("ENUM", "NONE");
-
-            if (ENUM != null && !ENUM.equalsIgnoreCase("NONE")) {
-                // Check if the location is available before sending
-                if (myLocation != null && !myLocation.isEmpty()) {
-                    manager.sendTextMessage(ENUM, null, "I'm in Trouble!\nSending My Location:\n" + myLocation, null, null);
-                } else {
-                    manager.sendTextMessage(ENUM, null, "I'm in Trouble!\nLocation unavailable", null, null);
-                }
-            }
+            getLocationAndSendSms();
         });
     }
 
+    private void getLocationAndSendSms() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Location permissions not granted!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+            String myLocation = (location != null) ?
+                    "http://maps.google.com/maps?q=loc:" + location.getLatitude() + "," + location.getLongitude() :
+                    "Location unavailable!";
+
+            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+            String num1 = sharedPreferences.getString("ENUM1", "NONE");
+            String num2 = sharedPreferences.getString("ENUM2", "NONE");
+
+            if (!num1.equals("NONE") && !num2.equals("NONE")) {
+                String message = "I'm in trouble! Please help me ASP. Here's my current location: " + myLocation;
+                manager.sendTextMessage(num1, null, message, null, null);
+                manager.sendTextMessage(num2, null, message, null, null);
+
+                Toast.makeText(this, "SOS Message Sent Successfully!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Failed to get location: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

@@ -30,17 +30,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="18sp"
-            android:text="\🚨\ SOS Will Be Sent To \n🚨\\n"
-            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:shadowColor="#3a3a3a3a"
+            android:fontFamily="@font/alfa_slab_one"
             android:gravity="center"
-           android:shadowRadius="@integer/material_motion_duration_long_1"
             android:textColor="@color/white"
-            android:shadowColor="#FF006A"
-            android:fontFamily="sans-serif"
+
+
             android:padding="15dp"
             android:layout_centerHorizontal="true"
-            />
+            android:maxLines="3"
+            android:background="@drawable/glass_effect"
+            android:lineSpacingExtra="5dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start"
@@ -50,10 +52,11 @@
             android:layout_marginTop="17dp"
             android:backgroundTint="#ffffff"
             android:onClick="startServiceV"
-            android:text="Start"
+            android:text="START"
             android:textColor="@color/white"
-            android:textSize="18dp"
-            android:textStyle="bold"
+            android:fontFamily="@font/alfa_slab_one"
+            android:textSize="20dp"
+            android:textStyle="normal"
             android:background="@drawable/glass_effect"
             app:cornerRadius="10dp"
             android:layout_centerHorizontal="true"/>
@@ -66,10 +69,11 @@
             android:layout_marginTop="24dp"
             android:backgroundTint="#ffffff"
             android:onClick="stopService"
-            android:text="Stop"
+            android:text="STOP"
+            android:fontFamily="@font/alfa_slab_one"
             android:textColor="@color/teal_200"
-            android:textSize="18dp"
-            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textStyle="normal"
             android:background="@drawable/glass_effect"
 
             app:cornerRadius="10dp"
