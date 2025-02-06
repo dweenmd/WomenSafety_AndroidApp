@@ -1,10 +1,12 @@
-package com.example.womensefty;
+package com.example.womensafety;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.womensafety.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterNumberActivity extends AppCompatActivity {

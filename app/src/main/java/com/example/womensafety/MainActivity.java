@@ -1,4 +1,4 @@
-package com.example.womensefty;
+package com.example.womensafety;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,10 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.womensafety.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 
 public class MainActivity extends AppCompatActivity {

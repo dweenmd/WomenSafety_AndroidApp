@@ -1,4 +1,4 @@
-package com.example.womensefty;
+package com.example.womensafety;
 
 import android.Manifest;
 import android.app.Notification;
@@ -10,16 +10,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.IBinder;
 import android.telephony.SmsManager;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+
+import com.example.womensafety.R;
 import com.github.tbouron.shakedetector.library.ShakeDetector;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 public class ServiceMine extends Service {
 

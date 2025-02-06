@@ -1,0 +1,10 @@
+<resources>
+    <!-- Neon Button Text Appearance -->
+    <style name="NeonButton" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#00FF00</item>  <!-- Green Neon Glow -->
+
+        <item name="android:shadowColor">#00FF00</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+</resources>

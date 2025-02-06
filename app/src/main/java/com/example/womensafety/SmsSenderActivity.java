@@ -1,4 +1,4 @@
-package com.example.womensefty;
+package com.example.womensafety;
 
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.tbouron.shakedetector.library.ShakeDetector;
+import com.example.womensafety.R;
 
 public class SmsSenderActivity extends AppCompatActivity {
 
