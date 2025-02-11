@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/green_clr"
     tools:context=".SplashScreen">
 
     <ImageView
         android:id="@+id/girlVector"
-        android:layout_width="130dp"
-        android:layout_height="200dp"
+        android:layout_width="140dp"
+        android:layout_height="213dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/girl_vector"
         android:layout_marginBottom="20dp"
+        android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +22,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Feel Safe Everywhere"
+        android:text="Ensuring Safety Through Technology"
         android:fontFamily="sans-serif-black"
-        android:textSize="28sp"
+        android:textSize="22sp"
+        android:textColor="@color/white"
         android:layout_below="@id/girlVector"
         app:layout_constraintTop_toBottomOf="@id/girlVector"
         app:layout_constraintStart_toStartOf="parent"

@@ -58,7 +58,7 @@ public class ServiceMine extends Service {
             String num2 = sharedPreferences.getString("ENUM2", "NONE");
 
             if (!num1.equals("NONE") && !num2.equals("NONE")) {
-                String message = "I'm in trouble! Please help me ASP. Here's my current location: " + myLocation;
+                String message = "I'm in trouble! Please help me ASAP. \nHere's my current location: \n" + myLocation;
                 manager.sendTextMessage(num1, null, message, null, null);
                 manager.sendTextMessage(num2, null, message, null, null);
 
@@ -89,7 +89,7 @@ public class ServiceMine extends Service {
                 Notification notification = new Notification.Builder(this, "MYID")
                         .setContentTitle("Women Safety")
                         .setContentText("Shake Device to Send SOS")
-                        .setSmallIcon(R.drawable.girl_vector)
+                        .setSmallIcon(R.drawable.logo)
                         .setContentIntent(pendingIntent)
                         .build();
                 this.startForeground(115, notification);

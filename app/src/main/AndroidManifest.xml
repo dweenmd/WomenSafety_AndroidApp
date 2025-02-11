@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SMS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>  <!-- Added this line -->
 
     <!-- Telephony Feature -->
     <uses-feature
@@ -42,11 +46,10 @@
             android:exported="true"
             android:foregroundServiceType="location"
             tools:ignore="ForegroundServicePermission"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-        <!-- Auto-start on boot -->
 
     </application>
 

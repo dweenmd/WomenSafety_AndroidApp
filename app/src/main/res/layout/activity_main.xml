@@ -3,22 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-
-    <View
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/baseline_more_vert_24"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="22dp"
         android:clickable="true"
         android:focusable="true"
-        android:backgroundTintMode="screen"
-        android:onClick="PopupMenu" />
+        android:onClick="PopupMenu"
+        app:srcCompat="@drawable/baseline_more_vert_24"
+        app:tint="@android:color/holo_green_dark"/>
+
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -29,15 +29,12 @@
             android:id="@+id/textNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="normal"
             android:shadowColor="#3a3a3a3a"
             android:fontFamily="@font/alfa_slab_one"
             android:gravity="center"
             android:textColor="@color/white"
-
-
             android:padding="15dp"
             android:layout_centerHorizontal="true"
             android:maxLines="3"
@@ -50,15 +47,13 @@
             android:layout_height="60dp"
             android:layout_below="@id/textNum"
             android:layout_marginTop="17dp"
-            android:backgroundTint="#ffffff"
             android:onClick="startServiceV"
             android:text="START"
             android:textColor="@color/white"
             android:fontFamily="@font/alfa_slab_one"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="normal"
             android:background="@drawable/glass_effect"
-            app:cornerRadius="10dp"
             android:layout_centerHorizontal="true"/>
 
         <com.google.android.material.button.MaterialButton
@@ -67,21 +62,43 @@
             android:layout_height="60dp"
             android:layout_below="@id/start"
             android:layout_marginTop="24dp"
-            android:backgroundTint="#ffffff"
             android:onClick="stopService"
             android:text="STOP"
             android:fontFamily="@font/alfa_slab_one"
-            android:textColor="@color/teal_200"
-            android:textSize="20dp"
+            android:textColor="@color/red"
+            android:textSize="20sp"
             android:textStyle="normal"
             android:background="@drawable/glass_effect"
-
-            app:cornerRadius="10dp"
             android:layout_centerHorizontal="true"/>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/stop"
+            android:layout_marginTop="78dp"
+            android:layout_centerHorizontal="true"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/red">  <!-- Use this instead of android:background -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_panic"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:fontFamily="@font/alfa_slab_one"
+                android:onClick="sendPanicSMS"
+                android:text="PANIC"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="normal"
+                android:backgroundTint="@color/red" />  <!-- Ensure the button itself is also red -->
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
     </RelativeLayout>
-
-
-
 
 </RelativeLayout>

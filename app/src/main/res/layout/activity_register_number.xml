@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background2"
+    android:background="@drawable/green_clr"
     android:layout_height="match_parent"
     tools:context=".RegisterNumberActivity">
 
@@ -19,10 +19,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
+            android:text="📞Enter Two Emergency Contact Numbers\n📩 To Send an SMS\n🚨 In Case of Emergency!"
             android:fontFamily="@font/alfa_slab_one"
-            android:text="Enter Two Emergency Contact Number(s)\nTo Send SMS in Case of Emergency!"
             android:textAlignment="center"
-            android:textColor="@color/purple_500"
+            android:textColor="#090202"
             android:textSize="16sp"
             android:layout_marginTop="20dp"
             android:background="@drawable/text_background"
@@ -42,19 +42,24 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/text1"
             android:layout_marginBottom="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/numberEdit1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="First Number"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
                 android:fontFamily="sans-serif-medium"
                 android:textAlignment="center"
-                android:background="@drawable/glass_effect"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,19 +71,24 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/number1"
             android:layout_marginBottom="20dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/numberEdit2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="Second Number"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
                 android:fontFamily="sans-serif-medium"
                 android:textAlignment="center"
-                android:background="@drawable/glass_effect"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,14 +98,13 @@
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:onClick="saveNumber"
-            android:text="Finish"
-            android:textColor="@color/black"
+            android:text="S A V E "
+            android:textColor="@color/green"
             android:layout_below="@id/number2"
             android:layout_centerHorizontal="true"
             android:backgroundTint="#ffffff"
             app:cornerRadius="20dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold" />
+            android:fontFamily="@font/alfa_slab_one" />
 
     </RelativeLayout>
 </RelativeLayout>
