@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/glass_effect"
     tools:context=".MainActivity">
 
     <ImageView
@@ -16,7 +16,7 @@
         android:focusable="true"
         android:onClick="PopupMenu"
         app:srcCompat="@drawable/baseline_more_vert_24"
-        app:tint="@android:color/holo_green_dark"/>
+        app:tint="@color/white"/>
 
 
 
@@ -53,7 +53,7 @@
             android:fontFamily="@font/alfa_slab_one"
             android:textSize="20sp"
             android:textStyle="normal"
-            android:background="@drawable/glass_effect"
+            android:backgroundTint="@color/dark_green"
             android:layout_centerHorizontal="true"/>
 
         <com.google.android.material.button.MaterialButton
@@ -65,10 +65,10 @@
             android:onClick="stopService"
             android:text="STOP"
             android:fontFamily="@font/alfa_slab_one"
-            android:textColor="@color/red"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="normal"
-            android:background="@drawable/glass_effect"
+           android:backgroundTint="@color/purple_700"
             android:layout_centerHorizontal="true"/>
 
         <androidx.cardview.widget.CardView
@@ -100,5 +100,36 @@
 
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_sos_106"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="CALL -  106"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/red"
+            android:onClick="callSOS106"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_sos_999"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="CALL -  999"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/red"
+            android:onClick="callSOS999"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
