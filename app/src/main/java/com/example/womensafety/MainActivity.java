@@ -197,9 +197,9 @@ public class MainActivity extends AppCompatActivity {
     }
     */
 
-    public void callSOS106(View view) {
+    public void callSOS109(View view) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:106"));
+        callIntent.setData(Uri.parse("tel:109"));
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);

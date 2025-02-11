@@ -110,15 +110,15 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sos_106"
+            android:id="@+id/btn_sos_109"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="CALL -  106"
+            android:text="CALL -  109"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/red"
-            android:onClick="callSOS106"/>
+            android:onClick="callSOS109"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sos_999"
             android:layout_width="0dp"
