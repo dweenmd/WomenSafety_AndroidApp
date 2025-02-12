@@ -52,7 +52,7 @@ Ensure you have the following installed:
 
 
 ## APK Download
-Download the Version 2.0 APK from:
+Download the Latest Version 2.0 APK from:
 [Google Drive](https://drive.google.com/file/d/1_td64mairo12GIeObDOjqUr3s2fWnXgT/view?usp=drive_link)
 
 Download the Version 1.0 APK from:
