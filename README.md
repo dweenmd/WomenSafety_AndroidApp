@@ -24,15 +24,38 @@ Ensure you have the following installed:
 4. Connect a physical device or use an emulator.
 5. Run the app.
 
-## Usage
+## How It Works
 
-1. Open the app and enter two emergency contact numbers.
-2. Press the "Finish" button to save the contacts.
-3. In case of an emergency, the app will send an SMS to the saved contacts.
+1. **Setup Emergency Contacts**  
+   - Open the app and enter two emergency contact numbers.  
+
+2. **Save Contacts**  
+   - Press the **"SAVE"** button to store the emergency contacts in the app.  
+
+3. **Trigger Emergency Alert**  
+   - **Shake the phone** to automatically send an SOS message with your location.  
+   - **Alternatively, use the "PANIC" button** to manually trigger an emergency alert.  
+
+4. **Emergency SOS Call**  
+   The app will automatically dial emergency services in Bangladesh:  
+   - **109** (Women’s Helpline)  
+   - **999** (National Emergency Service)  
+
+5. **Notification & Confirmation**  
+   - The app will display a **confirmation message**.  
+   - **SMS alerts** with your real-time location will be sent to your emergency contacts.  
+
+6. **Additional Features**  
+   - Enable or disable **shake detection** in settings.  
+   - **View and update emergency contacts** anytime.  
+   - Receive **safety notifications and alerts** when permissions are disabled.  
+
 
 ## APK Download
+Download the Version 2.0 APK from:
+[Google Drive](https://drive.google.com/file/d/1_td64mairo12GIeObDOjqUr3s2fWnXgT/view?usp=drive_link)
 
-Download the latest APK from:
+Download the Version 1.0 APK from:
 [Google Drive](https://drive.google.com/file/d/1-egMC2IgbohqtA_A5da_Lw_kvZy0Srup/view?usp=drive_link)
 
 ## Deploy
@@ -71,5 +94,5 @@ Special thanks to:
 
 ## License
 
-This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
+
 
