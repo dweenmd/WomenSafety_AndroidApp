@@ -90,7 +90,7 @@ For more information, check the [Android Developer Docs](https://developer.andro
 Special thanks to:
 - [Google](https://developer.android.com/) for Android development tools.
 - The open-source community for inspiration and support.
-- [Vinayak Patil](https://github.com/Vinayak-09) bhai 
+- [Vinayak Patil]() bhai 
 
 ## License
 
