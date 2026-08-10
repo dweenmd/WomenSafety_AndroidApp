@@ -1,4 +1,9 @@
 [versions]
+securityCrypto = "1.1.0-alpha06"
+libphonenumber = "8.13.27"
+lifecycle = "2.8.4"
+firebaseBom = "33.1.2"
+playServicesAuth = "21.2.0"
 agp = "8.13.2"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -12,6 +17,14 @@ playServicesLocation = "21.4.0"
 shakeDetector = "1.0.0"
 
 [libraries]
+security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
+libphonenumber = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version.ref = "libphonenumber" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
+lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycle" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

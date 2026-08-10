@@ -67,4 +67,18 @@ dependencies {
     implementation 'com.github.tbouron.shakedetector:library:1.0.0@aar'
     implementation libs.play.services.maps
     implementation libs.play.services.location
+    
+    // Security & Data
+    implementation libs.security.crypto
+    implementation libs.libphonenumber
+    
+    // Architecture
+    implementation libs.lifecycle.viewmodel
+    implementation libs.lifecycle.livedata
+    
+    // Firebase & Auth
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.auth
+    implementation libs.firebase.firestore
+    implementation libs.play.services.auth
 }
