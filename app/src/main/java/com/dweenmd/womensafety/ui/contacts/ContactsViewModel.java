@@ -1,17 +1,18 @@
 package com.dweenmd.womensafety.ui.contacts;
 
-import android.content.Context;
+import android.app.Application;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 import com.dweenmd.womensafety.data.ContactsRepository;
 import java.util.List;
 
-public class ContactsViewModel extends ViewModel {
+public class ContactsViewModel extends AndroidViewModel {
 
     private final ContactsRepository repository;
 
-    public ContactsViewModel(Context context) {
-        this.repository = new ContactsRepository(context);
+    public ContactsViewModel(Application application) {
+        super(application);
+        this.repository = new ContactsRepository(application);
     }
 
     public LiveData<List<ContactsRepository.Contact>> getContacts() {

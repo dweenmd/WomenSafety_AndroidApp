@@ -1,10 +1,13 @@
 package com.dweenmd.womensafety.ui.safety;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import com.dweenmd.womensafety.data.AuthRepository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -12,21 +15,24 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SafetyViewModel extends ViewModel {
+public class SafetyViewModel extends AndroidViewModel {
 
     private final SharedPreferences prefs;
     private final FirebaseFirestore db;
     private final FirebaseAuth auth;
+    private final AuthRepository authRepo;
 
     private final MutableLiveData<Boolean> backgroundProtection = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> liveLocationOnSos = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> shakeDetection = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> autoNotify = new MutableLiveData<>(false);
 
-    public SafetyViewModel(Context context) {
-        prefs = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE);
+    public SafetyViewModel(Application application) {
+        super(application);
+        prefs = application.getSharedPreferences("app_settings", Context.MODE_PRIVATE);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        authRepo = new AuthRepository(application);
         
         loadLocalSettings();
         syncWithFirestore();
@@ -40,6 +46,8 @@ public class SafetyViewModel extends ViewModel {
     }
 
     private void syncWithFirestore() {
+        if (authRepo.isDemoUser()) return;
+
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) return;
         
@@ -62,6 +70,8 @@ public class SafetyViewModel extends ViewModel {
         prefs.edit().putBoolean(key, value).apply();
         loadLocalSettings();
         
+        if (authRepo.isDemoUser()) return;
+
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             Map<String, Object> update = new HashMap<>();

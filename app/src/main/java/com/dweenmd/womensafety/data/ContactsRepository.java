@@ -29,6 +29,7 @@ public class ContactsRepository {
     private SharedPreferences sharedPreferences;
     private final FirebaseFirestore db;
     private final FirebaseAuth auth;
+    private final AuthRepository authRepo;
 
     private final MutableLiveData<List<Contact>> contactsLiveData = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Boolean> isSyncing = new MutableLiveData<>(false);
@@ -36,6 +37,7 @@ public class ContactsRepository {
     public ContactsRepository(Context context) {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        authRepo = new AuthRepository(context);
         
         try {
             String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
@@ -80,6 +82,11 @@ public class ContactsRepository {
         loadLocalContacts(); // Update LiveData immediately
 
         // Sync to Firestore
+        if (authRepo.isDemoUser()) {
+            Log.d(TAG, "Demo mode: Skipping Firestore save");
+            return;
+        }
+
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             isSyncing.setValue(true);
@@ -125,6 +132,11 @@ public class ContactsRepository {
     }
 
     public void syncWithFirestore() {
+        if (authRepo.isDemoUser()) {
+            Log.d(TAG, "Demo mode: Skipping Firestore sync");
+            return;
+        }
+
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) return;
         

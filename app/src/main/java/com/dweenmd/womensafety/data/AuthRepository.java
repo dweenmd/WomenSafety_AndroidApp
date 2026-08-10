@@ -1,19 +1,14 @@
 package com.dweenmd.womensafety.data;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -24,35 +19,54 @@ public class AuthRepository {
     private static final String TAG = "AuthRepository";
     private final FirebaseAuth mAuth;
     private final FirebaseFirestore db;
-    private final GoogleSignInClient mGoogleSignInClient;
     private final MutableLiveData<FirebaseUser> currentUserLiveData;
+    private final SharedPreferences prefs;
 
-    public AuthRepository(Context context, String webClientId) {
+    public AuthRepository(Context context) {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(webClientId)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
+        prefs = context.getSharedPreferences("AuthPrefs", Context.MODE_PRIVATE);
         
         currentUserLiveData = new MutableLiveData<>(mAuth.getCurrentUser());
+    }
+
+    public boolean isDemoUser() {
+        return prefs.getBoolean("isDemoUser", false);
+    }
+
+    public void setDemoUser(boolean isDemo) {
+        prefs.edit().putBoolean("isDemoUser", isDemo).apply();
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {
         return currentUserLiveData;
     }
 
-    public Intent getSignInIntent() {
-        return mGoogleSignInClient.getSignInIntent();
-    }
+    public void signInWithEmailAndPassword(String email, String password, AuthCallback callback) {
+        if ("demo@app.com".equals(email) && "123456".equals(password)) {
+            setDemoUser(true);
+            callback.onSuccess(null); // No FirebaseUser for demo
+            return;
+        }
 
-    public void firebaseAuthWithGoogle(String idToken, AuthCallback callback) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        setDemoUser(false);
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        currentUserLiveData.setValue(user);
+                        callback.onSuccess(user);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
+
+    public void signUpWithEmailAndPassword(String email, String password, AuthCallback callback) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        setDemoUser(false);
                         FirebaseUser user = mAuth.getCurrentUser();
                         currentUserLiveData.setValue(user);
                         ensureUserProfileExists(user);
@@ -64,7 +78,7 @@ public class AuthRepository {
     }
 
     private void ensureUserProfileExists(FirebaseUser user) {
-        if (user == null) return;
+        if (user == null || isDemoUser()) return;
         
         String uid = user.getUid();
         db.collection("users").document(uid).get()
@@ -72,7 +86,6 @@ public class AuthRepository {
                     if (!documentSnapshot.exists()) {
                         Map<String, Object> profile = new HashMap<>();
                         profile.put("email", user.getEmail());
-                        profile.put("displayName", user.getDisplayName());
                         profile.put("createdAt", System.currentTimeMillis());
                         db.collection("users").document(uid).set(profile)
                                 .addOnSuccessListener(aVoid -> Log.d(TAG, "User profile created"))
@@ -82,29 +95,14 @@ public class AuthRepository {
     }
 
     public void signOut() {
-        mAuth.signOut();
-        mGoogleSignInClient.signOut().addOnCompleteListener(task -> {
+        if (isDemoUser()) {
+            setDemoUser(false);
             currentUserLiveData.setValue(null);
-        });
-    }
-
-    public void deleteAccount(AuthCallback callback) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String uid = user.getUid();
-            db.collection("users").document(uid).delete().addOnCompleteListener(task -> {
-                user.delete().addOnCompleteListener(deleteTask -> {
-                    if (deleteTask.isSuccessful()) {
-                        currentUserLiveData.setValue(null);
-                        callback.onSuccess(null);
-                    } else {
-                        callback.onFailure(deleteTask.getException());
-                    }
-                });
-            });
-        } else {
-            callback.onFailure(new Exception("No user signed in"));
+            return;
         }
+
+        mAuth.signOut();
+        currentUserLiveData.setValue(null);
     }
 
     public interface AuthCallback {

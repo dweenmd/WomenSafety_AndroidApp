@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.data.AuthRepository;
 import com.dweenmd.womensafety.ui.MainActivity;
 import com.dweenmd.womensafety.ui.auth.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,17 +19,23 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        AuthRepository authRepository = new AuthRepository(this);
+
         new CountDownTimer(1000, 500) {
             @Override
             public void onTick(long millisUntilFinished) {}
 
             @Override
             public void onFinish() {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
+                if (authRepository.isDemoUser()) {
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 } else {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    } else {
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    }
                 }
                 finish();
             }
