@@ -40,6 +40,17 @@ WomenSafety is a lightweight, easy-to-use safety companion app designed for quic
 
 ---
 
+## 📦 Releases
+
+### v1.0 — First Release
+The first official release of WomenSafety, featuring the core emergency-alert experience: shake-to-alert, the manual panic button, real-time location sharing, and one-touch dialing to Bangladesh's emergency helplines (109 / 999).
+
+📥 [Download v1.0 APK](https://github.com/dweenmd/WomenSafety_AndroidApp/releases/tag/v1.0)
+
+> Check the [Releases page](https://github.com/dweenmd/WomenSafety_AndroidApp/releases) for the latest APK builds and version history.
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -107,7 +118,7 @@ For Android development references, see the [Android Developer Docs](https://dev
 
 - [Google](https://developer.android.com/) — for the Android development tools and platform
 - The open-source community — for continued inspiration and support
-- [Vinayak Patil](https://github.com/dweenmd/WomenSafety_AndroidApp/blob/main) bhai thanks for the idea.
+- [Vinayak Patil](https://github.com/dweenmd/WomenSafety_AndroidApp/blob/main) bhai — for guidance
 
 ---
 
