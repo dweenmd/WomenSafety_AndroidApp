@@ -4,52 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@color/premium_login_bg"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="WomenSafety"
-        android:textAppearance="?attr/textAppearanceHeadlineLarge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_sos"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:backgroundTint="?attr/colorError"
-        android:contentDescription="Emergency SOS Button. Double tap and hold to send an emergency text message and your location to your contacts."
-        android:text="HOLD TO SOS"
-        android:textColor="?attr/colorOnError"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:cornerRadius="100dp"
-        app:elevation="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/card_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
-
-    <com.google.android.material.card.MaterialCardView
+    <!-- Status Header Card (Top) -->
+    <FrameLayout
         android:id="@+id/card_status"
-        style="@style/Widget.WomenSafety.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_premium_input_normal"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="20dp"
             android:gravity="center_vertical">
 
             <ImageView
@@ -67,19 +39,154 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_status_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Protection Active"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_status_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shake detection is running in background"
-                    android:textAppearance="?attr/textAppearanceBodySmall" />
+                    android:layout_marginTop="4dp"
+                    android:text="Location on | Battery: Checking..."
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="13sp" />
             </LinearLayout>
-
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+
+    <!-- Pulse Animation Background Views -->
+    <View
+        android:id="@+id/pulse_bg_2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/pulse_circle"
+        android:alpha="0.3"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/layout_quick_actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_status" />
+
+    <View
+        android:id="@+id/pulse_bg_1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/pulse_circle"
+        android:alpha="0.5"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/layout_quick_actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_status" />
+
+    <!-- Main SOS Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sos"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:backgroundTint="?attr/colorError"
+        android:contentDescription="Emergency SOS Button. Tap and hold to send an emergency text message and your location to your contacts."
+        android:text="HOLD TO SOS"
+        android:textColor="?attr/colorOnError"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:cornerRadius="100dp"
+        app:elevation="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_quick_actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_status" />
+
+    <!-- Quick Actions (Bottom) -->
+    <LinearLayout
+        android:id="@+id/layout_quick_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginHorizontal="16dp">
+            
+            <ImageButton
+                android:id="@+id/btn_quick_fake_call"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/circle_bg_secondary"
+                android:src="@android:drawable/stat_sys_phone_call"
+                app:tint="?attr/colorPrimary" />
+                
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Fake Call"
+                android:textColor="@color/premium_login_text_main"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginHorizontal="16dp">
+            
+            <ImageButton
+                android:id="@+id/btn_quick_record"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/circle_bg_secondary"
+                android:src="@android:drawable/ic_btn_speak_now"
+                app:tint="?attr/colorPrimary" />
+                
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Record"
+                android:textColor="@color/premium_login_text_main"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginHorizontal="16dp">
+            
+            <ImageButton
+                android:id="@+id/btn_quick_share_location"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/circle_bg_secondary"
+                android:src="@android:drawable/ic_menu_mylocation"
+                app:tint="?attr/colorPrimary" />
+                
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Live Link"
+                android:textColor="@color/premium_login_text_main"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

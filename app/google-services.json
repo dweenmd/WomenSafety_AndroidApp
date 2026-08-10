@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "123456789012",
-    "project_id": "dummy-project-id",
-    "storage_bucket": "dummy-project-id.appspot.com"
+    "project_number": "717113347942",
+    "project_id": "women-safety-6af54",
+    "storage_bucket": "women-safety-6af54.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123456789012:android:abcdef1234567890abcdef",
+        "mobilesdk_app_id": "1:717113347942:android:8314dd306dc4b42bd242a7",
         "android_client_info": {
           "package_name": "com.dweenmd.womensafety"
         }
       },
       "oauth_client": [
         {
-          "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
+          "client_id": "717113347942-np1i6lunic603ccr03anqo3758jtmksm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.dweenmd.womensafety",
-            "certificate_hash": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0"
+            "certificate_hash": "beadc5097ebd559ce1207d3f3c154ff949fcc3f0"
           }
         },
         {
-          "client_id": "123456789012-123456abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com",
+          "client_id": "717113347942-mesk7bjpfchr509s19ts3cka68f7ntal.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "dummy_api_key_for_compilation"
+          "current_key": "AIzaSyDIc-ewUvprZkC-s0hFYlz_hO64-9ym8wY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "123456789012-123456abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com",
+              "client_id": "717113347942-mesk7bjpfchr509s19ts3cka68f7ntal.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

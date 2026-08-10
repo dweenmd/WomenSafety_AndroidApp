@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Phase 2: New Design System Colors (Light) -->
-    <color name="primary">#7C3AED</color>
-    <color name="primary_dark">#5B21B6</color>
-    <color name="background">#F8F7FC</color>
+    <color name="primary">#E63950</color> <!-- Deep Magenta/Coral -->
+    <color name="primary_dark">#B91C35</color>
+    <color name="background">#FDFCFE</color> <!-- Off-white/Soft Lavender hint -->
     <color name="surface">#FFFFFF</color>
     
-    <color name="on_surface">#17151C</color>
-    <color name="on_surface_secondary">#6B6672</color>
-    <color name="border">#E8E4ED</color>
+    <color name="on_surface">#2D2C31</color> <!-- Charcoal -->
+    <color name="on_surface_secondary">#5F5E64</color>
+    <color name="border">#EAE8EE</color>
     
-    <color name="sos">#DC2626</color>
-    <color name="sos_dark">#B91C1C</color>
-    <color name="sos_background">#FEF2F2</color>
+    <color name="sos">#E63950</color>
+    <color name="sos_dark">#B91C35</color>
+    <color name="sos_background">#FFF0F2</color>
     
     <color name="status_safe">#16A34A</color>
     <color name="status_warning">#F59E0B</color>
@@ -29,4 +29,17 @@
     <color name="gray">#FF808080</color>
     <color name="yellow">#A50985</color>
     <color name="dark_green">#006400</color>
+
+    <!-- Phase 3: Premium Login System Colors (Light Mode) -->
+    <color name="premium_login_bg">#FAF9FC</color>
+    <color name="premium_login_surface">#FFFFFF</color>
+    <color name="premium_login_input_bg">#F7F4FA</color>
+    <color name="premium_login_primary">#8749C8</color>
+    <color name="premium_login_secondary">#D94F8A</color>
+    <color name="premium_login_grad_start">#8B5CF6</color>
+    <color name="premium_login_grad_end">#EC4899</color>
+    <color name="premium_login_text_main">#211D27</color>
+    <color name="premium_login_text_secondary">#77717F</color>
+    <color name="premium_login_border">#DCD7E2</color>
+    <color name="premium_login_focus_border">#A855F7</color>
 </resources>

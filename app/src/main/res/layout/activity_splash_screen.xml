@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/green_clr"
+    android:background="@color/premium_login_bg"
     tools:context=".SplashScreen">
 
     <ImageView
@@ -22,10 +22,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ensuring Safety Through Technology"
+        android:text="Ensuring Safety"
         android:fontFamily="sans-serif-black"
         android:textSize="22sp"
-        android:textColor="@color/white"
+        android:textColor="@color/premium_login_text_main"
         android:layout_below="@id/girlVector"
         app:layout_constraintTop_toBottomOf="@id/girlVector"
         app:layout_constraintStart_toStartOf="parent"

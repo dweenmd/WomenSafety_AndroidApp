@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_premium_input_normal"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tv_form_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Emergency Contact"
+        android:textColor="@color/premium_login_text_main"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Full Name + Pick Contact Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+        
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Full Name"
+            app:hintTextColor="@color/premium_login_text_secondary"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="@color/premium_login_primary">
+            
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_form_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textColor="@color/premium_login_text_main" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/btn_pick_contact"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_premium_social_btn"
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:contentDescription="Pick from contacts"
+            app:tint="@color/premium_login_primary" />
+    </LinearLayout>
+
+    <!-- Phone Number -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        app:hintTextColor="@color/premium_login_text_secondary"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxStrokeColor="@color/premium_login_primary"
+        android:layout_marginBottom="16dp">
+        
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_form_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:textColor="@color/premium_login_text_main" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Relationship -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relationship"
+        android:textColor="@color/premium_login_text_secondary"
+        android:textSize="12sp"
+        android:layout_marginBottom="8dp" />
+        
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_premium_input_normal"
+        android:layout_marginBottom="24dp">
+        
+        <Spinner
+            android:id="@+id/spinner_relationship"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingHorizontal="12dp"
+            android:entries="@array/relationship_options"
+            android:spinnerMode="dropdown" />
+    </FrameLayout>
+
+    <!-- Priority -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Priority"
+        android:textColor="@color/premium_login_text_secondary"
+        android:textSize="12sp"
+        android:layout_marginBottom="8dp" />
+
+    <RadioGroup
+        android:id="@+id/rg_priority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp">
+        
+        <RadioButton
+            android:id="@+id/rb_primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Primary"
+            android:textColor="@color/premium_login_text_main"
+            android:buttonTint="@color/premium_login_primary"
+            android:layout_marginEnd="16dp" />
+            
+        <RadioButton
+            android:id="@+id/rb_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Secondary"
+            android:textColor="@color/premium_login_text_main"
+            android:buttonTint="@color/premium_login_primary"
+            android:checked="true" />
+    </RadioGroup>
+
+    <!-- Save Button -->
+    <FrameLayout
+        android:id="@+id/btn_save_contact"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_premium_btn"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Save Contact"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -27,6 +27,9 @@ public class SafetyViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> shakeDetection = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> autoNotify = new MutableLiveData<>(false);
 
+    private final MutableLiveData<Boolean> silentSos = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> languageBangla = new MutableLiveData<>(false);
+
     public SafetyViewModel(Application application) {
         super(application);
         prefs = application.getSharedPreferences("app_settings", Context.MODE_PRIVATE);
@@ -43,6 +46,8 @@ public class SafetyViewModel extends AndroidViewModel {
         liveLocationOnSos.setValue(prefs.getBoolean("liveLocationOnSos", true));
         shakeDetection.setValue(prefs.getBoolean("shakeDetection", true));
         autoNotify.setValue(prefs.getBoolean("autoNotify", false));
+        silentSos.setValue(prefs.getBoolean("silentSos", false));
+        languageBangla.setValue(prefs.getBoolean("languageBangla", false));
     }
 
     private void syncWithFirestore() {
@@ -60,6 +65,8 @@ public class SafetyViewModel extends AndroidViewModel {
                         if (documentSnapshot.contains("liveLocationOnSos")) editor.putBoolean("liveLocationOnSos", documentSnapshot.getBoolean("liveLocationOnSos"));
                         if (documentSnapshot.contains("shakeDetection")) editor.putBoolean("shakeDetection", documentSnapshot.getBoolean("shakeDetection"));
                         if (documentSnapshot.contains("autoNotify")) editor.putBoolean("autoNotify", documentSnapshot.getBoolean("autoNotify"));
+                        if (documentSnapshot.contains("silentSos")) editor.putBoolean("silentSos", documentSnapshot.getBoolean("silentSos"));
+                        if (documentSnapshot.contains("languageBangla")) editor.putBoolean("languageBangla", documentSnapshot.getBoolean("languageBangla"));
                         editor.apply();
                         loadLocalSettings();
                     }
@@ -85,4 +92,6 @@ public class SafetyViewModel extends AndroidViewModel {
     public LiveData<Boolean> getLiveLocationOnSos() { return liveLocationOnSos; }
     public LiveData<Boolean> getShakeDetection() { return shakeDetection; }
     public LiveData<Boolean> getAutoNotify() { return autoNotify; }
+    public LiveData<Boolean> getSilentSos() { return silentSos; }
+    public LiveData<Boolean> getLanguageBangla() { return languageBangla; }
 }

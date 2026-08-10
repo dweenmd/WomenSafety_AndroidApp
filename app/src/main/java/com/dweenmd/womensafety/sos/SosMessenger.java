@@ -42,14 +42,49 @@ public class SosMessenger {
         locationRepository.getCurrentLocation(new LocationRepository.LocationCallbackResult() {
             @Override
             public void onSuccess(Location location) {
+                // Start background recording
+                new AudioRecorderHelper(context).startRecording();
+                
                 String locUrl = "https://www.google.com/maps/search/?api=1&query=" + location.getLatitude() + "," + location.getLongitude();
                 sendMessages(contacts, locUrl, callback);
             }
 
             @Override
             public void onFailure(String reason) {
+                // Start background recording even if location fails
+                new AudioRecorderHelper(context).startRecording();
+                
                 Log.w(TAG, "Location fetch failed: " + reason);
                 sendMessages(contacts, "Location unavailable: " + reason, callback);
+            }
+        });
+    }
+
+    public void shareLocationOnly(SosCallback callback) {
+        List<ContactsRepository.Contact> contacts = contactsRepository.getLocalContactsSync();
+        if (contacts == null || contacts.isEmpty()) {
+            callback.onFailure("No emergency contacts found.");
+            return;
+        }
+
+        locationRepository.getCurrentLocation(new LocationRepository.LocationCallbackResult() {
+            @Override
+            public void onSuccess(Location location) {
+                String locUrl = "https://www.google.com/maps/search/?api=1&query=" + location.getLatitude() + "," + location.getLongitude();
+                String message = "Here is my current Live Location link:\n" + locUrl;
+                for (ContactsRepository.Contact contact : contacts) {
+                    try {
+                        smsManager.sendTextMessage(contact.phone, null, message, null, null);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Failed to send Location SMS to " + contact.name, e);
+                    }
+                }
+                callback.onSosTriggered("Live Location link sent to contacts.");
+            }
+
+            @Override
+            public void onFailure(String reason) {
+                callback.onFailure("Failed to get location: " + reason);
             }
         });
     }

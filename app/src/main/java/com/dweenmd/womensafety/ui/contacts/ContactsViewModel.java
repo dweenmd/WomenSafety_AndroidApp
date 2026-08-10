@@ -23,7 +23,11 @@ public class ContactsViewModel extends AndroidViewModel {
         return repository.getIsSyncing();
     }
 
-    public void saveContact(int index, String name, String phone) {
-        repository.saveContact(index, name, phone);
+    public void saveContact(ContactsRepository.Contact contact) {
+        repository.saveContact(contact);
+    }
+
+    public void deleteContact(String contactId) {
+        repository.deleteContact(contactId);
     }
 }

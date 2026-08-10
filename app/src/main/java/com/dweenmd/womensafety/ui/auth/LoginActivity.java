@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -39,13 +40,52 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
-        btnLogin = findViewById(R.id.btn_login);
-        btnRegister = findViewById(R.id.btn_register);
-        btnGoogleSignIn = findViewById(R.id.btn_google_signin);
+        Button btnLogin = findViewById(R.id.btn_login);
+        Button btnRegister = findViewById(R.id.btn_register);
+        Button btnGoogleSignIn = findViewById(R.id.btn_google_signin);
+        Button btnPhoneSignIn = findViewById(R.id.btn_phone_signin);
 
-        btnLogin.setOnClickListener(v -> performAuth(true));
-        btnRegister.setOnClickListener(v -> performAuth(false));
+        View mainContent = findViewById(R.id.cl_main_content);
+        if (mainContent != null) {
+            mainContent.setAlpha(0f);
+            mainContent.setTranslationY(50f);
+            mainContent.animate().alpha(1f).translationY(0f).setDuration(400).start();
+        }
+
+        btnLogin.setOnClickListener(v -> loginUser());
+        
+        View tvCreateAccount = findViewById(R.id.tv_create_account);
+        if (tvCreateAccount != null) {
+            tvCreateAccount.setOnClickListener(v -> {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            });
+        }
+
         btnGoogleSignIn.setOnClickListener(v -> signInWithGoogle());
+
+        btnPhoneSignIn.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, PhoneLoginActivity.class));
+        });
+
+        setupButtonAnimation(btnLogin);
+        setupButtonAnimation(btnGoogleSignIn);
+        setupButtonAnimation(btnPhoneSignIn);
+    }
+
+    private void setupButtonAnimation(View button) {
+        if (button == null) return;
+        button.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case android.view.MotionEvent.ACTION_DOWN:
+                    v.animate().scaleX(0.95f).scaleY(0.95f).setDuration(100).start();
+                    break;
+                case android.view.MotionEvent.ACTION_UP:
+                case android.view.MotionEvent.ACTION_CANCEL:
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
+                    break;
+            }
+            return false;
+        });
     }
 
     private void signInWithGoogle() {
@@ -78,12 +118,12 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 progressBar.setVisibility(View.GONE);
                 Log.w("LoginActivity", "Google sign in failed", e);
-                Toast.makeText(this, "Google Sign-In Failed: You need a valid google-services.json", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Google Sign-In Failed! Add your SHA-1 key to Firebase.", Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    private void performAuth(boolean isLogin) {
+    private void loginUser() {
         String email = etEmail.getText() != null ? etEmail.getText().toString().trim() : "";
         String password = etPassword.getText() != null ? etPassword.getText().toString().trim() : "";
 
@@ -93,13 +133,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        btnLogin.setEnabled(false);
-        btnRegister.setEnabled(false);
+        android.widget.TextView tvLoginBtnText = findViewById(R.id.tv_login_btn_text);
+        if (tvLoginBtnText != null) tvLoginBtnText.setVisibility(View.GONE);
 
         AuthRepository.AuthCallback callback = new AuthRepository.AuthCallback() {
             @Override
             public void onSuccess(FirebaseUser user) {
                 progressBar.setVisibility(View.GONE);
+                if (tvLoginBtnText != null) tvLoginBtnText.setVisibility(View.VISIBLE);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
@@ -107,16 +148,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 progressBar.setVisibility(View.GONE);
-                btnLogin.setEnabled(true);
-                btnRegister.setEnabled(true);
+                if (tvLoginBtnText != null) tvLoginBtnText.setVisibility(View.VISIBLE);
                 Toast.makeText(LoginActivity.this, "Auth Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         };
 
-        if (isLogin) {
-            authRepository.signInWithEmailAndPassword(email, password, callback);
-        } else {
-            authRepository.signUpWithEmailAndPassword(email, password, callback);
-        }
+        authRepository.signInWithEmailAndPassword(email, password, callback);
     }
 }

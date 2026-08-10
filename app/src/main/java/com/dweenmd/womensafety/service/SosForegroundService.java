@@ -71,6 +71,12 @@ public class SosForegroundService extends Service {
         });
     }
 
+    private android.content.BroadcastReceiver powerButtonReceiver;
+    private int powerButtonPressCount = 0;
+    private long lastPowerButtonPressTime = 0;
+    private static final int POWER_BUTTON_PRESS_THRESHOLD = 3; // Trigger after 3 presses
+    private static final long POWER_BUTTON_TIME_WINDOW = 3000; // 3 seconds window
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null && "stop".equalsIgnoreCase(intent.getAction())) {
@@ -90,10 +96,9 @@ public class SosForegroundService extends Service {
                 builder = new Notification.Builder(this);
             }
 
-            // Note: Add a proper icon for R.drawable.ic_launcher in production
             Notification notification = builder
                     .setContentTitle("Women Safety Active")
-                    .setContentText("Background protection is running. Shake to trigger SOS.")
+                    .setContentText("Background protection is running. Shake or press Power button 3x to trigger SOS.")
                     .setSmallIcon(android.R.drawable.ic_secure)
                     .setContentIntent(pendingIntent)
                     .setOngoing(true)
@@ -106,10 +111,42 @@ public class SosForegroundService extends Service {
             }
 
             ShakeDetector.start();
+            registerPowerButtonReceiver();
             isRunning = true;
         }
 
         return START_STICKY;
+    }
+    
+    private void registerPowerButtonReceiver() {
+        if (powerButtonReceiver == null) {
+            powerButtonReceiver = new android.content.BroadcastReceiver() {
+                @Override
+                public void onReceive(android.content.Context context, Intent intent) {
+                    if (Intent.ACTION_SCREEN_ON.equals(intent.getAction()) || Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+                        long currentTime = System.currentTimeMillis();
+                        if (currentTime - lastPowerButtonPressTime > POWER_BUTTON_TIME_WINDOW) {
+                            powerButtonPressCount = 1;
+                        } else {
+                            powerButtonPressCount++;
+                            if (powerButtonPressCount >= POWER_BUTTON_PRESS_THRESHOLD) {
+                                if (!isOnCooldown) {
+                                    Log.d(TAG, "Power button sequence detected! Triggering SOS...");
+                                    triggerSos();
+                                    startCooldown();
+                                }
+                                powerButtonPressCount = 0; // Reset
+                            }
+                        }
+                        lastPowerButtonPressTime = currentTime;
+                    }
+                }
+            };
+            android.content.IntentFilter filter = new android.content.IntentFilter();
+            filter.addAction(Intent.ACTION_SCREEN_ON);
+            filter.addAction(Intent.ACTION_SCREEN_OFF);
+            registerReceiver(powerButtonReceiver, filter);
+        }
     }
 
     @Override
@@ -118,5 +155,9 @@ public class SosForegroundService extends Service {
         ShakeDetector.stop();
         ShakeDetector.destroy();
         handler.removeCallbacksAndMessages(null);
+        if (powerButtonReceiver != null) {
+            unregisterReceiver(powerButtonReceiver);
+            powerButtonReceiver = null;
+        }
     }
 }

@@ -7,10 +7,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <!-- Foreground Service Permissions -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
@@ -37,8 +39,23 @@
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="false" />
-
-        <activity android:name=".ui.contacts.RegisterNumberActivity"/>
+            
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".ui.auth.PhoneLoginActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".ui.auth.OtpVerificationActivity"
+            android:exported="false" />
+        
+        <activity android:name=".ui.features.FakeCallActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:showOnLockScreen="true"
+            android:exported="false" />
 
         <activity android:name=".ui.splash.SplashActivity"
             android:exported="true">

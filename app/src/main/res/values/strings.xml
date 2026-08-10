@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">WomenSafety</string>
+    <string name="app_name">Women Safety</string>
+    <string name="title_home">Home</string>
+    
+    <string-array name="relationship_options">
+        <item>Parent</item>
+        <item>Brother / Sister</item>
+        <item>Friend</item>
+        <item>Relative</item>
+        <item>Teacher</item>
+        <item>Partner</item>
+        <item>Other</item>
+    </string-array>
 </resources>

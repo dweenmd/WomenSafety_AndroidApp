@@ -1,6 +1,7 @@
 package com.dweenmd.womensafety.data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -9,7 +10,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import android.app.Activity;
+import java.util.concurrent.TimeUnit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +55,7 @@ public class AuthRepository {
                         setDemoUser(false);
                         FirebaseUser user = mAuth.getCurrentUser();
                         currentUserLiveData.setValue(user);
-                        ensureUserProfileExists(user);
+                        ensureUserProfileExists(user, null, null);
                         callback.onSuccess(user);
                     } else {
                         callback.onFailure(task.getException());
@@ -96,7 +102,7 @@ public class AuthRepository {
                         setDemoUser(false);
                         FirebaseUser user = mAuth.getCurrentUser();
                         currentUserLiveData.setValue(user);
-                        ensureUserProfileExists(user);
+                        ensureUserProfileExists(user, null, null);
                         callback.onSuccess(user);
                     } else {
                         callback.onFailure(task.getException());
@@ -104,7 +110,22 @@ public class AuthRepository {
                 });
     }
 
-    private void ensureUserProfileExists(FirebaseUser user) {
+    public void signUpWithDetails(String name, String email, String phone, String password, AuthCallback callback) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        setDemoUser(false);
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        currentUserLiveData.setValue(user);
+                        ensureUserProfileExists(user, name, phone);
+                        callback.onSuccess(user);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
+
+    private void ensureUserProfileExists(FirebaseUser user, String name, String phone) {
         if (user == null || isDemoUser()) return;
         
         String uid = user.getUid();
@@ -114,6 +135,8 @@ public class AuthRepository {
                         Map<String, Object> profile = new HashMap<>();
                         profile.put("email", user.getEmail());
                         profile.put("createdAt", System.currentTimeMillis());
+                        if (name != null) profile.put("name", name);
+                        if (phone != null) profile.put("phone", phone);
                         db.collection("users").document(uid).set(profile)
                                 .addOnSuccessListener(aVoid -> Log.d(TAG, "User profile created"))
                                 .addOnFailureListener(e -> Log.e(TAG, "Failed to create profile", e));
@@ -132,6 +155,32 @@ public class AuthRepository {
         mGoogleSignInClient.signOut().addOnCompleteListener(task -> {
             currentUserLiveData.setValue(null);
         });
+    }
+
+    public void verifyPhoneNumber(String phoneNumber, Activity activity, PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks) {
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber(phoneNumber)
+                        .setTimeout(60L, TimeUnit.SECONDS)
+                        .setActivity(activity)
+                        .setCallbacks(callbacks)
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+    public void signInWithPhoneAuthCredential(PhoneAuthCredential credential, AuthCallback callback) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        setDemoUser(false);
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        currentUserLiveData.setValue(user);
+                        ensureUserProfileExists(user, null, user.getPhoneNumber());
+                        callback.onSuccess(user);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
     }
 
     public interface AuthCallback {

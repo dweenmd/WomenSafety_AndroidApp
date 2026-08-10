@@ -20,10 +20,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
+    <View
+        android:id="@+id/bottom_nav_border"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/premium_login_border"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/premium_login_surface"
+        app:itemIconTint="@color/selector_premium_bottom_nav"
+        app:itemTextColor="@color/selector_premium_bottom_nav"
+        app:elevation="0dp"
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

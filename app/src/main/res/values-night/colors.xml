@@ -16,4 +16,17 @@
     
     <color name="status_safe">#22C55E</color>
     <color name="status_warning">#FBBF24</color>
+
+    <!-- Phase 3: Premium Login System Colors (Dark Mode) -->
+    <color name="premium_login_bg">#0B0910</color>
+    <color name="premium_login_surface">#15121C</color>
+    <color name="premium_login_input_bg">#1A1622</color>
+    <color name="premium_login_primary">#9B5DE5</color>
+    <color name="premium_login_secondary">#E85AAD</color>
+    <color name="premium_login_grad_start">#8B5CF6</color>
+    <color name="premium_login_grad_end">#EC4899</color>
+    <color name="premium_login_text_main">#F8F7FA</color>
+    <color name="premium_login_text_secondary">#A9A3B2</color>
+    <color name="premium_login_border">#37313F</color>
+    <color name="premium_login_focus_border">#A855F7</color>
 </resources>

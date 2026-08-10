@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@color/premium_login_bg"
+    android:fillViewport="true"
     tools:context=".ui.contacts.ContactsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Emergency Contacts"
-            android:textAppearance="?attr/textAppearanceHeadlineLarge"
+            android:textColor="@color/premium_login_text_main"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_contacts_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="People who can be contacted when you need help."
+            android:textColor="@color/premium_login_text_secondary"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="24dp" />
 
         <ProgressBar
@@ -29,113 +41,49 @@
             android:visibility="invisible"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Contact 1 -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.WomenSafety.CardView"
+        <!-- Add Contact Button -->
+        <FrameLayout
+            android:id="@+id/btn_add_contact"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
+            android:layout_height="56dp"
+            android:background="@drawable/bg_premium_input_normal"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginBottom="24dp">
+            
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center">
+                
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_input_add"
+                    app:tint="@color/premium_login_primary" />
+                    
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Primary Contact (Contact 1)"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:layout_marginBottom="16dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Name"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_contact1_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="Phone Number"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_contact1_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="phone" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_save_contact1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Save Contact 1" />
+                    android:layout_marginStart="8dp"
+                    android:text="Add Emergency Contact"
+                    android:textColor="@color/premium_login_primary"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
-        <!-- Contact 2 -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.WomenSafety.CardView"
+        <!-- Dynamic Contacts List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_contacts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Secondary Contact (Contact 2)"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:layout_marginBottom="16dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Name"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_contact2_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="Phone Number"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_contact2_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="phone" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_save_contact2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Save Contact 2" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_contact"
+            tools:itemCount="3" />
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

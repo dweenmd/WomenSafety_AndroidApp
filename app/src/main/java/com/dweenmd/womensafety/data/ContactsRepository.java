@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ContactsRepository {
 
@@ -64,66 +65,128 @@ public class ContactsRepository {
         return isSyncing;
     }
 
-    public void saveContact(int index, String name, String phone) {
-        if (!PhoneNumberValidator.isValid(phone)) {
-            Log.e(TAG, "Invalid phone number: " + phone);
+    public void saveContact(Contact contact) {
+        if (!PhoneNumberValidator.isValid(contact.phone)) {
+            Log.e(TAG, "Invalid phone number skipped: " + contact.phone);
             return;
         }
 
-        // Save locally first for instant UI response and offline fallback
-        String contactId = "contact" + index;
-        if (sharedPreferences != null) {
-            sharedPreferences.edit()
-                    .putString(contactId + "_name", name)
-                    .putString(contactId + "_phone", phone)
-                    .apply();
+        if (contact.id == null || contact.id.isEmpty()) {
+            contact.id = UUID.randomUUID().toString();
         }
-        
-        loadLocalContacts(); // Update LiveData immediately
+
+        if (contact.isPrimary) {
+            // Remove primary from others
+            List<Contact> allContacts = getLocalContactsSync();
+            for (Contact c : allContacts) {
+                if (!c.id.equals(contact.id) && c.isPrimary) {
+                    c.isPrimary = false;
+                    saveContactInternal(c);
+                }
+            }
+        }
+
+        saveContactInternal(contact);
+        loadLocalContacts();
 
         // Sync to Firestore
-        if (authRepo.isDemoUser()) {
-            Log.d(TAG, "Demo mode: Skipping Firestore save");
-            return;
-        }
+        if (authRepo.isDemoUser()) return;
 
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
-            isSyncing.setValue(true);
             Map<String, Object> contactData = new HashMap<>();
-            contactData.put("name", name);
-            contactData.put("phone", phone);
-            contactData.put("addedAt", System.currentTimeMillis());
+            contactData.put("name", contact.name);
+            contactData.put("phone", contact.phone);
+            contactData.put("relationship", contact.relationship);
+            contactData.put("isPrimary", contact.isPrimary);
+            contactData.put("updatedAt", System.currentTimeMillis());
 
             db.collection("users").document(user.getUid())
-                    .collection("contacts").document(contactId)
+                    .collection("contacts").document(contact.id)
                     .set(contactData, SetOptions.merge())
-                    .addOnSuccessListener(aVoid -> {
-                        Log.d(TAG, "Contact saved to Firestore successfully");
-                        isSyncing.setValue(false);
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e(TAG, "Error saving contact to Firestore", e);
-                        isSyncing.setValue(false);
-                        // Data is still safe in EncryptedSharedPreferences and will be synced later
-                        // if Firestore persistence is enabled.
-                    });
+                    .addOnFailureListener(e -> Log.e(TAG, "Error saving contact to Firestore", e));
+        }
+    }
+
+    private void saveContactInternal(Contact c) {
+        if (sharedPreferences == null) return;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        
+        String currentIds = sharedPreferences.getString("contact_ids", "");
+        if (!currentIds.contains(c.id)) {
+            if (currentIds.length() > 0) currentIds += ",";
+            currentIds += c.id;
+            editor.putString("contact_ids", currentIds);
+        }
+
+        editor.putString(c.id + "_name", c.name);
+        editor.putString(c.id + "_phone", c.phone);
+        editor.putString(c.id + "_relationship", c.relationship);
+        editor.putBoolean(c.id + "_isPrimary", c.isPrimary);
+        editor.apply();
+    }
+
+    public void deleteContact(String contactId) {
+        if (sharedPreferences == null) return;
+        
+        String currentIds = sharedPreferences.getString("contact_ids", "");
+        String[] idArray = currentIds.split(",");
+        StringBuilder newIds = new StringBuilder();
+        
+        for (String id : idArray) {
+            if (!id.isEmpty() && !id.equals(contactId)) {
+                if (newIds.length() > 0) newIds.append(",");
+                newIds.append(id);
+            }
+        }
+        
+        sharedPreferences.edit()
+                .remove(contactId + "_name")
+                .remove(contactId + "_phone")
+                .remove(contactId + "_relationship")
+                .remove(contactId + "_isPrimary")
+                .putString("contact_ids", newIds.toString())
+                .apply();
+                
+        loadLocalContacts();
+        
+        if (!authRepo.isDemoUser()) {
+            FirebaseUser user = auth.getCurrentUser();
+            if (user != null) {
+                db.collection("users").document(user.getUid())
+                        .collection("contacts").document(contactId)
+                        .delete();
+            }
         }
     }
 
     public List<Contact> getLocalContactsSync() {
         List<Contact> contacts = new ArrayList<>();
         if (sharedPreferences != null) {
-            // App supports up to 2 contacts as per current logic
-            for (int i = 1; i <= 2; i++) {
-                String contactId = "contact" + i;
-                String name = sharedPreferences.getString(contactId + "_name", null);
-                String phone = sharedPreferences.getString(contactId + "_phone", null);
-                if (phone != null && !phone.isEmpty()) {
-                    contacts.add(new Contact(contactId, name != null ? name : "Emergency Contact " + i, phone));
+            String currentIds = sharedPreferences.getString("contact_ids", "contact1,contact2"); // Fallback to legacy
+            if (!currentIds.isEmpty()) {
+                String[] idArray = currentIds.split(",");
+                for (String contactId : idArray) {
+                    if (contactId.isEmpty()) continue;
+                    String name = sharedPreferences.getString(contactId + "_name", "");
+                    String phone = sharedPreferences.getString(contactId + "_phone", "");
+                    String relationship = sharedPreferences.getString(contactId + "_relationship", "Other");
+                    boolean isPrimary = sharedPreferences.getBoolean(contactId + "_isPrimary", false);
+                    
+                    if (phone.isEmpty() && (contactId.equals("contact1") || contactId.equals("contact2"))) continue;
+                    
+                    contacts.add(new Contact(contactId, name, phone, relationship, isPrimary));
                 }
             }
         }
+        
+        // Sort: Primary first
+        contacts.sort((c1, c2) -> {
+            if (c1.isPrimary && !c2.isPrimary) return -1;
+            if (!c1.isPrimary && c2.isPrimary) return 1;
+            return 0;
+        });
+        
         return contacts;
     }
 
@@ -132,10 +195,7 @@ public class ContactsRepository {
     }
 
     public void syncWithFirestore() {
-        if (authRepo.isDemoUser()) {
-            Log.d(TAG, "Demo mode: Skipping Firestore sync");
-            return;
-        }
+        if (authRepo.isDemoUser()) return;
 
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) return;
@@ -146,14 +206,25 @@ public class ContactsRepository {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (sharedPreferences != null) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
+                        StringBuilder ids = new StringBuilder();
                         queryDocumentSnapshots.forEach(doc -> {
                             String id = doc.getId();
                             String name = doc.getString("name");
                             String phone = doc.getString("phone");
+                            String relationship = doc.getString("relationship");
+                            if (relationship == null) relationship = "Other";
+                            Boolean isPrimaryObj = doc.getBoolean("isPrimary");
+                            boolean isPrimary = isPrimaryObj != null && isPrimaryObj;
+                            
+                            if (ids.length() > 0) ids.append(",");
+                            ids.append(id);
                             
                             editor.putString(id + "_name", name);
                             editor.putString(id + "_phone", phone);
+                            editor.putString(id + "_relationship", relationship);
+                            editor.putBoolean(id + "_isPrimary", isPrimary);
                         });
+                        editor.putString("contact_ids", ids.toString());
                         editor.apply();
                         loadLocalContacts();
                     }
@@ -169,11 +240,17 @@ public class ContactsRepository {
         public String id;
         public String name;
         public String phone;
+        public String relationship;
+        public boolean isPrimary;
 
-        public Contact(String id, String name, String phone) {
+        public Contact() {}
+
+        public Contact(String id, String name, String phone, String relationship, boolean isPrimary) {
             this.id = id;
             this.name = name;
             this.phone = phone;
+            this.relationship = relationship;
+            this.isPrimary = isPrimary;
         }
     }
 }

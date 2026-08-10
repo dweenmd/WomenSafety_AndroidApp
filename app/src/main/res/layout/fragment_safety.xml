@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="@color/premium_login_bg"
     tools:context=".ui.safety.SafetyFragment">
 
     <LinearLayout
@@ -17,14 +17,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Safety Settings"
-            android:textAppearance="?attr/textAppearanceHeadlineLarge"
+            android:textColor="@color/premium_login_text_main"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.WomenSafety.CardView"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_premium_input_normal">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,12 +40,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Background Protection"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Keep the app running in the background to listen for triggers."
-                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp"
                     android:layout_marginBottom="16dp"/>
 
                 <!-- Live Location on SOS -->
@@ -52,12 +57,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Include Live Location"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Send your current Google Maps link when SOS is triggered."
-                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp"
                     android:layout_marginBottom="16dp"/>
 
                 <!-- Shake Detection -->
@@ -66,12 +74,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Shake to SOS"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trigger SOS by violently shaking your phone."
-                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp"
                     android:layout_marginBottom="16dp"/>
 
                 <!-- Auto Notify Low Battery -->
@@ -80,25 +91,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Low Battery Warning"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Notify contacts when your battery drops below 15%."
-                    android:textAppearance="?attr/textAppearanceBodySmall" />
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Silent SOS Mode -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_silent_sos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Silent SOS Mode"
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trigger SOS without vibrating or making a sound."
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Bangla Language Toggle -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="বাংলা ভাষা (Bangla)"
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Switch app language to Bengali (Requires Restart)."
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp" />
 
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_logout"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
-            android:text="Sign Out"
-            android:textColor="?attr/colorError" />
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>
