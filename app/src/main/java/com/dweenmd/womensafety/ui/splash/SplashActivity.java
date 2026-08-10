@@ -1,4 +1,4 @@
-package com.dweenmd.womensafety;
+package com.dweenmd.womensafety.ui.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,7 @@ import android.os.CountDownTimer;
 
 import com.dweenmd.womensafety.R;
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

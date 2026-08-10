@@ -14,7 +14,7 @@
  * covered by gesture navigation or 3-button navigation bars.
  */
 
-package com.dweenmd.womensafety;
+package com.dweenmd.womensafety.ui;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;

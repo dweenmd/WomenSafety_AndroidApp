@@ -1,4 +1,4 @@
-package com.dweenmd.womensafety;
+package com.dweenmd.womensafety.service;
 
 import android.Manifest;
 import android.app.Notification;
@@ -22,7 +22,7 @@ import com.github.tbouron.shakedetector.library.ShakeDetector;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
-public class ServiceMine extends Service {
+public class SosForegroundService extends Service {
 
     boolean isRunning = false;
     FusedLocationProviderClient fusedLocationClient;

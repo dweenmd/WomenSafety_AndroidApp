@@ -1,4 +1,4 @@
-package com.dweenmd.womensafety;
+package com.dweenmd.womensafety.ui.contacts;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
