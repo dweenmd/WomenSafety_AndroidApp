@@ -24,6 +24,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:backgroundTint="?attr/colorError"
+        android:contentDescription="Emergency SOS Button. Double tap and hold to send an emergency text message and your location to your contacts."
         android:text="HOLD TO SOS"
         android:textColor="?attr/colorOnError"
         android:textSize="24sp"

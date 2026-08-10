@@ -1,32 +1,34 @@
 package com.dweenmd.womensafety.service;
 
-import android.Manifest;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.os.Build;
-import android.os.IBinder;
-import android.telephony.SmsManager;
-import android.widget.Toast;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import android.content.pm.ServiceInfo;
+import android.os.Build;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
+import android.util.Log;
+
+import androidx.annotation.Nullable;
+
+import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.WomenSafetyApp;
+import com.dweenmd.womensafety.sos.SosMessenger;
+import com.dweenmd.womensafety.ui.MainActivity;
 import com.github.tbouron.shakedetector.library.ShakeDetector;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 
 public class SosForegroundService extends Service {
 
-    boolean isRunning = false;
-    FusedLocationProviderClient fusedLocationClient;
-    SmsManager manager = SmsManager.getDefault();
+    private static final String TAG = "SosForegroundService";
+    private boolean isRunning = false;
+    private SosMessenger sosMessenger;
+    
+    // Cooldown mechanism to prevent SMS spam on continuous shaking
+    private boolean isOnCooldown = false;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private static final long COOLDOWN_MS = 10000; // 10 seconds cooldown
 
     @Nullable
     @Override
@@ -37,40 +39,40 @@ public class SosForegroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        sosMessenger = new SosMessenger(this);
 
         ShakeDetector.create(this, () -> {
-            getLocationAndSendSms();
+            if (!isOnCooldown) {
+                Log.d(TAG, "Shake detected! Triggering SOS...");
+                triggerSos();
+                startCooldown();
+            } else {
+                Log.d(TAG, "Shake detected but on cooldown. Ignored.");
+            }
         });
     }
 
-    private void getLocationAndSendSms() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
+    private void startCooldown() {
+        isOnCooldown = true;
+        handler.postDelayed(() -> isOnCooldown = false, COOLDOWN_MS);
+    }
 
-        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-            String myLocation = (location != null) ?
-                    "https://www.google.com/maps/search/?api=1&query=" + location.getLatitude() + "," + location.getLongitude() :
-                    "Location unavailable!";
+    private void triggerSos() {
+        sosMessenger.triggerSos(new SosMessenger.SosCallback() {
+            @Override
+            public void onSosTriggered(String status) {
+                Log.d(TAG, "SOS Triggered: " + status);
+            }
 
-            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-            String num1 = sharedPreferences.getString("ENUM1", "NONE");
-            String num2 = sharedPreferences.getString("ENUM2", "NONE");
-
-            if (!num1.equals("NONE") && !num2.equals("NONE")) {
-                String message = "Emergency! I'm in trouble!\nPlease help me ASAP.\nMy current location: " + myLocation;
-                manager.sendTextMessage(num1, null, message, null, null);
-                manager.sendTextMessage(num2, null, message, null, null);
-
-                Toast.makeText(this, "SOS Message Sent!", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onFailure(String error) {
+                Log.e(TAG, "SOS Failed: " + error);
             }
         });
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         if (intent != null && "stop".equalsIgnoreCase(intent.getAction())) {
             if (isRunning) {
                 stopForeground(true);
@@ -78,32 +80,33 @@ public class SosForegroundService extends Service {
                 isRunning = false;
             }
         } else {
-            Intent notificationIntent = new Intent(this, com.dweenmd.womensafety.ui.MainActivity.class);
+            Intent notificationIntent = new Intent(this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                NotificationChannel channel = new NotificationChannel("MYID", "CHANNELFOREGROUND", NotificationManager.IMPORTANCE_DEFAULT);
-                NotificationManager m = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if (m != null) {
-                    m.createNotificationChannel(channel);
-                }
-
-                Notification notification = new Notification.Builder(this, "MYID")
-                        .setContentTitle("Women Safety")
-                        .setContentText("Shake Device to Send SOS")
-                        .setSmallIcon(R.drawable.logo)
-                        .setContentIntent(pendingIntent)
-                        .setOngoing(true)
-                        .build();
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    startForeground(115, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);
-                } else {
-                    startForeground(115, notification);
-                }
-                
-                isRunning = true;
+            Notification.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                builder = new Notification.Builder(this, WomenSafetyApp.CHANNEL_ID);
+            } else {
+                builder = new Notification.Builder(this);
             }
+
+            // Note: Add a proper icon for R.drawable.ic_launcher in production
+            Notification notification = builder
+                    .setContentTitle("Women Safety Active")
+                    .setContentText("Background protection is running. Shake to trigger SOS.")
+                    .setSmallIcon(android.R.drawable.ic_secure)
+                    .setContentIntent(pendingIntent)
+                    .setOngoing(true)
+                    .build();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(115, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);
+            } else {
+                startForeground(115, notification);
+            }
+
+            ShakeDetector.start();
+            isRunning = true;
         }
 
         return START_STICKY;
@@ -114,5 +117,6 @@ public class SosForegroundService extends Service {
         super.onDestroy();
         ShakeDetector.stop();
         ShakeDetector.destroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }
