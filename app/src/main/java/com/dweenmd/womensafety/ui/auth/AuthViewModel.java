@@ -10,8 +10,8 @@ public class AuthViewModel extends ViewModel {
 
     private final AuthRepository authRepository;
 
-    public AuthViewModel(Context context, String webClientId) {
-        authRepository = new AuthRepository(context, webClientId);
+    public AuthViewModel(Context context) {
+        authRepository = new AuthRepository(context);
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {

@@ -21,13 +21,40 @@ public class AuthRepository {
     private final FirebaseFirestore db;
     private final MutableLiveData<FirebaseUser> currentUserLiveData;
     private final SharedPreferences prefs;
+    private final com.google.android.gms.auth.api.signin.GoogleSignInClient mGoogleSignInClient;
 
     public AuthRepository(Context context) {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         prefs = context.getSharedPreferences("AuthPrefs", Context.MODE_PRIVATE);
         
+        com.google.android.gms.auth.api.signin.GoogleSignInOptions gso = new com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder(com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(com.dweenmd.womensafety.R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(context, gso);
+        
         currentUserLiveData = new MutableLiveData<>(mAuth.getCurrentUser());
+    }
+
+    public Intent getSignInIntent() {
+        return mGoogleSignInClient.getSignInIntent();
+    }
+
+    public void firebaseAuthWithGoogle(String idToken, AuthCallback callback) {
+        com.google.firebase.auth.AuthCredential credential = com.google.firebase.auth.GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        setDemoUser(false);
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        currentUserLiveData.setValue(user);
+                        ensureUserProfileExists(user);
+                        callback.onSuccess(user);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
     }
 
     public boolean isDemoUser() {
@@ -102,7 +129,9 @@ public class AuthRepository {
         }
 
         mAuth.signOut();
-        currentUserLiveData.setValue(null);
+        mGoogleSignInClient.signOut().addOnCompleteListener(task -> {
+            currentUserLiveData.setValue(null);
+        });
     }
 
     public interface AuthCallback {

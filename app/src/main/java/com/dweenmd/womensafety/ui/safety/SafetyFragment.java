@@ -57,7 +57,7 @@ public class SafetyFragment extends Fragment {
 
         // Logout
         view.findViewById(R.id.btn_logout).setOnClickListener(v -> {
-            new AuthRepository(requireContext(), "YOUR_WEB_CLIENT_ID").signOut();
+            new AuthRepository(requireContext()).signOut();
             startActivity(new Intent(requireContext(), LoginActivity.class));
             requireActivity().finish();
         });
