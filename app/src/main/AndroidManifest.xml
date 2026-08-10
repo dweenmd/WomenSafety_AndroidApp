@@ -33,9 +33,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WomenSafety">
 
-        <activity android:name=".RegisterNumberActivity"/>
+        <activity android:name=".ui.contacts.RegisterNumberActivity"/>
 
-        <activity android:name=".SplashScreen"
+        <activity android:name=".ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -43,11 +43,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".ui.MainActivity"/>
 
         <!-- Background Service -->
         <service
-            android:name=".ServiceMine"
+            android:name=".service.SosForegroundService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="location"

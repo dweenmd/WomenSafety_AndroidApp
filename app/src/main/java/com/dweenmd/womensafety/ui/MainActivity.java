@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         String num2 = sharedPreferences.getString("ENUM2", "NONE");
 
         if (num1.equals("NONE") || num2.equals("NONE")) {
-            startActivity(new Intent(this, RegisterNumberActivity.class));
+            startActivity(new Intent(this, com.dweenmd.womensafety.ui.contacts.RegisterNumberActivity.class));
         } else {
             TextView textView = findViewById(R.id.textNum);
             textView.setText("🚨 SOS Will Be Sent To 🚨\n📞 " + num1 + "\n📞 " + num2);
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
     public void stopService(View view) {
-        Intent notificationIntent = new Intent(this, ServiceMine.class);
+        Intent notificationIntent = new Intent(this, com.dweenmd.womensafety.service.SosForegroundService.class);
         notificationIntent.setAction("stop");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             getApplicationContext().startForegroundService(notificationIntent);
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (allGranted) {
-            Intent notificationIntent = new Intent(this, ServiceMine.class);
+            Intent notificationIntent = new Intent(this, com.dweenmd.womensafety.service.SosForegroundService.class);
             notificationIntent.setAction("Start");
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
         popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.changeNum) {
-                startActivity(new Intent(MainActivity.this, RegisterNumberActivity.class));
+                startActivity(new Intent(MainActivity.this, com.dweenmd.womensafety.ui.contacts.RegisterNumberActivity.class));
             }
             return true;
         });
