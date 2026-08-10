@@ -1,1 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?><FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Safety Fragment" android:layout_gravity="center" /></FrameLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
+    tools:context=".ui.safety.SafetyFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Safety Settings"
+            android:textAppearance="?attr/textAppearanceHeadlineLarge"
+            android:layout_marginBottom="24dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.WomenSafety.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Background Protection -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_background_protection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Background Protection"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Keep the app running in the background to listen for triggers."
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Live Location on SOS -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_live_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Include Live Location"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Send your current Google Maps link when SOS is triggered."
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Shake Detection -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_shake_detection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Shake to SOS"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trigger SOS by violently shaking your phone."
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Auto Notify Low Battery -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switch_auto_notify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Low Battery Warning"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notify contacts when your battery drops below 15%."
+                    android:textAppearance="?attr/textAppearanceBodySmall" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_logout"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:text="Sign Out"
+            android:textColor="?attr/colorError" />
+
+    </LinearLayout>
+</ScrollView>
