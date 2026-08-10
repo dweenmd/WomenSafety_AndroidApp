@@ -14,7 +14,7 @@
  * covered by gesture navigation or 3-button navigation bars.
  */
 
-package com.example.womensafety;
+package com.dweenmd.womensafety;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             TextView textView = findViewById(R.id.textNum);
             textView.setText("🚨 SOS Will Be Sent To 🚨\n📞 " + num1 + "\n📞 " + num2);
+            
+            // Request Notification permission for Android 13+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+                }
+            }
         }
     }
 
@@ -170,10 +177,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startServiceV(View view) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        String[] permissions;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissions = new String[]{
+                    Manifest.permission.SEND_SMS,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.POST_NOTIFICATIONS
+            };
+        } else {
+            permissions = new String[]{
+                    Manifest.permission.SEND_SMS,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            };
+        }
 
+        boolean allGranted = true;
+        for (String p : permissions) {
+            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
+                allGranted = false;
+                break;
+            }
+        }
+
+        if (allGranted) {
             Intent notificationIntent = new Intent(this, ServiceMine.class);
             notificationIntent.setAction("Start");
 
@@ -182,11 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), "Service Started!", Snackbar.LENGTH_LONG).show();
             }
         } else {
-            multiplePermissions.launch(new String[]{
-                    Manifest.permission.SEND_SMS,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            });
+            multiplePermissions.launch(permissions);
         }
     }
 

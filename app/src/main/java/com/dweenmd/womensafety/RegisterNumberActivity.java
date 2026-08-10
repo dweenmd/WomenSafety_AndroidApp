@@ -1,4 +1,4 @@
-package com.example.womensafety;
+package com.dweenmd.womensafety;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;

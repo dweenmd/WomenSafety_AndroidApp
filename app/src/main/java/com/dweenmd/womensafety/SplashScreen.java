@@ -1,4 +1,4 @@
-package com.example.womensafety;
+package com.dweenmd.womensafety;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
-import com.example.womensafety.R;
+import com.dweenmd.womensafety.R;
 
 public class SplashScreen extends AppCompatActivity {
 

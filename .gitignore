@@ -9,3 +9,11 @@
 .cxx
 local.properties
 /.artifacts/
+
+# Release signing secrets - never commit these
+app/keystore.properties
+*.jks
+*.keystore
+womensafety-release
+app/release/
+*.apk

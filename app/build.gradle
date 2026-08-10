@@ -2,12 +2,21 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// Release signing: keystore.properties is NOT committed to git.
+// Create app/keystore.properties (see app/keystore.properties.example) before doing a release build.
+def keystorePropertiesFile = rootProject.file("app/keystore.properties")
+def keystoreProperties = new Properties()
+def hasReleaseSigning = keystorePropertiesFile.exists()
+if (hasReleaseSigning) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
-    namespace 'com.example.womensafety'
+    namespace 'com.dweenmd.womensafety'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.example.womensafety"
+        applicationId "com.dweenmd.womensafety"
         minSdk 26
         targetSdk 35
         versionCode 1
@@ -16,11 +25,26 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            release {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            // Falls back to debug signing if no keystore.properties is set up yet,
+            // so the project still builds out of the box. Set up keystore.properties
+            // before shipping a real release build.
+            signingConfig hasReleaseSigning ? signingConfigs.release : signingConfigs.debug
         }
     }
     compileOptions {
@@ -30,25 +54,17 @@ android {
 }
 
 dependencies {
-
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
+    // Note: @aar is required for this specific library to resolve correctly from JitPack
     implementation 'com.github.tbouron.shakedetector:library:1.0.0@aar'
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation libs.play.services.maps
+    implementation libs.play.services.location
 }
