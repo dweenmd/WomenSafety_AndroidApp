@@ -1,130 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/glass_effect"
-    tools:context=".MainActivity">
+    android:background="?attr/colorBackground"
+    tools:context=".ui.MainActivity">
 
-    <!-- Top menu icon -->
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="22dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="PopupMenu"
-        app:srcCompat="@drawable/baseline_more_vert_24"
-        app:tint="@color/white"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
 
-    <!-- Center content -->
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:labelVisibilityMode="labeled" />
 
-        <TextView
-            android:id="@+id/textNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:fontFamily="@font/alfa_slab_one"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:padding="15dp"
-            android:layout_centerHorizontal="true"
-            android:maxLines="3"
-            android:background="@drawable/glass_effect"
-            android:lineSpacingExtra="5dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/start"
-            android:layout_width="220dp"
-            android:layout_height="60dp"
-            android:layout_below="@id/textNum"
-            android:layout_marginTop="17dp"
-            android:onClick="startServiceV"
-            android:text="START"
-            android:textColor="@color/white"
-            android:fontFamily="@font/alfa_slab_one"
-            android:textSize="20sp"
-            android:backgroundTint="@color/dark_green"
-            android:layout_centerHorizontal="true"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/stop"
-            android:layout_width="220dp"
-            android:layout_height="60dp"
-            android:layout_below="@id/start"
-            android:layout_marginTop="24dp"
-            android:onClick="stopService"
-            android:text="STOP"
-            android:fontFamily="@font/alfa_slab_one"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:backgroundTint="@color/purple_700"
-            android:layout_centerHorizontal="true"/>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/stop"
-            android:layout_marginTop="78dp"
-            android:layout_centerHorizontal="true"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/red">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_panic"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:fontFamily="@font/alfa_slab_one"
-                android:onClick="sendPanicSMS"
-                android:text="PANIC"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:backgroundTint="@color/red" />
-        </androidx.cardview.widget.CardView>
-
-    </RelativeLayout>
-
-    <!-- Bottom emergency buttons -->
-    <LinearLayout
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sos_109"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:text="CALL - 109"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/red"
-            android:onClick="callSOS109"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sos_999"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="CALL - 999"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/red"
-            android:onClick="callSOS999"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

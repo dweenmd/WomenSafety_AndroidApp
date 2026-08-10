@@ -33,6 +33,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WomenSafety">
 
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="false" />
+
         <activity android:name=".ui.contacts.RegisterNumberActivity"/>
 
         <activity android:name=".ui.splash.SplashActivity"

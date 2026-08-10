@@ -1,4 +1,5 @@
 [versions]
+navigation = "2.7.7"
 securityCrypto = "1.1.0-alpha06"
 libphonenumber = "8.13.27"
 lifecycle = "2.8.4"
@@ -17,6 +18,8 @@ playServicesLocation = "21.4.0"
 shakeDetector = "1.0.0"
 
 [libraries]
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation" }
 security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 libphonenumber = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version.ref = "libphonenumber" }
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
