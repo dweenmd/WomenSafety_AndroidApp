@@ -242,11 +242,4 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(callIntent);
     }
-    /* // action call not working xiomi and samsung mobile.
-    public void callSOS999(View view) { Intent callIntent = new Intent(Intent.ACTION_CALL);
-    callIntent.setData(Uri.parse("tel:999"));
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-    { ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
-     return; }
-     startActivity(callIntent); } */
 }
