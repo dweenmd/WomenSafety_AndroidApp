@@ -1,11 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/glass_effect"
     tools:context=".MainActivity">
 
+    <!-- Top menu icon -->
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -18,8 +20,7 @@
         app:srcCompat="@drawable/baseline_more_vert_24"
         app:tint="@color/white"/>
 
-
-
+    <!-- Center content -->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,8 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textStyle="normal"
-            android:shadowColor="#3a3a3a3a"
             android:fontFamily="@font/alfa_slab_one"
             android:gravity="center"
             android:textColor="@color/white"
@@ -52,7 +51,6 @@
             android:textColor="@color/white"
             android:fontFamily="@font/alfa_slab_one"
             android:textSize="20sp"
-            android:textStyle="normal"
             android:backgroundTint="@color/dark_green"
             android:layout_centerHorizontal="true"/>
 
@@ -67,8 +65,7 @@
             android:fontFamily="@font/alfa_slab_one"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="normal"
-           android:backgroundTint="@color/purple_700"
+            android:backgroundTint="@color/purple_700"
             android:layout_centerHorizontal="true"/>
 
         <androidx.cardview.widget.CardView
@@ -79,7 +76,7 @@
             android:layout_centerHorizontal="true"
             app:cardCornerRadius="40dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/red">  <!-- Use this instead of android:background -->
+            app:cardBackgroundColor="@color/red">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_panic"
@@ -89,42 +86,40 @@
                 android:onClick="sendPanicSMS"
                 android:text="PANIC"
                 android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="normal"
-                android:backgroundTint="@color/red" />  <!-- Ensure the button itself is also red -->
+                android:textSize="18sp"
+                android:backgroundTint="@color/red" />
         </androidx.cardview.widget.CardView>
 
-
-
-
-
-
     </RelativeLayout>
+
+    <!-- Bottom emergency buttons -->
     <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:padding="12dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sos_109"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="CALL -  109"
+            android:text="CALL - 109"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/red"
             android:onClick="callSOS109"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sos_999"
             android:layout_width="0dp"
             android:layout_height="60dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:text="CALL -  999"
+            android:text="CALL - 999"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/red"

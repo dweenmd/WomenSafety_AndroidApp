@@ -1,3 +1,19 @@
+/*
+ * MainActivity.java
+ * -----------------
+ * This activity handles the main SOS features of the Women Safety app.
+ *
+ * ✔ Sends panic SMS with live location
+ * ✔ Starts and stops foreground service
+ * ✔ Opens emergency dialer buttons
+ * ✔ Shows popup menu
+ *
+ * IMPORTANT UI FIX:
+ * This activity uses WindowInsets to automatically add bottom padding
+ * based on the system navigation bar height, so bottom buttons are never
+ * covered by gesture navigation or 3-button navigation bars.
+ */
+
 package com.example.womensafety;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -7,12 +23,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,7 +39,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.telephony.SmsManager;
@@ -29,9 +47,6 @@ import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import android.location.Location;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Map;
@@ -45,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /* ---------- Navigation bar safe-area handling ---------- */
+        View root = findViewById(R.id.rootLayout);
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(0, 0, 0, systemBars.bottom);
+            return insets;
+        });
+        /* ------------------------------------------------------- */
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         smsManager = SmsManager.getDefault();
@@ -73,22 +97,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendPanicSMS(View view) {
-        // Log when the method starts
+
         Log.d("VIBRATION_DEBUG", "sendPanicSMS triggered");
 
-        // Vibrate when panic button is pressed
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null) {
-            Log.d("VIBRATION_DEBUG", "Vibrator service found");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                Log.d("VIBRATION_DEBUG", "Vibration triggered (Android O+)");
             } else {
                 vibrator.vibrate(500);
-                Log.d("VIBRATION_DEBUG", "Vibration triggered (Legacy)");
             }
-        } else {
-            Log.e("VIBRATION_DEBUG", "Vibrator service not available");
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
@@ -108,18 +126,19 @@ public class MainActivity extends AppCompatActivity {
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
             String myLocation = (location != null) ?
-                    "http://maps.google.com/maps?q=loc:" + location.getLatitude() + "," + location.getLongitude() :
-                    "Location unavailable!";
+                    "https://www.google.com/maps/search/?api=1&query="
+                            + location.getLatitude() + "," + location.getLongitude()
+                    : "Trouble to get exact Location!";
 
-            String message = "Emergency! I'm in trouble! \nPlease help me ASAP. \nMy current location: \n" + myLocation;
+            String message = "Emergency! I'm in trouble!\nPlease help me ASAP.\nMy current location:" + myLocation;
 
             smsManager.sendTextMessage(num1, null, message, null, null);
             smsManager.sendTextMessage(num2, null, message, null, null);
 
             Toast.makeText(MainActivity.this, "SOS Message Sent!", Toast.LENGTH_SHORT).show();
-        }).addOnFailureListener(e -> {
-            Toast.makeText(MainActivity.this, "Failed to get location!", Toast.LENGTH_SHORT).show();
-        });
+        }).addOnFailureListener(e ->
+                Toast.makeText(MainActivity.this, "Failed to get location!", Toast.LENGTH_SHORT).show()
+        );
     }
 
     private ActivityResultLauncher<String[]> multiplePermissions = registerForActivityResult(
@@ -154,14 +173,20 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
             Intent notificationIntent = new Intent(this, ServiceMine.class);
             notificationIntent.setAction("Start");
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 getApplicationContext().startForegroundService(notificationIntent);
                 Snackbar.make(findViewById(android.R.id.content), "Service Started!", Snackbar.LENGTH_LONG).show();
             }
         } else {
-            multiplePermissions.launch(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION});
+            multiplePermissions.launch(new String[]{
+                    Manifest.permission.SEND_SMS,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            });
         }
     }
 
@@ -183,20 +208,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(dialIntent);
     }
 
-   /*
-   // action call not working xiomi and samsung mobile.
-    public void callSOS999(View view) {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:999"));
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
-            return;
-        }
-        startActivity(callIntent);
-    }
-    */
-
     public void callSOS109(View view) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:109"));
@@ -207,5 +218,11 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(callIntent);
     }
-
+    /* // action call not working xiomi and samsung mobile.
+    public void callSOS999(View view) { Intent callIntent = new Intent(Intent.ACTION_CALL);
+    callIntent.setData(Uri.parse("tel:999"));
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+    { ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+     return; }
+     startActivity(callIntent); } */
 }
