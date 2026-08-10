@@ -1,8 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.WomenSafety" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_secondary</item>
+        <item name="colorError">@color/sos</item>
+        <item name="colorOnError">#FFFFFF</item>
+        
+        <!-- Typography -->
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.WomenSafety.AppTitle</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.WomenSafety.ScreenTitle</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.WomenSafety.CardTitle</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.WomenSafety.Body</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.WomenSafety.Caption</item>
     </style>
 
     <style name="Theme.WomenSafety" parent="Base.Theme.WomenSafety" />

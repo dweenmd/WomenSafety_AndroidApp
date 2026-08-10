@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Phase 2: New Design System Colors (Light) -->
+    <color name="primary">#7C3AED</color>
+    <color name="primary_dark">#5B21B6</color>
+    <color name="background">#F8F7FC</color>
+    <color name="surface">#FFFFFF</color>
+    
+    <color name="on_surface">#17151C</color>
+    <color name="on_surface_secondary">#6B6672</color>
+    <color name="border">#E8E4ED</color>
+    
+    <color name="sos">#DC2626</color>
+    <color name="sos_dark">#B91C1C</color>
+    <color name="sos_background">#FEF2F2</color>
+    
+    <color name="status_safe">#16A34A</color>
+    <color name="status_warning">#F59E0B</color>
+
+    <!-- Legacy colors (keep temporarily until layouts are migrated) -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -11,5 +29,4 @@
     <color name="gray">#FF808080</color>
     <color name="yellow">#A50985</color>
     <color name="dark_green">#006400</color>
-
 </resources>

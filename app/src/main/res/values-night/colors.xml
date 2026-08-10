@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Phase 2: New Design System Colors (Dark) -->
+    <color name="primary">#9353D3</color>
+    <color name="primary_dark">#7C3AED</color>
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    
+    <color name="on_surface">#E0E0E0</color>
+    <color name="on_surface_secondary">#A0A0A0</color>
+    <color name="border">#333333</color>
+    
+    <color name="sos">#EF4444</color>
+    <color name="sos_dark">#DC2626</color>
+    <color name="sos_background">#450a0a</color>
+    
+    <color name="status_safe">#22C55E</color>
+    <color name="status_warning">#FBBF24</color>
+</resources>
