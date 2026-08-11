@@ -1,6 +1,6 @@
 # 🛡️ WomenSafety Android App
 
-An emergency alert application built for Android that helps women send instant SOS notifications — with real-time location — to their emergency contacts in distress situations.
+An advanced, premium emergency alert application built for Android. It empowers women to send instant SOS notifications—with real-time location—to their emergency contacts during distress situations, featuring a sleek, production-ready interface.
 
 ![Platform](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)
 ![Language](https://img.shields.io/badge/language-Java-007396?logo=java&logoColor=white)
@@ -11,21 +11,35 @@ An emergency alert application built for Android that helps women send instant S
 
 ## 📖 Overview
 
-WomenSafety is a lightweight, easy-to-use safety companion app designed for quick action during emergencies. With a shake gesture or a single tap, it alerts trusted contacts and connects to national emergency helplines — no fumbling through menus when it matters most.
+WomenSafety is a modern, reliable, and easy-to-use safety companion app designed for quick action during emergencies. With a massive recent UI/UX overhaul, it now features a premium dark/light mode, smart contact management, advanced authentication, and immediate access to SOS tools—ensuring no time is wasted when it matters most.
 
 ---
 
-## ✨ Features
+## ✨ Key Features & Recent Updates
 
-- 📱 **Emergency Contacts** — Save two trusted contact numbers for instant alerts
-- 🤳 **Shake to Alert** — Shake the phone to automatically trigger an SOS message with your live location
-- 🚨 **Panic Button** — Manually send an emergency alert with a single tap
-- 📍 **Real-Time Location Sharing** — SMS alerts include your current GPS location
-- ☎️ **One-Touch Emergency Calling** — Automatically dials Bangladesh's national emergency services
-  - **109** — Women's Helpline
-  - **999** — National Emergency Service
-- 🔔 **Confirmation & Notifications** — Visual confirmation once an alert is sent, plus permission-status alerts
-- ⚙️ **Configurable Settings** — Enable/disable shake detection and manage contacts anytime
+### 🎨 Premium UI/UX Redesign (v3.0)
+- **Modern Themes**: Beautifully crafted Dark and Light modes using a professional color palette (Purple/Charcoal/Red).
+- **Smooth Navigation**: Intuitive Bottom Navigation Bar (Home, Safety, Contacts, Profile).
+- **Categorized Profile**: A sleek, iOS-style settings page organized into Account, Safety, and App sections.
+
+### 🔒 Advanced Authentication
+- **Secure Login & Registration**: Powered by Firebase Authentication.
+- **Phone OTP Verification**: Fast and secure phone number login alongside traditional Email/Password methods.
+- **Seamless Onboarding**: Clean, animated splash screen and onboarding flow.
+
+### 👥 Smart Emergency Contacts
+- **Phonebook Integration**: Add contacts manually or instantly fetch them from your device's native phonebook.
+- **Primary & Secondary Prioritization**: Important contacts are highlighted at the top with a dedicated ⭐ Primary badge.
+- **Interactive Forms**: Smooth Bottom Sheet dialogs for adding and editing contacts without leaving the screen.
+- **Quick Actions**: One-tap Call and Message buttons directly on the contact cards.
+
+### 🚨 Core SOS & Safety Features
+- **Hold-to-SOS**: A clear, prominent panic button that triggers emergency mode.
+- **Real-Time Location Sharing**: SMS alerts automatically include your current GPS live-link.
+- **Shake to Alert**: Shake the phone to automatically trigger an SOS message with your location.
+- **Fake Call**: Schedule a simulated incoming call to gracefully exit uncomfortable situations.
+- **Emergency Audio Record**: Quickly start a background audio recording.
+- **One-Touch Emergency Calling**: Automatically dials Bangladesh's national emergency services (109 / 999).
 
 ---
 
@@ -34,20 +48,12 @@ WomenSafety is a lightweight, easy-to-use safety companion app designed for quic
 | Component | Technology |
 |---|---|
 | Language | Java |
-| UI | XML, Material Components |
+| Architecture | MVVM (ViewModel, LiveData) |
+| UI | XML, Material Components 3 |
+| Backend | Firebase (Auth, Firestore) |
+| Local Storage | EncryptedSharedPreferences |
 | Platform | Android SDK |
 | Build Tool | Gradle |
-
----
-
-## 📦 Releases
-
-### v1.0 — First Release
-The first official release of WomenSafety, featuring the core emergency-alert experience: shake-to-alert, the manual panic button, real-time location sharing, and one-touch dialing to Bangladesh's emergency helplines (109 / 999).
-
-📥 [Download v1.0 APK](https://github.com/dweenmd/WomenSafety_AndroidApp/releases/tag/v1.0)
-
-> Check the [Releases page](https://github.com/dweenmd/WomenSafety_AndroidApp/releases) for the latest APK builds and version history.
 
 ---
 
@@ -68,22 +74,10 @@ Make sure you have the following installed:
    git clone https://github.com/dweenmd/WomenSafety_AndroidApp.git
    ```
 2. **Open the project** in Android Studio.
-3. **Sync Gradle** and let it resolve all dependencies.
-4. **Connect a device** (or launch an emulator).
+3. **Configure Firebase**:
+   - Ensure your `google-services.json` is placed inside the `app/` directory.
+4. **Sync Gradle** and let it resolve all dependencies.
 5. **Run the app** ▶️
-
----
-
-## 📱 How It Works
-
-1. **Set Up Emergency Contacts** — Open the app and enter two emergency contact numbers.
-2. **Save Contacts** — Tap **SAVE** to store them locally.
-3. **Trigger an Alert**
-   - **Shake** your phone to automatically send an SOS with your location, **or**
-   - Tap the **PANIC** button to trigger it manually.
-4. **Emergency Call** — The app automatically dials Bangladesh's emergency services (109 / 999).
-5. **Confirmation** — A confirmation message appears, and SMS alerts (with live location) go out to your emergency contacts.
-6. **Manage Settings** — Toggle shake detection on/off and update contacts anytime from the settings screen.
 
 ---
 
@@ -105,20 +99,6 @@ Contributions are welcome! To contribute:
    git push origin feature-branch
    ```
 5. Open a Pull Request
-
----
-
-## 📚 Documentation
-
-For Android development references, see the [Android Developer Docs](https://developer.android.com/docs).
-
----
-
-## 🙏 Acknowledgments
-
-- [Google](https://developer.android.com/) — for the Android development tools and platform
-- The open-source community — for continued inspiration and support
-- [Vinayak Patil](https://github.com/dweenmd/WomenSafety_AndroidApp/blob/main) bhai — for guidance
 
 ---
 
