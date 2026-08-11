@@ -1,11 +1,8 @@
 package com.dweenmd.womensafety.ui.home;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,7 +10,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,20 +19,30 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.Glide;
 import com.dweenmd.womensafety.R;
 import com.dweenmd.womensafety.data.ContactsRepository;
 import com.dweenmd.womensafety.sos.SosMessenger;
+import com.dweenmd.womensafety.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.materialswitch.MaterialSwitch;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel viewModel;
     private SosMessenger sosMessenger;
+    private ContactsRepository contactsRepository;
+    private Handler longPressHandler;
+    private Runnable longPressRunnable;
+    private boolean isHolding = false;
 
     @Nullable
     @Override
@@ -46,41 +54,188 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         sosMessenger = new SosMessenger(requireContext());
+        contactsRepository = new ContactsRepository(requireContext());
+        longPressHandler = new Handler(Looper.getMainLooper());
 
-        // Top App Bar
+        setupToolbar(view);
+        setupGreeting(view);
+        setupStatusCard(view);
+        setupSosButton(view);
+        setupQuickActions(view);
+        setupEmergencyContacts(view);
+    }
+
+    private void setupToolbar(View view) {
         ImageButton btnMenu = view.findViewById(R.id.btn_menu);
         if (btnMenu != null) {
             btnMenu.setOnClickListener(v -> {
-                if (requireActivity() instanceof com.dweenmd.womensafety.ui.MainActivity) {
-                    ((com.dweenmd.womensafety.ui.MainActivity) requireActivity()).openDrawer();
+                if (requireActivity() instanceof MainActivity) {
+                    ((MainActivity) requireActivity()).openDrawer();
                 }
             });
         }
-        
+
         ImageButton btnNotifications = view.findViewById(R.id.btn_notifications);
         if (btnNotifications != null) {
-            btnNotifications.setOnClickListener(v -> Toast.makeText(requireContext(), "No new notifications", Toast.LENGTH_SHORT).show());
+            btnNotifications.setOnClickListener(v -> Toast.makeText(requireContext(), "No new safety alerts", Toast.LENGTH_SHORT).show());
         }
 
-        // SOS Button
+        ImageView ivAvatar = view.findViewById(R.id.iv_avatar);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null && ivAvatar != null) {
+            if (user.getPhotoUrl() != null) {
+                Glide.with(this).load(user.getPhotoUrl()).circleCrop().into(ivAvatar);
+            }
+        }
+    }
+
+    private void setupGreeting(View view) {
+        TextView tvGreeting = view.findViewById(R.id.tv_greeting);
+        if (tvGreeting != null) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String name = (user != null && user.getDisplayName() != null) ? user.getDisplayName().split(" ")[0] : "Safe Guardian";
+            tvGreeting.setText("Hello, " + name);
+        }
+    }
+
+    private void setupStatusCard(View view) {
+        boolean isRunning = isServiceRunning(com.dweenmd.womensafety.service.SosForegroundService.class);
+        
+        TextView tvTitle = view.findViewById(R.id.tv_status_title);
+        TextView tvDesc = view.findViewById(R.id.tv_status_desc);
+        View indicator = view.findViewById(R.id.view_status_indicator);
+        View card = view.findViewById(R.id.card_status_home);
+
+        if (isRunning) {
+            tvTitle.setText("You're Protected");
+            tvDesc.setText("Background protection is active");
+            indicator.setBackgroundResource(R.drawable.green_clr);
+        } else {
+            tvTitle.setText("Protection Off");
+            tvDesc.setText("Tap to enable safety features");
+            indicator.setBackgroundResource(R.drawable.rounded_bg_gray); // Assume gray for inactive
+        }
+
+        if (card != null) {
+            card.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.safetyFragment));
+        }
+    }
+
+    private void setupSosButton(View view) {
         MaterialButton btnSos = view.findViewById(R.id.btn_sos);
+        View pulseBg = view.findViewById(R.id.pulse_bg);
+
+        if (pulseBg != null) {
+            Animation pulse = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse);
+            pulseBg.startAnimation(pulse);
+        }
+
+        longPressRunnable = () -> {
+            if (isHolding) {
+                triggerSos();
+                isHolding = false;
+            }
+        };
+
         if (btnSos != null) {
-            btnSos.setOnClickListener(v -> triggerSos());
+            btnSos.setOnTouchListener((v, event) -> {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        isHolding = true;
+                        btnSos.animate().scaleX(0.92f).scaleY(0.92f).setDuration(150).start();
+                        longPressHandler.postDelayed(longPressRunnable, 1500);
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        isHolding = false;
+                        btnSos.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).start();
+                        longPressHandler.removeCallbacks(longPressRunnable);
+                        if (event.getAction() == MotionEvent.ACTION_UP) v.performClick();
+                        return true;
+                }
+                return false;
+            });
+            
+            btnSos.setOnClickListener(v -> Toast.makeText(requireContext(), "Hold for 1.5 seconds to SOS", Toast.LENGTH_SHORT).show());
+        }
+    }
+
+    private void setupQuickActions(View view) {
+        View btnShareLoc = view.findViewById(R.id.btn_share_location_home);
+        if (btnShareLoc != null) {
+            btnShareLoc.setOnClickListener(v -> {
+                Toast.makeText(requireContext(), "Sharing location...", Toast.LENGTH_SHORT).show();
+                sosMessenger.shareLocationOnly(new SosMessenger.SosCallback() {
+                    @Override
+                    public void onSosTriggered(String status) {
+                        Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
+                    }
+                });
+            });
+        }
+
+        View btnTimer = view.findViewById(R.id.btn_safety_timer_home);
+        if (btnTimer != null) {
+            btnTimer.setOnClickListener(v -> Toast.makeText(requireContext(), "Safety Timer coming soon!", Toast.LENGTH_SHORT).show());
+        }
+    }
+
+    private void setupEmergencyContacts(View view) {
+        List<ContactsRepository.Contact> contacts = contactsRepository.getLocalContactsSync();
+        
+        TextView tvName = view.findViewById(R.id.tv_contact_name_home);
+        TextView tvRelation = view.findViewById(R.id.tv_contact_relation_home);
+        ImageView ivAvatar = view.findViewById(R.id.iv_contact_avatar_home);
+        View card = view.findViewById(R.id.card_primary_contact_home);
+        View btnCall = view.findViewById(R.id.btn_contact_call_home);
+
+        if (!contacts.isEmpty()) {
+            ContactsRepository.Contact primary = contacts.get(0); // Repository sorts primary first
+            tvName.setText(primary.name);
+            tvRelation.setText(primary.relationship);
+            
+            if (btnCall != null) {
+                btnCall.setOnClickListener(v -> {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + primary.phone));
+                    startActivity(intent);
+                });
+            }
+        }
+
+        if (card != null) {
+            card.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.contactsFragment));
         }
     }
 
     private void triggerSos() {
-        Toast.makeText(requireContext(), R.string.toast_triggering_sos, Toast.LENGTH_SHORT).show();
+        if (!isAdded()) return;
+        Toast.makeText(requireContext(), "🚨 SOS TRIGGERED! 🚨", Toast.LENGTH_SHORT).show();
         sosMessenger.triggerSos(new SosMessenger.SosCallback() {
             @Override
             public void onSosTriggered(String status) {
-                Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show();
+                if (isAdded()) Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
+                if (isAdded()) Toast.makeText(requireContext(), "Failed: " + error, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private boolean isServiceRunning(Class<?> serviceClass) {
+        android.app.ActivityManager manager = (android.app.ActivityManager) requireContext().getSystemService(Context.ACTIVITY_SERVICE);
+        for (android.app.ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

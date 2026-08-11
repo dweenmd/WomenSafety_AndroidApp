@@ -36,37 +36,50 @@ public class SosMessenger {
 
         // Read contacts immediately from local cache so we don't block on network
         List<ContactsRepository.Contact> contacts = contactsRepository.getLocalContactsSync();
+        
+        android.content.SharedPreferences prefs = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE);
+        boolean includeLocation = prefs.getBoolean("liveLocationOnSos", true);
 
-        // Fetch location
-        locationRepository.getCurrentLocation(new LocationRepository.LocationCallbackResult() {
-            @Override
-            public void onSuccess(Location location) {
-                // Start background recording
-                new AudioRecorderHelper(context).startRecording();
-                
-                String locUrl = "https://www.google.com/maps/search/?api=1&query=" + location.getLatitude() + "," + location.getLongitude();
-                
-                if (contacts != null && !contacts.isEmpty()) {
-                    sendMessages(contacts, locUrl, callback);
-                } else {
-                    callback.onFailure("No contacts found. Called emergency number.");
+        if (includeLocation) {
+            // Fetch location
+            locationRepository.getCurrentLocation(new LocationRepository.LocationCallbackResult() {
+                @Override
+                public void onSuccess(Location location) {
+                    // Start background recording
+                    new AudioRecorderHelper(context).startRecording();
+                    
+                    String locUrl = "https://www.google.com/maps/search/?api=1&query=" + location.getLatitude() + "," + location.getLongitude();
+                    
+                    if (contacts != null && !contacts.isEmpty()) {
+                        sendMessages(contacts, locUrl, callback);
+                    } else {
+                        callback.onFailure("No contacts found. Called emergency number.");
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(String reason) {
-                // Start background recording even if location fails
-                new AudioRecorderHelper(context).startRecording();
-                
-                Log.w(TAG, "Location fetch failed: " + reason);
-                
-                if (contacts != null && !contacts.isEmpty()) {
-                    sendMessages(contacts, "Location unavailable: " + reason, callback);
-                } else {
-                    callback.onFailure("No contacts found. Called emergency number.");
+                @Override
+                public void onFailure(String reason) {
+                    // Start background recording even if location fails
+                    new AudioRecorderHelper(context).startRecording();
+                    
+                    Log.w(TAG, "Location fetch failed: " + reason);
+                    
+                    if (contacts != null && !contacts.isEmpty()) {
+                        sendMessages(contacts, "Location unavailable: " + reason, callback);
+                    } else {
+                        callback.onFailure("No contacts found. Called emergency number.");
+                    }
                 }
+            });
+        } else {
+            // Send SOS without location
+            new AudioRecorderHelper(context).startRecording();
+            if (contacts != null && !contacts.isEmpty()) {
+                sendMessages(contacts, "Location sharing is disabled by user.", callback);
+            } else {
+                callback.onFailure("No contacts found. Called emergency number.");
             }
-        });
+        }
     }
 
     private void callEmergencyNumber() {

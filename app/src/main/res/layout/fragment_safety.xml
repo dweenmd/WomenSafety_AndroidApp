@@ -226,7 +226,6 @@
                         android:textColor="@color/m3_on_surface_variant"
                         android:textSize="14sp" />
 
-                    <!-- Using the custom pill style for SOS button -->
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
@@ -265,13 +264,13 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.SereneGuardian.CardView"
                 android:layout_marginBottom="16dp">
-                
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="24dp">
-                    
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -281,7 +280,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
-                        
+
                     <!-- Share Live Location -->
                     <LinearLayout
                         android:id="@+id/btn_share_location"
@@ -293,7 +292,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true">
-                        
+
                         <FrameLayout
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -306,7 +305,7 @@
                                 android:src="@android:drawable/ic_menu_mylocation"
                                 app:tint="@color/m3_primary_container" />
                         </FrameLayout>
-                        
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -327,14 +326,14 @@
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
-                        
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_chevron_right"
                             app:tint="@color/m3_on_surface_variant" />
                     </LinearLayout>
-                    
+
                     <!-- Safety Timer -->
                     <LinearLayout
                         android:id="@+id/btn_safety_timer"
@@ -346,7 +345,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true">
-                        
+
                         <FrameLayout
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -359,7 +358,7 @@
                                 android:src="@drawable/ic_safety"
                                 app:tint="@color/m3_primary_container" />
                         </FrameLayout>
-                        
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -380,14 +379,14 @@
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
-                        
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_chevron_right"
                             app:tint="@color/m3_on_surface_variant" />
                     </LinearLayout>
-                    
+
                     <!-- Check In -->
                     <LinearLayout
                         android:id="@+id/btn_check_in"
@@ -399,7 +398,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true">
-                        
+
                         <FrameLayout
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -412,7 +411,7 @@
                                 android:src="@drawable/ic_check"
                                 app:tint="@color/m3_primary_container" />
                         </FrameLayout>
-                        
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -433,14 +432,14 @@
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
-                        
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_chevron_right"
                             app:tint="@color/m3_on_surface_variant" />
                     </LinearLayout>
-                    
+
                     <!-- Emergency Contacts -->
                     <LinearLayout
                         android:id="@+id/btn_manage_contacts"
@@ -452,7 +451,7 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true">
-                        
+
                         <FrameLayout
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -465,7 +464,7 @@
                                 android:src="@drawable/ic_person"
                                 app:tint="@color/m3_primary_container" />
                         </FrameLayout>
-                        
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -486,12 +485,143 @@
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
-                        
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_chevron_right"
                             app:tint="@color/m3_on_surface_variant" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Safety Settings -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.SereneGuardian.CardView"
+                android:layout_marginBottom="16dp">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="Safety Settings"
+                        android:textColor="@color/m3_on_surface"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Background Protection Switch -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp"
+                        android:gravity="center_vertical">
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Background Protection"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Keep detection active always"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_background_protection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" android:layout_marginVertical="8dp" />
+
+                    <!-- Shake Detection Switch -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp"
+                        android:gravity="center_vertical">
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shake to SOS"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shake device to trigger alert"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_shake_detection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" android:layout_marginVertical="8dp" />
+
+                    <!-- Live Location Switch -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp"
+                        android:gravity="center_vertical">
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Include Live Location"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Send GPS link with SMS"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switch_live_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -527,184 +657,6 @@
                         android:textColor="@color/m3_on_surface_variant"
                         android:textSize="14sp"
                         android:lineSpacingExtra="4dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Safety History -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.SereneGuardian.CardView"
-                android:layout_marginBottom="24dp">
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-                    
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="16dp">
-                        
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/inter"
-                            android:text="Safety History"
-                            android:textColor="@color/m3_on_surface"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                            
-                        <TextView
-                            android:id="@+id/btn_view_all_history"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter"
-                            android:text="View All"
-                            android:textColor="@color/m3_primary_container"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:focusable="true" />
-                    </LinearLayout>
-                    
-                    <!-- Timeline Items -->
-                    <!-- Event 1 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="16dp">
-                        
-                        <FrameLayout
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_bg_secondary"
-                            android:backgroundTint="@color/m3_surface_container_lowest"
-                            android:padding="2dp">
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/circle_bg_secondary"
-                                android:backgroundTint="@color/m3_surface" />
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_check"
-                                app:tint="@color/m3_on_surface_variant" />
-                        </FrameLayout>
-                        
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="16dp"
-                            android:orientation="vertical"
-                            android:background="@drawable/rounded_bg_gray"
-                            android:backgroundTint="@color/m3_surface_container_low"
-                            android:padding="16dp">
-                            
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Checked In Safe"
-                                    android:textColor="@color/m3_on_surface"
-                                    android:textStyle="bold"
-                                    android:textSize="14sp" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Today, 2:30 PM"
-                                    android:textColor="@color/m3_on_surface_variant"
-                                    android:textSize="11sp" />
-                            </LinearLayout>
-                            
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Location: Downtown Office"
-                                android:textColor="@color/m3_on_surface_variant"
-                                android:textSize="12sp"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Event 2 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        
-                        <FrameLayout
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/circle_bg_secondary"
-                            android:backgroundTint="@color/m3_surface_container_lowest"
-                            android:padding="2dp">
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/circle_bg_secondary"
-                                android:backgroundTint="@color/m3_surface" />
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_safety"
-                                app:tint="@color/m3_on_surface_variant" />
-                        </FrameLayout>
-                        
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="16dp"
-                            android:orientation="vertical"
-                            android:background="@drawable/rounded_bg_gray"
-                            android:backgroundTint="@color/m3_surface_container_low"
-                            android:padding="16dp">
-                            
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Timer Completed"
-                                    android:textColor="@color/m3_on_surface"
-                                    android:textStyle="bold"
-                                    android:textSize="14sp" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Yesterday, 9:15 PM"
-                                    android:textColor="@color/m3_on_surface_variant"
-                                    android:textSize="11sp" />
-                            </LinearLayout>
-                            
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Evening run completed safely."
-                                android:textColor="@color/m3_on_surface_variant"
-                                android:textSize="12sp"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

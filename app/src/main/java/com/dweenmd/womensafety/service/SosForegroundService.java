@@ -19,16 +19,26 @@ import com.dweenmd.womensafety.sos.SosMessenger;
 import com.dweenmd.womensafety.ui.MainActivity;
 import com.github.tbouron.shakedetector.library.ShakeDetector;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.BatteryManager;
+
 public class SosForegroundService extends Service {
 
     private static final String TAG = "SosForegroundService";
     private boolean isRunning = false;
     private SosMessenger sosMessenger;
+    private SharedPreferences prefs;
     
     // Cooldown mechanism to prevent SMS spam on continuous shaking
     private boolean isOnCooldown = false;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private static final long COOLDOWN_MS = 10000; // 10 seconds cooldown
+
+    private android.content.BroadcastReceiver batteryReceiver;
+    private boolean lowBatteryAlertSent = false;
 
     @Nullable
     @Override
@@ -40,14 +50,54 @@ public class SosForegroundService extends Service {
     public void onCreate() {
         super.onCreate();
         sosMessenger = new SosMessenger(this);
+        prefs = getSharedPreferences("app_settings", Context.MODE_PRIVATE);
 
         ShakeDetector.create(this, () -> {
-            if (!isOnCooldown) {
+            boolean shakeEnabled = prefs.getBoolean("shakeDetection", true);
+            if (shakeEnabled && !isOnCooldown) {
                 Log.d(TAG, "Shake detected! Triggering SOS...");
                 triggerSos();
                 startCooldown();
-            } else {
-                Log.d(TAG, "Shake detected but on cooldown. Ignored.");
+            }
+        });
+        
+        registerBatteryReceiver();
+    }
+
+    private void registerBatteryReceiver() {
+        batteryReceiver = new android.content.BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                boolean autoNotify = prefs.getBoolean("autoNotify", false);
+                if (!autoNotify) return;
+
+                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+                float batteryPct = level * 100 / (float) scale;
+
+                if (batteryPct <= 15 && !lowBatteryAlertSent) {
+                    Log.d(TAG, "Low battery detected: " + batteryPct + "%. Sending alert.");
+                    sendLowBatteryAlert(batteryPct);
+                    lowBatteryAlertSent = true;
+                } else if (batteryPct > 20) {
+                    lowBatteryAlertSent = false; // Reset when charged
+                }
+            }
+        };
+        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    }
+
+    private void sendLowBatteryAlert(float pct) {
+        // Logic to send a subtle alert or share location once before phone dies
+        sosMessenger.shareLocationOnly(new SosMessenger.SosCallback() {
+            @Override
+            public void onSosTriggered(String status) {
+                Log.d(TAG, "Low battery location shared: " + status);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.e(TAG, "Low battery alert failed: " + error);
             }
         });
     }
@@ -162,6 +212,10 @@ public class SosForegroundService extends Service {
         if (powerButtonReceiver != null) {
             unregisterReceiver(powerButtonReceiver);
             powerButtonReceiver = null;
+        }
+        if (batteryReceiver != null) {
+            unregisterReceiver(batteryReceiver);
+            batteryReceiver = null;
         }
     }
 }

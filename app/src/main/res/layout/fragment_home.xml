@@ -100,10 +100,11 @@
 
             <!-- Greeting -->
             <TextView
+                android:id="@+id/tv_greeting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Good evening, Dween"
+                android:text="Hello, Safe Guardian"
                 android:textColor="@color/m3_on_background"
                 android:textSize="28sp"
                 android:textStyle="bold" />
@@ -119,6 +120,7 @@
 
             <!-- Status Card -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_status_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -134,11 +136,13 @@
                     android:gravity="center_vertical">
                     
                     <FrameLayout
+                        android:id="@+id/iv_status_icon_bg"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@drawable/circle_bg_secondary"
                         android:backgroundTint="#33FFFFFF">
                         <ImageView
+                            android:id="@+id/iv_status_icon"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:layout_gravity="center"
@@ -153,10 +157,11 @@
                         android:layout_marginStart="16dp">
                         
                         <TextView
+                            android:id="@+id/tv_status_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter"
-                            android:text="You're Safe"
+                            android:text="Loading..."
                             android:textColor="@color/m3_on_primary_container"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -168,15 +173,17 @@
                             android:layout_marginTop="4dp"
                             android:gravity="center_vertical">
                             <View
+                                android:id="@+id/view_status_indicator"
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
                                 android:background="@drawable/green_clr" />
                             <TextView
+                                android:id="@+id/tv_status_desc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:fontFamily="@font/inter"
-                                android:text="Protection active"
+                                android:text="Checking protection..."
                                 android:textColor="#CCD8CEFF"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -210,11 +217,14 @@
 
                 <!-- Share Location -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_share_location_home"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    style="@style/Widget.SereneGuardian.CardView.Standard">
+                    style="@style/Widget.SereneGuardian.CardView.Standard"
+                    android:clickable="true"
+                    android:focusable="true">
                     
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -246,11 +256,14 @@
 
                 <!-- Safety Timer -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_safety_timer_home"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    style="@style/Widget.SereneGuardian.CardView.Standard">
+                    style="@style/Widget.SereneGuardian.CardView.Standard"
+                    android:clickable="true"
+                    android:focusable="true">
                     
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -293,10 +306,13 @@
                 android:textStyle="bold" />
                 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_primary_contact_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                style="@style/Widget.SereneGuardian.CardView.Standard">
+                style="@style/Widget.SereneGuardian.CardView.Standard"
+                android:clickable="true"
+                android:focusable="true">
                 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -306,6 +322,7 @@
                     android:gravity="center_vertical">
                     
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iv_contact_avatar_home"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:src="@drawable/ic_person"
@@ -320,23 +337,26 @@
                         android:layout_marginStart="16dp"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/tv_contact_name_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter"
-                            android:text="Sarah Rahman"
+                            android:text="No contact set"
                             android:textColor="@color/m3_on_surface"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                         <TextView
+                            android:id="@+id/tv_contact_relation_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter"
-                            android:text="Sister"
+                            android:text="Set emergency contact"
                             android:textColor="@color/m3_on_surface_variant"
                             android:textSize="14sp" />
                     </LinearLayout>
                     
                     <ImageButton
+                        android:id="@+id/btn_contact_call_home"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/circle_bg_secondary"
