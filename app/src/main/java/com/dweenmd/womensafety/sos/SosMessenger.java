@@ -31,6 +31,12 @@ public class SosMessenger {
     }
 
     public void triggerSos(SosCallback callback) {
+        // Double check permissions before proceeding
+        if (androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.SEND_SMS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            callback.onFailure("SMS Permission not granted. Action aborted.");
+            return;
+        }
+
         // Call the emergency number synchronously with the user action to avoid Android 10+ background start restrictions
         callEmergencyNumber();
 

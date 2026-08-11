@@ -98,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
         checkAndStartService();
     }
 
+    @Override
+    public void onBackPressed() {
+        androidx.drawerlayout.widget.DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer != null && drawer.isDrawerOpen(androidx.core.view.GravityCompat.START)) {
+            drawer.closeDrawer(androidx.core.view.GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void setupNavHeader(com.google.android.material.navigation.NavigationView navView, NavController navController) {
         View headerView = navView.getHeaderView(0);
         if (headerView == null) return;

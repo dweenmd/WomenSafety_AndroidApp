@@ -41,6 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
             uri -> {
                 if (uri != null) {
                     selectedImageUri = uri;
+                    ivAvatar.setPadding(0, 0, 0, 0);
                     Glide.with(this).load(uri).circleCrop().into(ivAvatar);
                 }
             }
@@ -100,6 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
             etPhone.setText(user.getPhoneNumber() != null ? user.getPhoneNumber() : "");
 
             if (user.getPhotoUrl() != null) {
+                ivAvatar.setPadding(0, 0, 0, 0);
                 Glide.with(this)
                         .load(user.getPhotoUrl())
                         .circleCrop()
@@ -147,25 +149,33 @@ public class EditProfileActivity extends AppCompatActivity {
         setLoading(true);
 
         if (selectedImageUri != null) {
-            // Upload image first
+            // Upload image first using stream for better compatibility
             StorageReference profileRef = storage.getReference()
                     .child("users")
                     .child(user.getUid())
-                    .child("profile.jpg");
+                    .child("profile_" + System.currentTimeMillis() + ".jpg");
 
-            profileRef.putFile(selectedImageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            updateAuthAndFirestore(user, newName, newPhone, newDob, newGender, uri);
-                        }).addOnFailureListener(e -> {
+            try {
+                java.io.InputStream stream = getContentResolver().openInputStream(selectedImageUri);
+                if (stream == null) throw new java.io.IOException("Stream is null");
+
+                profileRef.putStream(stream)
+                        .addOnSuccessListener(taskSnapshot -> {
+                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                updateAuthAndFirestore(user, newName, newPhone, newDob, newGender, uri);
+                            });
+                        })
+                        .addOnFailureListener(e -> {
                             setLoading(false);
-                            Toast.makeText(this, "Failed to get image url: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         });
-                    })
-                    .addOnFailureListener(e -> {
-                        setLoading(false);
-                        Toast.makeText(this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+            } catch (java.io.FileNotFoundException e) {
+                setLoading(false);
+                Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
+            } catch (java.io.IOException e) {
+                setLoading(false);
+                Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
+            }
         } else {
             updateAuthAndFirestore(user, newName, newPhone, newDob, newGender, user.getPhotoUrl());
         }

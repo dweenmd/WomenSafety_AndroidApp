@@ -55,37 +55,51 @@ public class VerificationActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) return;
         
-        // Email Verification
+        boolean isEmailProvider = false;
+        boolean isGoogleProvider = false;
+        boolean isPhoneProvider = false;
+
+        for (com.google.firebase.auth.UserInfo userInfo : user.getProviderData()) {
+            String pid = userInfo.getProviderId();
+            if (pid.equals("google.com")) isGoogleProvider = true;
+            else if (pid.equals("password")) isEmailProvider = true;
+            else if (pid.equals("phone")) isPhoneProvider = true;
+        }
+
+        // Email Verification Logic
+        // user.isEmailVerified() is the source of truth, but we can override UI 
+        // to show "Verified" if signed in via Email/Google as requested.
+        boolean emailVerified = user.isEmailVerified() || isGoogleProvider || isEmailProvider;
+        
         setupVerificationItem(findViewById(R.id.verify_email), android.R.drawable.ic_dialog_email, 
                 "Email Verification", 
-                user.isEmailVerified() ? "Verified" : "Tap to send verification email", 
-                user.isEmailVerified(),
+                emailVerified ? "Verified (" + user.getEmail() + ")" : "Not Verified", 
+                emailVerified,
                 () -> {
-                    if (!user.isEmailVerified()) {
+                    if (!emailVerified && user.getEmail() != null) {
                         user.sendEmailVerification().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(this, "Failed to send email. Try again later.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Verification email sent", Toast.LENGTH_LONG).show();
                             }
                         });
-                    } else {
-                        Toast.makeText(this, "Email is already verified", Toast.LENGTH_SHORT).show();
+                    } else if (user.getEmail() == null) {
+                        Toast.makeText(this, "Please add an email to your account", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        // Phone Verification
-        boolean hasPhone = user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty();
+        // Phone Verification Logic
+        // Verified if signed in via phone or has a phone number linked
+        boolean phoneVerified = isPhoneProvider || (user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty());
+        
         setupVerificationItem(findViewById(R.id.verify_phone), android.R.drawable.ic_menu_call, 
                 "Phone Verification", 
-                hasPhone ? "Verified (" + user.getPhoneNumber() + ")" : "Phone number not linked", 
-                hasPhone,
+                phoneVerified ? "Verified (" + user.getPhoneNumber() + ")" : "Not Linked", 
+                phoneVerified,
                 () -> {
-                    if (!hasPhone) {
-                        // Redirect to Phone Login/Linking activity
+                    if (!phoneVerified) {
                         startActivity(new android.content.Intent(this, com.dweenmd.womensafety.ui.auth.PhoneLoginActivity.class));
                     } else {
-                        Toast.makeText(this, "Phone is already verified", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Phone is verified", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

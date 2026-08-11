@@ -3,8 +3,12 @@ package com.dweenmd.womensafety.service;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,12 +23,6 @@ import com.dweenmd.womensafety.sos.SosMessenger;
 import com.dweenmd.womensafety.ui.MainActivity;
 import com.github.tbouron.shakedetector.library.ShakeDetector;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.os.BatteryManager;
-
 public class SosForegroundService extends Service {
 
     private static final String TAG = "SosForegroundService";
@@ -32,13 +30,18 @@ public class SosForegroundService extends Service {
     private SosMessenger sosMessenger;
     private SharedPreferences prefs;
     
-    // Cooldown mechanism to prevent SMS spam on continuous shaking
     private boolean isOnCooldown = false;
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private static final long COOLDOWN_MS = 10000; // 10 seconds cooldown
+    private static final long COOLDOWN_MS = 10000;
 
     private android.content.BroadcastReceiver batteryReceiver;
     private boolean lowBatteryAlertSent = false;
+
+    private android.content.BroadcastReceiver powerButtonReceiver;
+    private int powerButtonPressCount = 0;
+    private long lastPowerButtonPressTime = 0;
+    private static final int POWER_BUTTON_PRESS_THRESHOLD = 3;
+    private static final long POWER_BUTTON_TIME_WINDOW = 3000;
 
     @Nullable
     @Override
@@ -76,19 +79,17 @@ public class SosForegroundService extends Service {
                 float batteryPct = level * 100 / (float) scale;
 
                 if (batteryPct <= 15 && !lowBatteryAlertSent) {
-                    Log.d(TAG, "Low battery detected: " + batteryPct + "%. Sending alert.");
-                    sendLowBatteryAlert(batteryPct);
+                    sendLowBatteryAlert();
                     lowBatteryAlertSent = true;
                 } else if (batteryPct > 20) {
-                    lowBatteryAlertSent = false; // Reset when charged
+                    lowBatteryAlertSent = false;
                 }
             }
         };
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
-    private void sendLowBatteryAlert(float pct) {
-        // Logic to send a subtle alert or share location once before phone dies
+    private void sendLowBatteryAlert() {
         sosMessenger.shareLocationOnly(new SosMessenger.SosCallback() {
             @Override
             public void onSosTriggered(String status) {
@@ -121,12 +122,6 @@ public class SosForegroundService extends Service {
         });
     }
 
-    private android.content.BroadcastReceiver powerButtonReceiver;
-    private int powerButtonPressCount = 0;
-    private long lastPowerButtonPressTime = 0;
-    private static final int POWER_BUTTON_PRESS_THRESHOLD = 3; // Trigger after 3 presses
-    private static final long POWER_BUTTON_TIME_WINDOW = 3000; // 3 seconds window
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null && "stop".equalsIgnoreCase(intent.getAction())) {
@@ -135,39 +130,42 @@ public class SosForegroundService extends Service {
                 stopSelf();
                 isRunning = false;
             }
-        } else {
-            Intent notificationIntent = new Intent(this, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
-
-            Notification.Builder builder;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                builder = new Notification.Builder(this, WomenSafetyApp.CHANNEL_ID);
-            } else {
-                builder = new Notification.Builder(this);
-            }
-
-            Notification notification = builder
-                    .setContentTitle("Women Safety Active")
-                    .setContentText("Background protection is running. Shake or press Power button 3x to trigger SOS.")
-                    .setSmallIcon(android.R.drawable.ic_secure)
-                    .setContentIntent(pendingIntent)
-                    .setOngoing(true)
-                    .build();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                int serviceType = ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    serviceType |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
-                }
-                startForeground(115, notification, serviceType);
-            } else {
-                startForeground(115, notification);
-            }
-
-            ShakeDetector.start();
-            registerPowerButtonReceiver();
-            isRunning = true;
+            return START_NOT_STICKY;
         }
+
+        if (isRunning) return START_STICKY;
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+
+        Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, WomenSafetyApp.CHANNEL_ID);
+        } else {
+            builder = new Notification.Builder(this);
+        }
+
+        Notification notification = builder
+                .setContentTitle("Women Safety Active")
+                .setContentText("Background protection is running. Shake or press Power button 3x for SOS.")
+                .setSmallIcon(android.R.drawable.ic_secure)
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .build();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            int serviceType = ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                serviceType |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
+            }
+            startForeground(115, notification, serviceType);
+        } else {
+            startForeground(115, notification);
+        }
+
+        ShakeDetector.start();
+        registerPowerButtonReceiver();
+        isRunning = true;
 
         return START_STICKY;
     }
@@ -185,18 +183,17 @@ public class SosForegroundService extends Service {
                             powerButtonPressCount++;
                             if (powerButtonPressCount >= POWER_BUTTON_PRESS_THRESHOLD) {
                                 if (!isOnCooldown) {
-                                    Log.d(TAG, "Power button sequence detected! Triggering SOS...");
                                     triggerSos();
                                     startCooldown();
                                 }
-                                powerButtonPressCount = 0; // Reset
+                                powerButtonPressCount = 0;
                             }
                         }
                         lastPowerButtonPressTime = currentTime;
                     }
                 }
             };
-            android.content.IntentFilter filter = new android.content.IntentFilter();
+            IntentFilter filter = new IntentFilter();
             filter.addAction(Intent.ACTION_SCREEN_ON);
             filter.addAction(Intent.ACTION_SCREEN_OFF);
             registerReceiver(powerButtonReceiver, filter);
@@ -217,5 +214,6 @@ public class SosForegroundService extends Service {
             unregisterReceiver(batteryReceiver);
             batteryReceiver = null;
         }
+        isRunning = false;
     }
 }
