@@ -61,7 +61,23 @@
             android:name=".ui.profile.EditProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.WomenSafety" />
-            
+
+        <activity
+            android:name=".ui.profile.VerificationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.profile.NotificationsSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.profile.AppPreferencesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.profile.PermissionsActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="false" />

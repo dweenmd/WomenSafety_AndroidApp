@@ -183,6 +183,25 @@ public class AuthRepository {
                 });
     }
 
+    public void deleteAccount(AuthCallback callback) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            db.collection("users").document(uid).delete().addOnCompleteListener(task -> {
+                user.delete().addOnCompleteListener(deleteTask -> {
+                    if (deleteTask.isSuccessful()) {
+                        currentUserLiveData.setValue(null);
+                        callback.onSuccess(null);
+                    } else {
+                        callback.onFailure(deleteTask.getException());
+                    }
+                });
+            });
+        } else {
+            callback.onFailure(new Exception("No user signed in"));
+        }
+    }
+
     public interface AuthCallback {
         void onSuccess(FirebaseUser user);
         void onFailure(Exception e);

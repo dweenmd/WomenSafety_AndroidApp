@@ -258,7 +258,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ACCOUNT"
+                    android:text="Account &amp; Security"
                     android:fontFamily="@font/inter"
                     android:textColor="@color/m3_on_surface_variant"
                     android:textSize="12sp"
@@ -285,7 +285,7 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- APP SECTION -->
+            <!-- APP PREFERENCES SECTION -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,7 +295,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="APP"
+                    android:text="App Preferences"
                     android:fontFamily="@font/inter"
                     android:textColor="@color/m3_on_surface_variant"
                     android:textSize="12sp"
@@ -320,7 +320,7 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- PRIVACY SECTION -->
+            <!-- SYSTEM & PERMISSIONS SECTION -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -330,7 +330,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PRIVACY"
+                    android:text="Settings &amp; Permissions"
                     android:fontFamily="@font/inter"
                     android:textColor="@color/m3_on_surface_variant"
                     android:textSize="12sp"
@@ -348,9 +348,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <include layout="@layout/item_profile_menu" android:id="@+id/menu_privacy_settings" />
+                        <include layout="@layout/item_profile_menu" android:id="@+id/menu_app_settings" />
                         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" />
-                        <include layout="@layout/item_profile_menu" android:id="@+id/menu_location_permissions" />
+                        <include layout="@layout/item_profile_menu" android:id="@+id/menu_permissions" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>

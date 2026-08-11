@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/m3_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/m3_surface"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_notifications"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Notification Settings"
+            app:navigationIcon="@drawable/ic_chevron_right"
+            app:navigationIconTint="@color/m3_on_surface" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.SereneGuardian.CardView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <!-- SOS Sound -->
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_sos_sound"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Play Sound on SOS"
+                        android:padding="16dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" />
+
+                    <!-- Vibrate -->
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_sos_vibrate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vibrate on SOS"
+                        android:padding="16dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" />
+
+                    <!-- Flashlight -->
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_sos_flashlight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Flashlight Alert"
+                        android:padding="16dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_system_notification_settings"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="System Notification Settings" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

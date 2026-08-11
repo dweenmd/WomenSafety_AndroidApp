@@ -97,18 +97,18 @@ public class ProfileFragment extends Fragment {
         btnEditAvatar.setOnClickListener(editProfileListener);
         btnCompleteProfile.setOnClickListener(editProfileListener);
 
-        // ACCOUNT
-        setupMenuItem(view.findViewById(R.id.menu_personal_info), android.R.drawable.ic_menu_info_details, "Personal Information", "", R.color.tint_account_bg, R.color.tint_account_icon, v -> showPersonalInfoBottomSheet());
-        setupMenuItem(view.findViewById(R.id.menu_security), android.R.drawable.ic_lock_idle_lock, "Password & Security", "", R.color.tint_account_bg, R.color.tint_account_icon, v -> startActivity(new Intent(requireContext(), SecurityActivity.class)));
-        setupMenuItem(view.findViewById(R.id.menu_verification), android.R.drawable.checkbox_on_background, "Verification", "", R.color.tint_account_bg, R.color.tint_account_icon, v -> Toast.makeText(requireContext(), "Verification settings", Toast.LENGTH_SHORT).show());
+        // ACCOUNT & SECURITY
+        setupMenuItem(view.findViewById(R.id.menu_personal_info), android.R.drawable.ic_menu_info_details, "Personal Information", "View your profile details", R.color.tint_account_bg, R.color.tint_account_icon, v -> showPersonalInfoBottomSheet());
+        setupMenuItem(view.findViewById(R.id.menu_security), android.R.drawable.ic_lock_idle_lock, "Password & Security", "Change password, view login history", R.color.tint_account_bg, R.color.tint_account_icon, v -> startActivity(new Intent(requireContext(), SecurityActivity.class)));
+        setupMenuItem(view.findViewById(R.id.menu_verification), android.R.drawable.checkbox_on_background, "Verification", "Email and phone status", R.color.tint_account_bg, R.color.tint_account_icon, v -> startActivity(new Intent(requireContext(), VerificationActivity.class)));
 
-        // APP
-        setupMenuItem(view.findViewById(R.id.menu_notifications), android.R.drawable.ic_popup_reminder, "Notifications", "", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "Notifications", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_app_preferences), android.R.drawable.ic_menu_preferences, "App Preferences", "", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "App Preferences", Toast.LENGTH_SHORT).show());
+        // APP PREFERENCES
+        setupMenuItem(view.findViewById(R.id.menu_notifications), R.drawable.ic_notifications, "Notifications", "Manage app alerts and sounds", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> startActivity(new Intent(requireContext(), NotificationsSettingsActivity.class)));
+        setupMenuItem(view.findViewById(R.id.menu_app_preferences), android.R.drawable.ic_menu_gallery, "Theme & Language", "Appearance and localization", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> startActivity(new Intent(requireContext(), AppPreferencesActivity.class)));
 
-        // PRIVACY
-        setupMenuItem(view.findViewById(R.id.menu_privacy_settings), android.R.drawable.ic_secure, "Settings", "", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PrivacySettingsActivity.class)));
-        setupMenuItem(view.findViewById(R.id.menu_location_permissions), android.R.drawable.ic_menu_mylocation, "Permissions", "", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PrivacySettingsActivity.class)));
+        // SYSTEM & PERMISSIONS
+        setupMenuItem(view.findViewById(R.id.menu_app_settings), android.R.drawable.ic_menu_preferences, "General Settings", "App-wide system settings", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), SettingsActivity.class)));
+        setupMenuItem(view.findViewById(R.id.menu_permissions), android.R.drawable.ic_menu_mylocation, "Permissions", "Manage required system access", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PermissionsActivity.class)));
 
         // ACTIONS
         view.findViewById(R.id.btn_logout).setOnClickListener(v -> showLogoutDialog());
@@ -163,7 +163,23 @@ public class ProfileFragment extends Fragment {
                 .setTitle("Delete your account?")
                 .setMessage("This action is permanent and cannot be undone. All your data, emergency contacts, and settings will be permanently erased.")
                 .setPositiveButton("Delete Account", (dialog, which) -> {
-                    Toast.makeText(requireContext(), "Account deleted (dummy)", Toast.LENGTH_SHORT).show();
+                    authRepository.deleteAccount(new AuthRepository.AuthCallback() {
+                        @Override
+                        public void onSuccess(FirebaseUser user) {
+                            if (isAdded()) {
+                                Toast.makeText(requireContext(), "Account deleted successfully", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(requireContext(), LoginActivity.class));
+                                requireActivity().finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            if (isAdded()) {
+                                Toast.makeText(requireContext(), "Failed to delete account: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
