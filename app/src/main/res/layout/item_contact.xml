@@ -23,6 +23,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_person"
+                android:importantForAccessibility="no"
                 app:tint="@color/premium_login_text_secondary" />
         </FrameLayout>
 
@@ -63,19 +64,21 @@
 
         <ImageButton
             android:id="@+id/btn_call_other"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_premium_social_btn"
             android:src="@android:drawable/ic_menu_call"
+            android:contentDescription="@string/contact_action_call"
             app:tint="@color/premium_login_primary"
             android:layout_marginEnd="8dp" />
 
         <ImageButton
             android:id="@+id/btn_menu_other"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_more"
+            android:contentDescription="@string/cd_contact_menu"
             app:tint="@color/premium_login_text_secondary" />
     </LinearLayout>
 </FrameLayout>

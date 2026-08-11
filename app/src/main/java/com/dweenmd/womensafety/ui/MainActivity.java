@@ -42,21 +42,30 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void checkAndRequestPermissions() {
+        java.util.List<String> permissions = new java.util.ArrayList<>();
+        
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            java.util.List<String> permissions = new java.util.ArrayList<>();
             if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
                 permissions.add(android.Manifest.permission.POST_NOTIFICATIONS);
             }
-            if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                permissions.add(android.Manifest.permission.RECORD_AUDIO);
+        }
+        
+        String[] requiredPermissions = {
+            android.Manifest.permission.RECORD_AUDIO,
+            android.Manifest.permission.CALL_PHONE,
+            android.Manifest.permission.SEND_SMS,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        };
+        
+        for (String perm : requiredPermissions) {
+            if (androidx.core.content.ContextCompat.checkSelfPermission(this, perm) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                permissions.add(perm);
             }
-            if (!permissions.isEmpty()) {
-                androidx.core.app.ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), REQUEST_NOTIFICATION_PERMISSION);
-            }
-        } else {
-            if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                androidx.core.app.ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO}, REQUEST_NOTIFICATION_PERMISSION);
-            }
+        }
+        
+        if (!permissions.isEmpty()) {
+            androidx.core.app.ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), REQUEST_NOTIFICATION_PERMISSION);
         }
     }
     

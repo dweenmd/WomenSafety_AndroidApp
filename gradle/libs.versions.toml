@@ -27,6 +27,9 @@ lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata"
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

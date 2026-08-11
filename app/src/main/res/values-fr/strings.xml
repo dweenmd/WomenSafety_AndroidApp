@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relationship_options">
+        <item>Parent</item>
+        <item>Frère / Sœur</item>
+        <item>Ami(e)</item>
+        <item>Proche</item>
+        <item>Professeur</item>
+        <item>Partenaire</item>
+        <item>Autre</item>
+    </string-array>
+    <string name="app_name">Sécurité des Femmes</string>
+    <string name="title_home">Accueil</string>
+    <string name="caller_dad">Papa</string>
+    <string name="incoming_call">Appel entrant...</string>
+    <string name="login_welcome">Bon retour 👋</string>
+    <string name="login_subtitle">Connectez-vous pour continuer</string>
+    <string name="login_forgot_password">Mot de passe oublié?</string>
+    <string name="login_btn_sign_in">Se connecter →</string>
+    <string name="login_or">OU</string>
+    <string name="login_google">Continuer avec Google</string>
+    <string name="login_phone">Continuer avec Téléphone</string>
+    <string name="login_no_account">Pas de compte? </string>
+    <string name="login_create_one">Créer un compte</string>
+    <string name="login_footer">Politique de confidentialité • Conditions d\'utilisation</string>
+    <string name="otp_title">Vérifier OTP</string>
+    <string name="otp_subtitle">Entrez le code à 6 chiffres envoyé.</string>
+    <string name="otp_btn_verify">Vérifier et Connecter →</string>
+    <string name="phone_login_title">Connexion Mobile</string>
+    <string name="phone_login_subtitle">Nous enverrons un SMS avec un code.</string>
+    <string name="phone_login_btn_send">Envoyer OTP →</string>
+    <string name="register_title">Créer un compte</string>
+    <string name="register_subtitle">Rejoignez-nous</string>
+    <string name="register_btn_register">S\'inscrire →</string>
+    <string name="register_has_account">Vous avez déjà un compte? </string>
+    <string name="register_login_here">Connectez-vous ici</string>
+    <string name="splash_subtitle">Assurer la Sécurité</string>
+    <string name="contact_form_add_title">Ajouter un Contact</string>
+    <string name="contact_form_edit_title">Modifier le Contact</string>
+    <string name="contact_form_relationship">Relation</string>
+    <string name="contact_form_priority">Priorité</string>
+    <string name="contact_form_primary">Principal</string>
+    <string name="contact_form_secondary">Secondaire</string>
+    <string name="contact_form_btn_save">Enregistrer le Contact</string>
+    <string name="contacts_title">Contacts d\'Urgence</string>
+    <string name="contacts_subtitle">Personnes à contacter en cas de besoin.</string>
+    <string name="contacts_btn_add">Ajouter un Contact</string>
+    <string name="home_protection_active">Protection Active</string>
+    <string name="home_protection_inactive">Protection Inactive</string>
+    <string name="home_battery_checking">Position activée | Batterie : Vérification...</string>
+    <string name="home_battery_status">Position activée | Batterie : %1$d%%</string>
+    <string name="home_contacts_added">3 contacts ajoutés</string>
+    <string name="home_contacts_count_ready">%1$d contact(s) prêt(s)</string>
+    <string name="home_manage_contacts">Gérer</string>
+    <string name="home_btn_sos">SOS</string>
+    <string name="home_quick_fake_call">Faux Appel</string>
+    <string name="home_quick_record">Enregistrer</string>
+    <string name="home_quick_live_link">Lien en Direct</string>
+    <string name="profile_title">Mon Profil</string>
+    <string name="profile_btn_edit">Modifier Profil</string>
+    <string name="profile_section_account">COMPTE</string>
+    <string name="profile_section_safety">SÉCURITÉ</string>
+    <string name="profile_section_app">APPLICATION</string>
+    <string name="profile_btn_sign_out">Se déconnecter</string>
+    <string name="safety_title">Paramètres de Sécurité</string>
+    <string name="safety_bg_protection">Protection en arrière-plan</string>
+    <string name="safety_bg_protection_desc">Garder l\'application active en arrière-plan.</string>
+    <string name="safety_live_location">Partage de position</string>
+    <string name="safety_live_location_desc">Envoyer le lien Maps lors du SOS.</string>
+    <string name="safety_shake_sos">Secouer pour SOS</string>
+    <string name="safety_shake_sos_desc">Déclencher SOS en secouant le téléphone.</string>
+    <string name="safety_low_battery">Alerte batterie faible</string>
+    <string name="safety_low_battery_desc">Notifier si la batterie est inférieure à 15%.</string>
+    <string name="safety_silent_sos">Mode SOS Silencieux</string>
+    <string name="safety_silent_sos_desc">SOS sans son ni vibration.</string>
+    <string name="safety_language_bangla">Langue (Bengali)</string>
+    <string name="safety_language_bangla_desc">Changer la langue (Redémarrage requis).</string>
+    <string name="contact_primary_badge">CONTACT PRINCIPAL</string>
+    <string name="contact_action_call">Appeler</string>
+    <string name="contact_action_message">Message</string>
+    <string name="placeholder_title">Titre</string>
+    <string name="placeholder_subtitle">Sous-titre</string>
+</resources>

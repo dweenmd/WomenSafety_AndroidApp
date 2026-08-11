@@ -25,6 +25,8 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="32dp"
                 android:src="@drawable/logo"
+                android:contentDescription="@string/app_name"
+                android:importantForAccessibility="no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Create Account"
+                android:text="@string/register_title"
                 android:textColor="@color/premium_login_text_main"
                 android:textSize="28sp"
                 android:textStyle="bold"
@@ -47,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Join us to start your journey"
+                android:text="@string/register_subtitle"
                 android:textColor="@color/premium_login_text_secondary"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -195,7 +197,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Register  →"
+                        android:text="@string/register_btn_register"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -229,7 +231,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Already have an account? "
+                    android:text="@string/register_has_account"
                     android:textColor="@color/premium_login_text_secondary"
                     android:textSize="14sp" />
                 
@@ -237,7 +239,9 @@
                     android:id="@+id/tvLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Login here"
+                    android:minHeight="48dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/register_login_here"
                     android:textColor="@color/premium_login_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />

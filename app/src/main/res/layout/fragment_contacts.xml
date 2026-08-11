@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Emergency Contacts"
+            android:text="@string/contacts_title"
             android:textColor="@color/premium_login_text_main"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -26,7 +26,7 @@
             android:id="@+id/tv_contacts_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="People who can be contacted when you need help."
+            android:text="@string/contacts_subtitle"
             android:textColor="@color/premium_login_text_secondary"
             android:textSize="14sp"
             android:layout_marginTop="4dp"
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Add Emergency Contact"
+                    android:text="@string/contacts_btn_add"
                     android:textColor="@color/premium_login_primary"
                     android:textStyle="bold"
                     android:textSize="16sp" />

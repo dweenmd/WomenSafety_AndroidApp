@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relationship_options">
+        <item>माता-पिता</item>
+        <item>भाई / बहन</item>
+        <item>मित्र</item>
+        <item>रिश्तेदार</item>
+        <item>शिक्षक</item>
+        <item>साथी</item>
+        <item>अन्य</item>
+    </string-array>
+    <string name="app_name">महिला सुरक्षा</string>
+    <string name="title_home">होम</string>
+    <string name="caller_dad">पापा</string>
+    <string name="incoming_call">इनकमिंग कॉल...</string>
+    <string name="login_welcome">वापसी पर स्वागत है 👋</string>
+    <string name="login_subtitle">जारी रखने के लिए साइन इन करें</string>
+    <string name="login_forgot_password">पासवर्ड भूल गए?</string>
+    <string name="login_btn_sign_in">साइन इन  →</string>
+    <string name="login_or">या</string>
+    <string name="login_google">Google के साथ जारी रखें</string>
+    <string name="login_phone">फोन के साथ जारी रखें</string>
+    <string name="login_no_account">अकाउंट नहीं है? </string>
+    <string name="login_create_one">नया बनाएँ</string>
+    <string name="login_footer">गोपनीयता नीति • सेवा की शर्तें</string>
+    <string name="otp_title">OTP सत्यापित करें</string>
+    <string name="otp_subtitle">अपने फोन पर भेजा गया 6-अंकीय कोड दर्ज करें।</string>
+    <string name="otp_btn_verify">सत्यापित करें और लॉगिन करें  →</string>
+    <string name="phone_login_title">मोबाइल लॉगिन</string>
+    <string name="phone_login_subtitle">हम एक पुष्टिकरण कोड के साथ SMS भेजेंगे।</string>
+    <string name="phone_login_btn_send">OTP भेजें  →</string>
+    <string name="register_title">खाता बनाएं</string>
+    <string name="register_subtitle">अपनी यात्रा शुरू करने के लिए हमसे जुड़ें</string>
+    <string name="register_btn_register">रजिस्टर  →</string>
+    <string name="register_has_account">क्या आपके पास पहले से खाता है? </string>
+    <string name="register_login_here">यहां लॉगिन करें</string>
+    <string name="splash_subtitle">सुरक्षा सुनिश्चित करना</string>
+    <string name="contact_form_add_title">आपातकालीन संपर्क जोड़ें</string>
+    <string name="contact_form_edit_title">संपर्क संपादित करें</string>
+    <string name="contact_form_relationship">रिश्ता</string>
+    <string name="contact_form_priority">प्राथमिकता</string>
+    <string name="contact_form_primary">प्राथमिक</string>
+    <string name="contact_form_secondary">माध्यमिक</string>
+    <string name="contact_form_btn_save">संपर्क सहेजें</string>
+    <string name="contacts_title">आपातकालीन संपर्क</string>
+    <string name="contacts_subtitle">लोग जिन्हें मदद की आवश्यकता होने पर संपर्क किया जा सकता है।</string>
+    <string name="contacts_btn_add">आपातकालीन संपर्क जोड़ें</string>
+    <string name="home_protection_active">सुरक्षा सक्रिय</string>
+    <string name="home_protection_inactive">सुरक्षा निष्क्रिय</string>
+    <string name="home_battery_checking">स्थान चालू | बैटरी: जांची जा रही है...</string>
+    <string name="home_battery_status">स्थान चालू | बैटरी: %1$d%%</string>
+    <string name="home_contacts_added">3 संपर्क जोड़े गए</string>
+    <string name="home_contacts_count_ready">%1$d संपर्क तैयार हैं</string>
+    <string name="home_manage_contacts">प्रबंधित करें</string>
+    <string name="home_btn_sos">SOS</string>
+    <string name="home_quick_fake_call">फेक कॉल</string>
+    <string name="home_quick_record">रिकॉर्ड</string>
+    <string name="home_quick_live_link">लाइव लिंक</string>
+    <string name="profile_title">मेरी प्रोफाइल</string>
+    <string name="profile_btn_edit">प्रोफाइल संपादित करें</string>
+    <string name="profile_section_account">खाता</string>
+    <string name="profile_section_safety">सुरक्षा</string>
+    <string name="profile_section_app">ऐप</string>
+    <string name="profile_btn_sign_out">साइन आउट</string>
+    <string name="safety_title">सुरक्षा सेटिंग्स</string>
+    <string name="safety_bg_protection">बैकग्राउंड सुरक्षा</string>
+    <string name="safety_bg_protection_desc">ट्रिगर सुनने के लिए ऐप को बैकग्राउंड में चालू रखें।</string>
+    <string name="safety_live_location">लाइव लोकेशन शामिल करें</string>
+    <string name="safety_live_location_desc">SOS ट्रिगर होने पर अपना वर्तमान Google मैप्स लिंक भेजें।</string>
+    <string name="safety_shake_sos">हिलाने पर SOS</string>
+    <string name="safety_shake_sos_desc">अपने फोन को जोर से हिलाकर SOS ट्रिगर करें।</string>
+    <string name="safety_low_battery">लो बैटरी चेतावनी</string>
+    <string name="safety_low_battery_desc">बैटरी 15% से कम होने पर संपर्कों को सूचित करें।</string>
+    <string name="safety_silent_sos">साइलेंट SOS मोड</string>
+    <string name="safety_silent_sos_desc">बिना कंपन या आवाज के SOS ट्रिगर करें।</string>
+    <string name="safety_language_bangla">बांग्ला भाषा (Bangla)</string>
+    <string name="safety_language_bangla_desc">ऐप की भाषा बंगाली में बदलें (पुनरारंभ आवश्यक)।</string>
+    <string name="contact_primary_badge">प्राथमिक संपर्क</string>
+    <string name="contact_action_call">कॉल</string>
+    <string name="contact_action_message">संदेश</string>
+    <string name="placeholder_title">शीर्षक</string>
+    <string name="placeholder_subtitle">उपशीर्षक</string>
+</resources>

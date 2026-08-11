@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/premium_login_bg"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_security"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/premium_login_bg"
+        app:title="Password &amp; Security"
+        app:titleTextColor="@color/premium_login_text_main" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LOGIN &amp; RECOVERY"
+                android:textColor="@color/premium_login_text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_premium_input_normal"
+                android:layout_marginBottom="24dp">
+                
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_change_password" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+                
+                <!-- 2FA Switch Item -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="16dp">
+
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_premium_input_normal"
+                        android:layout_marginEnd="16dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_secure"
+                            app:tint="@color/premium_login_primary" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Two-Factor Authentication"
+                            android:textColor="@color/premium_login_text_main"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Add an extra layer of security"
+                            android:textColor="@color/premium_login_text_secondary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_2fa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+                
+                <!-- Biometric Switch Item -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="16dp">
+
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_premium_input_normal"
+                        android:layout_marginEnd="16dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_menu_camera"
+                            app:tint="@color/premium_login_primary" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Biometric Login"
+                            android:textColor="@color/premium_login_text_main"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Use fingerprint or face authentication"
+                            android:textColor="@color/premium_login_text_secondary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_biometric"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DEVICES &amp; ACTIVITY"
+                android:textColor="@color/premium_login_text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_premium_input_normal"
+                android:layout_marginBottom="32dp">
+                
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_active_sessions" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_login_activity_sec" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_trusted_devices" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btn_logout_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Log Out From All Devices"
+                android:textColor="?attr/colorError"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:background="@drawable/bg_premium_input_normal"
+                android:layout_marginBottom="32dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

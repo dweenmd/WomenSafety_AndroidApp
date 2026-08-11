@@ -37,7 +37,7 @@ public class FakeCallActivity extends AppCompatActivity {
 
         btnAnswer.setOnClickListener(v -> {
             stopRingtone();
-            tvStatus.setText("00:00");
+            tvStatus.setText(R.string.fake_call_timer_zero);
             btnAnswer.setVisibility(android.view.View.GONE);
             // Simulate conversation delay then hang up
             new Handler().postDelayed(this::finish, 5000);

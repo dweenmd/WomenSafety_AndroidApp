@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relationship_options">
+        <item>বাবা-মা</item>
+        <item>ভাই / বোন</item>
+        <item>বন্ধু</item>
+        <item>আত্মীয়</item>
+        <item>শিক্ষক</item>
+        <item>সঙ্গী</item>
+        <item>অন্যান্য</item>
+    </string-array>
+    <string name="app_name">উইমেন সেফটি</string>
+    <string name="title_home">হোম</string>
+    <string name="caller_dad">বাবা</string>
+    <string name="incoming_call">কল আসছে...</string>
+    <string name="login_welcome">আবার স্বাগতম 👋</string>
+    <string name="login_subtitle">এগিয়ে যেতে সাইন ইন করুন</string>
+    <string name="login_forgot_password">পাসওয়ার্ড ভুলে গেছেন?</string>
+    <string name="login_btn_sign_in">সাইন ইন →</string>
+    <string name="login_or">অথবা</string>
+    <string name="login_google">গুগল দিয়ে চালিয়ে যান</string>
+    <string name="login_phone">ফোন নম্বর দিয়ে চালিয়ে যান</string>
+    <string name="login_no_account">অ্যাকাউন্ট নেই? </string>
+    <string name="login_create_one">তৈরি করুন</string>
+    <string name="login_footer">গোপনীয়তা নীতি • পরিষেবার শর্তাবলী</string>
+    <string name="otp_title">ওটিপি যাচাই করুন</string>
+    <string name="otp_subtitle">আপনার ফোনে পাঠানো ৬-ডিজিটের কোড লিখুন।</string>
+    <string name="otp_btn_verify">যাচাই ও লগইন করুন →</string>
+    <string name="phone_login_title">মোবাইল লগইন</string>
+    <string name="phone_login_subtitle">আমরা একটি কনফার্মেশন কোডসহ এসএমএস পাঠাব।</string>
+    <string name="phone_login_btn_send">ওটিপি পাঠান →</string>
+    <string name="register_title">অ্যাকাউন্ট তৈরি করুন</string>
+    <string name="register_subtitle">আমাদের সাথে যুক্ত হোন</string>
+    <string name="register_btn_register">নিবন্ধন করুন →</string>
+    <string name="register_has_account">ইতোমধ্যে অ্যাকাউন্ট আছে? </string>
+    <string name="register_login_here">লগইন করুন</string>
+    <string name="splash_subtitle">নিরাপত্তা নিশ্চিতকরণ</string>
+    <string name="contact_form_add_title">জরুরী পরিচিতি যোগ করুন</string>
+    <string name="contact_form_edit_title">পরিচিতি সম্পাদনা করুন</string>
+    <string name="contact_form_relationship">সম্পর্ক</string>
+    <string name="contact_form_priority">অগ্রাধিকার</string>
+    <string name="contact_form_primary">প্রাথমিক</string>
+    <string name="contact_form_secondary">মাধ্যমিক</string>
+    <string name="contact_form_btn_save">সেভ করুন</string>
+    <string name="contacts_title">জরুরী পরিচিতি</string>
+    <string name="contacts_subtitle">যাদের সাহায্য প্রয়োজন হলে কল করা যাবে।</string>
+    <string name="contacts_btn_add">নতুন পরিচিতি যোগ করুন</string>
+    <string name="home_protection_active">সুরক্ষা সক্রিয়</string>
+    <string name="home_protection_inactive">সুরক্ষা নিষ্ক্রিয়</string>
+    <string name="home_battery_checking">লোকেশন চালু | ব্যাটারি: চেক করা হচ্ছে...</string>
+    <string name="home_battery_status">লোকেশন চালু | ব্যাটারি: %1$d%%</string>
+    <string name="home_contacts_added">৩ টি পরিচিতি যুক্ত</string>
+    <string name="home_contacts_count_ready">%1$d টি পরিচিতি প্রস্তুত</string>
+    <string name="home_manage_contacts">ম্যানেজ</string>
+    <string name="home_btn_sos">এসওএস (SOS)</string>
+    <string name="home_quick_fake_call">ফেক কল</string>
+    <string name="home_quick_record">রেকর্ড</string>
+    <string name="home_quick_live_link">লাইভ লিংক</string>
+    <string name="profile_title">আমার প্রোফাইল</string>
+    <string name="profile_btn_edit">প্রোফাইল সম্পাদন</string>
+    <string name="profile_section_account">অ্যাকাউন্ট</string>
+    <string name="profile_section_safety">নিরাপত্তা</string>
+    <string name="profile_section_app">অ্যাপ</string>
+    <string name="profile_btn_sign_out">লগ আউট</string>
+    <string name="safety_title">নিরাপত্তা সেটিংস</string>
+    <string name="safety_bg_protection">ব্যাকগ্রাউন্ড সুরক্ষা</string>
+    <string name="safety_bg_protection_desc">জরুরী পরিস্থিতিতে ট্র্রিগারের জন্য অ্যাপটি ব্যাকগ্রাউন্ডে চালু রাখুন।</string>
+    <string name="safety_live_location">লাইভ লোকেশন শেয়ার</string>
+    <string name="safety_live_location_desc">এসওএস ট্রিগার হলে গুগল ম্যাপ লিংক পাঠান।</string>
+    <string name="safety_shake_sos">ঝাঁকিয়ে এসওএস</string>
+    <string name="safety_shake_sos_desc">ফোন জোরে ঝাঁকিয়ে এসওএস ট্রিগার করুন।</string>
+    <string name="safety_low_battery">লো ব্যাটারি ওয়ার্নিং</string>
+    <string name="safety_low_battery_desc">ব্যাটারি ১৫% এর নিচে নামলে পরিচিতদের জানান।</string>
+    <string name="safety_silent_sos">সাইলেন্ট এসওএস</string>
+    <string name="safety_silent_sos_desc">শব্দ বা ভাইব্রেশন ছাড়া এসওএস ট্রিগার করুন।</string>
+    <string name="safety_language_bangla">বাংলা ভাষা (Bangla)</string>
+    <string name="safety_language_bangla_desc">অ্যাপের ভাষা পরিবর্তন করুন (রিস্টার্ট প্রয়োজন)।</string>
+    <string name="contact_primary_badge">প্রাথমিক পরিচিতি</string>
+    <string name="contact_action_call">কল</string>
+    <string name="contact_action_message">মেসেজ</string>
+    <string name="placeholder_title">শিরোনাম</string>
+    <string name="placeholder_subtitle">উপশিরোনাম</string>
+</resources>

@@ -27,6 +27,8 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="32dp"
                 android:src="@drawable/logo"
+                android:contentDescription="@string/app_name"
+                android:importantForAccessibility="no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="Welcome back 👋"
+                android:text="@string/login_welcome"
                 android:textColor="@color/premium_login_text_main"
                 android:textSize="28sp"
                 android:textStyle="bold"
@@ -51,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Sign in to continue your journey"
+                android:text="@string/login_subtitle"
                 android:textColor="@color/premium_login_text_secondary"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +131,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Forgot password?"
+                android:minHeight="48dp"
+                android:gravity="center_vertical"
+                android:text="@string/login_forgot_password"
                 android:textColor="@color/premium_login_primary"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -154,7 +158,7 @@
                         android:id="@+id/tv_login_btn_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign In  →"
+                        android:text="@string/login_btn_sign_in"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -197,7 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:text="OR"
+                    android:text="@string/login_or"
                     android:textColor="@color/premium_login_text_secondary"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -232,12 +236,13 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:importantForAccessibility="no"
                             android:src="@drawable/ic_google_brand" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
-                            android:text="Continue with Google"
+                            android:text="@string/login_google"
                             android:textColor="@color/premium_login_text_main"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -268,12 +273,13 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@android:drawable/ic_menu_call"
+                            android:importantForAccessibility="no"
                             app:tint="@color/premium_login_text_main" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
-                            android:text="Continue with Phone"
+                            android:text="@string/login_phone"
                             android:textColor="@color/premium_login_text_main"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -301,7 +307,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Don't have an account? "
+                    android:text="@string/login_no_account"
                     android:textColor="@color/premium_login_text_secondary"
                     android:textSize="14sp" />
                 
@@ -309,7 +315,9 @@
                     android:id="@+id/tv_create_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Create one"
+                    android:minHeight="48dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/login_create_one"
                     android:textColor="@color/premium_login_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -327,7 +335,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                android:text="Privacy Policy  •  Terms of Service"
+                android:text="@string/login_footer"
                 android:textColor="@color/premium_login_text_secondary"
                 android:textSize="12sp"
                 android:alpha="0.6"

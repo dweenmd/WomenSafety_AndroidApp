@@ -34,7 +34,11 @@ public class SplashActivity extends AppCompatActivity {
                     if (user != null) {
                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     } else {
-                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        if (!com.dweenmd.womensafety.ui.auth.PrivacyConsentActivity.hasConsent(SplashActivity.this)) {
+                            startActivity(new Intent(SplashActivity.this, com.dweenmd.womensafety.ui.auth.PrivacyConsentActivity.class));
+                        } else {
+                            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        }
                     }
                 }
                 finish();

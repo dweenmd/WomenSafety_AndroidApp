@@ -52,7 +52,7 @@ public class ContactFormBottomSheet extends BottomSheetDialogFragment {
                 if (isGranted) {
                     launchContactPicker();
                 } else {
-                    Toast.makeText(getContext(), "Permission denied to read contacts", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toast_permission_denied_contacts, Toast.LENGTH_SHORT).show();
                 }
             }
     );
@@ -88,7 +88,7 @@ public class ContactFormBottomSheet extends BottomSheetDialogFragment {
         View btnPickContact = view.findViewById(R.id.btn_pick_contact);
 
         if (contactToEdit != null) {
-            tvTitle.setText("Edit Contact");
+            tvTitle.setText(R.string.contact_form_edit_title);
             etName.setText(contactToEdit.name);
             etPhone.setText(contactToEdit.phone);
             
@@ -117,7 +117,12 @@ public class ContactFormBottomSheet extends BottomSheetDialogFragment {
             boolean isPrimary = rbPrimary.isChecked();
 
             if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone)) {
-                Toast.makeText(getContext(), "Name and phone cannot be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.toast_name_phone_empty, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!com.dweenmd.womensafety.data.PhoneNumberValidator.isValid(phone)) {
+                Toast.makeText(getContext(), "Invalid phone number format", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -168,7 +173,7 @@ public class ContactFormBottomSheet extends BottomSheetDialogFragment {
                 }
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Failed to read contact data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.toast_failed_read_contact, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -31,12 +31,11 @@ public class SosMessenger {
     }
 
     public void triggerSos(SosCallback callback) {
+        // Call the emergency number synchronously with the user action to avoid Android 10+ background start restrictions
+        callEmergencyNumber();
+
         // Read contacts immediately from local cache so we don't block on network
         List<ContactsRepository.Contact> contacts = contactsRepository.getLocalContactsSync();
-        if (contacts == null || contacts.isEmpty()) {
-            callback.onFailure("No emergency contacts found.");
-            return;
-        }
 
         // Fetch location
         locationRepository.getCurrentLocation(new LocationRepository.LocationCallbackResult() {
@@ -46,7 +45,12 @@ public class SosMessenger {
                 new AudioRecorderHelper(context).startRecording();
                 
                 String locUrl = "https://www.google.com/maps/search/?api=1&query=" + location.getLatitude() + "," + location.getLongitude();
-                sendMessages(contacts, locUrl, callback);
+                
+                if (contacts != null && !contacts.isEmpty()) {
+                    sendMessages(contacts, locUrl, callback);
+                } else {
+                    callback.onFailure("No contacts found. Called emergency number.");
+                }
             }
 
             @Override
@@ -55,9 +59,26 @@ public class SosMessenger {
                 new AudioRecorderHelper(context).startRecording();
                 
                 Log.w(TAG, "Location fetch failed: " + reason);
-                sendMessages(contacts, "Location unavailable: " + reason, callback);
+                
+                if (contacts != null && !contacts.isEmpty()) {
+                    sendMessages(contacts, "Location unavailable: " + reason, callback);
+                } else {
+                    callback.onFailure("No contacts found. Called emergency number.");
+                }
             }
         });
+    }
+
+    private void callEmergencyNumber() {
+        try {
+            EmergencyNumberProvider.EmergencyNumbers numbers = EmergencyNumberProvider.getEmergencyNumber(context);
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(android.net.Uri.parse("tel:" + numbers.general));
+            callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(callIntent);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to start ACTION_CALL", e);
+        }
     }
 
     public void shareLocationOnly(SosCallback callback) {
@@ -97,15 +118,33 @@ public class SosMessenger {
 
         Intent deliveredIntent = new Intent(ACTION_SMS_DELIVERED);
         PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE);
+        
+        // TODO: Replace this stub with a real backend client (e.g. Retrofit instance) when backend is ready
+        // TODO: Ensure google-services.json is added to the app/ directory for FCM to work.
+        AlertBackendClient alertClient = new AlertBackendClient() {
+            @Override
+            public void sendPushAlert(ContactsRepository.Contact contact, String msg) {
+                Log.d(TAG, "Stub: Sending push alert to contact " + contact.name + " (" + contact.phone + ")");
+                // Actual implementation would POST to your server which then sends an FCM message
+            }
+        };
 
         for (ContactsRepository.Contact contact : contacts) {
+            // 1. Primary channel: SMS
             try {
                 smsManager.sendTextMessage(contact.phone, null, message, sentPI, deliveredPI);
             } catch (Exception e) {
                 Log.e(TAG, "Failed to send SMS to " + contact.name, e);
             }
+            
+            // 2. Parallel channel: Push Notification (FCM)
+            try {
+                alertClient.sendPushAlert(contact, message);
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to send push alert to " + contact.name, e);
+            }
         }
-        callback.onSosTriggered("SOS triggered. Waiting for delivery confirmation.");
+        callback.onSosTriggered("SOS triggered. SMS & Push alerts sent.");
     }
 
     public interface SosCallback {

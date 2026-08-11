@@ -112,13 +112,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Exception e) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(LoginActivity.this, "Google Auth Failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, R.string.toast_google_auth_failed, Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (ApiException e) {
                 progressBar.setVisibility(View.GONE);
                 Log.w("LoginActivity", "Google sign in failed", e);
-                Toast.makeText(this, "Google Sign-In Failed! Add your SHA-1 key to Firebase.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.toast_google_signin_failed, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = etPassword.getText() != null ? etPassword.getText().toString().trim() : "";
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_enter_email_password, Toast.LENGTH_SHORT).show();
             return;
         }
 

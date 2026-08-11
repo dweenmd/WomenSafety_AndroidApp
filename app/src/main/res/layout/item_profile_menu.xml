@@ -9,12 +9,13 @@
     android:clickable="true"
     android:focusable="true"
     android:paddingHorizontal="4dp"
-    android:paddingVertical="16dp">
+    android:paddingVertical="14dp">
 
     <FrameLayout
+        android:id="@+id/icon_container"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/bg_premium_input_normal"
+        android:background="@drawable/bg_icon_tinted"
         android:layout_marginEnd="16dp">
         
         <ImageView
@@ -22,8 +23,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@android:drawable/ic_menu_help"
-            app:tint="@color/premium_login_primary" />
+            android:src="@android:drawable/ic_menu_help" />
     </FrameLayout>
 
     <LinearLayout
@@ -36,7 +36,7 @@
             android:id="@+id/tv_menu_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/placeholder_title"
             android:textColor="@color/premium_login_text_main"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Subtitle"
+            android:text="@string/placeholder_subtitle"
             android:textColor="@color/premium_login_text_secondary"
             android:textSize="14sp" />
     </LinearLayout>

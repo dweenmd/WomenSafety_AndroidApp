@@ -37,7 +37,37 @@
         android:theme="@style/Theme.WomenSafety">
 
         <activity
+            android:name=".ui.profile.SettingsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity" />
+            
+        <activity
+            android:name=".ui.profile.SecurityActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".ui.profile.LoginActivityHistoryActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".ui.profile.PrivacySettingsActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".ui.auth.PrivacyConsentActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".ui.profile.EditProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.WomenSafety" />
+            
+        <activity
             android:name=".ui.auth.LoginActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".MainActivity"
             android:exported="false" />
             
         <activity

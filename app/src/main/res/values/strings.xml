@@ -11,4 +11,127 @@
         <item>Partner</item>
         <item>Other</item>
     </string-array>
+
+    <!-- Fake Call -->
+    <string name="caller_dad">Dad</string>
+    <string name="incoming_call">Incoming call...</string>
+
+    <!-- Login Activity -->
+    <string name="login_welcome">Welcome back 👋</string>
+    <string name="login_subtitle">Sign in to continue your journey</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_btn_sign_in">Sign In  →</string>
+    <string name="login_or">OR</string>
+    <string name="login_google">Continue with Google</string>
+    <string name="login_phone">Continue with Phone</string>
+    <string name="login_no_account">Don\'t have an account? </string>
+    <string name="login_create_one">Create one</string>
+    <string name="login_footer">Privacy Policy  •  Terms of Service</string>
+
+    <!-- OTP Verification Activity -->
+    <string name="otp_title">Verify OTP</string>
+    <string name="otp_subtitle">Enter the 6-digit code sent to your phone.</string>
+    <string name="otp_btn_verify">Verify &amp; Login  →</string>
+
+    <!-- Phone Login Activity -->
+    <string name="phone_login_title">Mobile Login</string>
+    <string name="phone_login_subtitle">We will send an SMS with a confirmation code.</string>
+    <string name="phone_login_btn_send">Send OTP  →</string>
+
+    <!-- Register Activity -->
+    <string name="register_title">Create Account</string>
+    <string name="register_subtitle">Join us to start your journey</string>
+    <string name="register_btn_register">Register  →</string>
+    <string name="register_has_account">Already have an account? </string>
+    <string name="register_login_here">Login here</string>
+
+    <!-- Splash Screen Activity -->
+    <string name="splash_subtitle">Ensuring Safety</string>
+
+    <!-- Contact Form Dialog -->
+    <string name="contact_form_add_title">Add Emergency Contact</string>
+    <string name="contact_form_edit_title">Edit Contact</string>
+    <string name="contact_form_relationship">Relationship</string>
+    <string name="contact_form_priority">Priority</string>
+    <string name="contact_form_primary">Primary</string>
+    <string name="contact_form_secondary">Secondary</string>
+    <string name="contact_form_btn_save">Save Contact</string>
+
+    <!-- Contacts Fragment -->
+    <string name="contacts_title">Emergency Contacts</string>
+    <string name="contacts_subtitle">People who can be contacted when you need help.</string>
+    <string name="contacts_btn_add">Add Emergency Contact</string>
+
+    <!-- Home Fragment -->
+    <string name="home_protection_active">Protection Active</string>
+    <string name="home_protection_inactive">Protection Inactive</string>
+    <string name="home_battery_checking">Location on | Battery: Checking...</string>
+    <string name="home_battery_status">Location on | Battery: %1$d%%</string>
+    <string name="home_contacts_added">3 contacts added</string>
+    <string name="home_contacts_count_ready">%1$d contact(s) ready</string>
+    <string name="home_manage_contacts">Manage</string>
+    <string name="home_btn_sos">HOLD TO SOS</string>
+    <string name="home_quick_fake_call">Fake Call</string>
+    <string name="home_quick_record">Record</string>
+    <string name="home_quick_live_link">Live Link</string>
+
+    <!-- Profile Fragment -->
+    <string name="profile_title">My Profile</string>
+    <string name="profile_btn_edit">Edit Profile</string>
+    <string name="profile_section_account">ACCOUNT</string>
+    <string name="profile_section_safety">SAFETY</string>
+    <string name="profile_section_app">APP</string>
+    <string name="profile_btn_sign_out">Sign Out</string>
+
+    <!-- Safety Fragment -->
+    <string name="safety_title">Safety Settings</string>
+    <string name="safety_bg_protection">Background Protection</string>
+    <string name="safety_bg_protection_desc">Keep the app running in the background to listen for triggers.</string>
+    <string name="safety_live_location">Include Live Location</string>
+    <string name="safety_live_location_desc">Send your current Google Maps link when SOS is triggered.</string>
+    <string name="safety_shake_sos">Shake to SOS</string>
+    <string name="safety_shake_sos_desc">Trigger SOS by violently shaking your phone.</string>
+    <string name="safety_low_battery">Low Battery Warning</string>
+    <string name="safety_low_battery_desc">Notify contacts when your battery drops below 15%.</string>
+    <string name="safety_silent_sos">Silent SOS Mode</string>
+    <string name="safety_silent_sos_desc">Trigger SOS without vibrating or making a sound.</string>
+    <string name="safety_language_bangla">App Language</string>
+    <string name="safety_language_bangla_desc">Select your preferred language.</string>
+
+    <!-- Contacts UI -->
+    <string name="contact_primary_badge">PRIMARY CONTACT</string>
+    <string name="contact_action_call">Call</string>
+    <string name="contact_action_message">Message</string>
+
+    <!-- Placeholders -->
+    <string name="placeholder_title">Title</string>
+    <string name="placeholder_subtitle">Subtitle</string>
+    
+    <!-- Accessibility -->
+    <string name="cd_fake_call">Schedule a fake call to escape an uncomfortable situation</string>
+    <string name="cd_record">Start recording emergency audio</string>
+    <string name="cd_live_link">Share your live location with contacts</string>
+    <string name="cd_status_icon">Protection status icon</string>
+    <string name="cd_contacts_icon">Contacts icon</string>
+    <string name="cd_sos_button">Emergency SOS Button. Tap and hold to send an emergency text message and your location to your contacts.</string>
+    <string name="cd_privacy_icon">Privacy and Data Consent Icon</string>
+    <string name="cd_contact_menu">Contact options</string>
+
+    <!-- Toasts / Java Strings -->
+    <string name="toast_google_auth_failed">Google Auth Failed.</string>
+    <string name="toast_google_signin_failed">Google Sign-In Failed! Add your SHA-1 key to Firebase.</string>
+    <string name="toast_enter_email_password">Please enter email and password</string>
+    <string name="toast_login_successful">Login Successful</string>
+    <string name="toast_registration_successful">Registration Successful</string>
+    <string name="toast_permission_denied_contacts">Permission denied to read contacts</string>
+    <string name="toast_name_phone_empty">Name and phone cannot be empty</string>
+    <string name="toast_failed_read_contact">Failed to read contact data</string>
+    <string name="toast_contact_saved">Contact saved successfully</string>
+    <string name="fake_call_timer_zero">00:00</string>
+    <string name="toast_fake_call_scheduled">Fake call scheduled in 5 seconds...</string>
+    <string name="toast_started_audio_record">Started 15s emergency audio recording.</string>
+    <string name="toast_fetching_location">Fetching location...</string>
+    <string name="toast_triggering_sos">Triggering SOS...</string>
+    <string name="toast_language_restart">Language change requires app restart.</string>
+
 </resources>

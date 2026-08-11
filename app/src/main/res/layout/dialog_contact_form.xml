@@ -11,7 +11,7 @@
         android:id="@+id/tv_form_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Emergency Contact"
+        android:text="@string/contacts_btn_add"
         android:textColor="@color/premium_login_text_main"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -84,7 +84,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Relationship"
+        android:text="@string/contact_form_relationship"
         android:textColor="@color/premium_login_text_secondary"
         android:textSize="12sp"
         android:layout_marginBottom="8dp" />
@@ -108,7 +108,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Priority"
+        android:text="@string/contact_form_priority"
         android:textColor="@color/premium_login_text_secondary"
         android:textSize="12sp"
         android:layout_marginBottom="8dp" />
@@ -124,7 +124,7 @@
             android:id="@+id/rb_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Primary"
+            android:text="@string/contact_form_primary"
             android:textColor="@color/premium_login_text_main"
             android:buttonTint="@color/premium_login_primary"
             android:layout_marginEnd="16dp" />
@@ -133,7 +133,7 @@
             android:id="@+id/rb_secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Secondary"
+            android:text="@string/contact_form_secondary"
             android:textColor="@color/premium_login_text_main"
             android:buttonTint="@color/premium_login_primary"
             android:checked="true" />
@@ -152,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Save Contact"
+            android:text="@string/contact_form_btn_save"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="16sp" />

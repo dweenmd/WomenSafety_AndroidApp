@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relationship_options">
+        <item>الوالدين</item>
+        <item>الأخ / الأخت</item>
+        <item>صديق</item>
+        <item>قريب</item>
+        <item>معلم</item>
+        <item>شريك</item>
+        <item>آخر</item>
+    </string-array>
+    <string name="app_name">سلامة المرأة</string>
+    <string name="title_home">الرئيسية</string>
+    <string name="caller_dad">أبي</string>
+    <string name="incoming_call">مكالمة واردة...</string>
+    <string name="login_welcome">أهلاً بك 👋</string>
+    <string name="login_subtitle">قم بتسجيل الدخول للمتابعة</string>
+    <string name="login_forgot_password">نسيت كلمة المرور؟</string>
+    <string name="login_btn_sign_in">تسجيل الدخول →</string>
+    <string name="login_or">أو</string>
+    <string name="login_google">المتابعة باستخدام Google</string>
+    <string name="login_phone">المتابعة باستخدام الهاتف</string>
+    <string name="login_no_account">ليس لديك حساب؟ </string>
+    <string name="login_create_one">أنشئ حساباً</string>
+    <string name="login_footer">سياسة الخصوصية • شروط الخدمة</string>
+    <string name="otp_title">التحقق من OTP</string>
+    <string name="otp_subtitle">أدخل الرمز المكون من 6 أرقام المرسل إلى هاتفك.</string>
+    <string name="otp_btn_verify">تحقق وسجل الدخول →</string>
+    <string name="phone_login_title">تسجيل الدخول بالهاتف</string>
+    <string name="phone_login_subtitle">سنرسل رسالة تحتوي على رمز التأكيد.</string>
+    <string name="phone_login_btn_send">إرسال OTP →</string>
+    <string name="register_title">إنشاء حساب</string>
+    <string name="register_subtitle">انضم إلينا لتبدأ</string>
+    <string name="register_btn_register">تسجيل →</string>
+    <string name="register_has_account">لديك حساب بالفعل؟ </string>
+    <string name="register_login_here">سجل الدخول هنا</string>
+    <string name="splash_subtitle">ضمان السلامة</string>
+    <string name="contact_form_add_title">إضافة جهة اتصال للطوارئ</string>
+    <string name="contact_form_edit_title">تعديل جهة الاتصال</string>
+    <string name="contact_form_relationship">القرابة</string>
+    <string name="contact_form_priority">الأولوية</string>
+    <string name="contact_form_primary">أساسي</string>
+    <string name="contact_form_secondary">ثانوي</string>
+    <string name="contact_form_btn_save">حفظ جهة الاتصال</string>
+    <string name="contacts_title">جهات اتصال الطوارئ</string>
+    <string name="contacts_subtitle">الأشخاص الذين يمكن الاتصال بهم عند الحاجة.</string>
+    <string name="contacts_btn_add">إضافة جهة اتصال</string>
+    <string name="home_protection_active">الحماية نشطة</string>
+    <string name="home_protection_inactive">الحماية غير نشطة</string>
+    <string name="home_battery_checking">الموقع قيد التشغيل | البطارية: جاري التحقق...</string>
+    <string name="home_battery_status">الموقع قيد التشغيل | البطارية: %1$d%%</string>
+    <string name="home_contacts_added">تمت إضافة 3 جهات اتصال</string>
+    <string name="home_contacts_count_ready">%1$d جهة اتصال جاهزة</string>
+    <string name="home_manage_contacts">إدارة</string>
+    <string name="home_btn_sos">SOS</string>
+    <string name="home_quick_fake_call">مكالمة وهمية</string>
+    <string name="home_quick_record">تسجيل</string>
+    <string name="home_quick_live_link">رابط مباشر</string>
+    <string name="profile_title">ملفي الشخصي</string>
+    <string name="profile_btn_edit">تعديل الملف</string>
+    <string name="profile_section_account">الحساب</string>
+    <string name="profile_section_safety">السلامة</string>
+    <string name="profile_section_app">التطبيق</string>
+    <string name="profile_btn_sign_out">تسجيل الخروج</string>
+    <string name="safety_title">إعدادات السلامة</string>
+    <string name="safety_bg_protection">الحماية في الخلفية</string>
+    <string name="safety_bg_protection_desc">استمر في تشغيل التطبيق في الخلفية للاستجابة للطوارئ.</string>
+    <string name="safety_live_location">مشاركة الموقع المباشر</string>
+    <string name="safety_live_location_desc">إرسال رابط خرائط جوجل الخاص بك عند تنشيط SOS.</string>
+    <string name="safety_shake_sos">الهز للتنبيه</string>
+    <string name="safety_shake_sos_desc">قم بتنشيط SOS عن طريق هز هاتفك.</string>
+    <string name="safety_low_battery">تنبيه انخفاض البطارية</string>
+    <string name="safety_low_battery_desc">إعلام جهات الاتصال عندما تنخفض البطارية عن 15%.</string>
+    <string name="safety_silent_sos">وضع SOS الصامت</string>
+    <string name="safety_silent_sos_desc">تنشيط SOS بدون اهتزاز أو صوت.</string>
+    <string name="safety_language_bangla">اللغة البنغالية</string>
+    <string name="safety_language_bangla_desc">تغيير لغة التطبيق (يتطلب إعادة التشغيل).</string>
+    <string name="contact_primary_badge">جهة اتصال أساسية</string>
+    <string name="contact_action_call">اتصال</string>
+    <string name="contact_action_message">رسالة</string>
+    <string name="placeholder_title">العنوان</string>
+    <string name="placeholder_subtitle">العنوان الفرعي</string>
+</resources>

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/premium_login_bg"
+    android:fillViewport="true"
     tools:context=".ui.profile.ProfileFragment">
 
     <LinearLayout
@@ -16,73 +17,222 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Profile"
+            android:text="Profile"
             android:textColor="@color/premium_login_text_main"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
-        <!-- Header Card -->
+        <!-- HEADER SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Avatar with Edit Button -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp">
+
+                <ImageView
+                    android:id="@+id/iv_profile_header_avatar"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_person"
+                    android:background="@drawable/pulse_circle"
+                    android:padding="8dp"
+                    app:tint="@color/premium_login_text_main" />
+
+                <FrameLayout
+                    android:id="@+id/btn_edit_avatar_header"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_premium_btn"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:elevation="4dp">
+                    
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_edit"
+                        app:tint="#FFFFFF" />
+                </FrameLayout>
+            </FrameLayout>
+
+            <!-- Name & Verification -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/tv_profile_header_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Abdul Awal"
+                        android:textColor="@color/premium_login_text_main"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="6dp"
+                        android:src="@android:drawable/checkbox_on_background"
+                        app:tint="?attr/colorPrimary" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_profile_header_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="d***@gmail.com"
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp" />
+                    
+                <TextView
+                    android:id="@+id/tv_profile_header_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="+880 17******45"
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+                <!-- Profile Completion Card -->
+                <FrameLayout
+                    android:id="@+id/card_profile_completion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_card_completion">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Profile 80% complete"
+                                    android:textColor="@color/premium_login_text_main"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_missing_field"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Add your phone number to finish setup"
+                                    android:textColor="@color/premium_login_text_secondary"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/btn_dismiss_completion"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:padding="4dp"
+                                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                                app:tint="@color/premium_login_text_secondary"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:focusable="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="12dp">
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:progress="80"
+                                app:trackCornerRadius="4dp"
+                                app:indicatorColor="?attr/colorPrimary"
+                                app:trackColor="#E0E0E0"
+                                app:trackThickness="8dp" />
+
+                            <TextView
+                                android:id="@+id/btn_complete_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:text="Complete →"
+                                android:textColor="?attr/colorPrimary"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:background="?attr/selectableItemBackground" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+        <!-- SAFETY Section (Moved up and wrapped) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAFETY"
+            android:textColor="@color/premium_login_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="4dp" />
+            
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_premium_input_normal"
-            android:padding="20dp"
-            android:layout_marginBottom="32dp">
+            android:background="@drawable/bg_card_safety_highlight"
+            android:padding="8dp"
+            android:layout_marginBottom="24dp">
             
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:background="@drawable/bg_premium_input_normal">
                 
-                <ImageView
-                    android:id="@+id/iv_profile_avatar"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/ic_person"
-                    android:background="@drawable/pulse_circle"
-                    android:padding="12dp"
-                    app:tint="@color/premium_login_text_main" />
-                    
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="16dp"
-                    android:orientation="vertical">
-                    
-                    <TextView
-                        android:id="@+id/tv_profile_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="Dween Mohammad"
-                        android:textColor="@color/premium_login_text_main"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                        
-                    <TextView
-                        android:id="@+id/tv_profile_email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="dween.gk@gmail.com"
-                        android:textColor="@color/premium_login_text_secondary"
-                        android:textSize="14sp"
-                        android:layout_marginTop="2dp" />
-                        
-                    <TextView
-                        android:id="@+id/btn_edit_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Edit Profile"
-                        android:textColor="@color/premium_login_primary"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"/>
-                </LinearLayout>
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_emergency_contacts" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_sos_settings" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_location_sharing" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+                <include layout="@layout/item_profile_menu" android:id="@+id/menu_safety_notifications" />
             </LinearLayout>
         </FrameLayout>
 
@@ -108,14 +258,18 @@
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
             <include layout="@layout/item_profile_menu" android:id="@+id/menu_security" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_privacy" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_login_activity" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_verification" />
         </LinearLayout>
 
-        <!-- SAFETY Section -->
+
+
+        <!-- APP & SETTINGS Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SAFETY"
+            android:text="APP &amp; SETTINGS"
             android:textColor="@color/premium_login_text_secondary"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -129,20 +283,47 @@
             android:background="@drawable/bg_premium_input_normal"
             android:layout_marginBottom="24dp">
             
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_emergency_contacts" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_notifications" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_sos_settings" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_appearance" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_location" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_language" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_safety_notifications" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_app_preferences" />
         </LinearLayout>
-        
-        <!-- APP Section -->
+
+        <!-- PRIVACY Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="APP"
+            android:text="PRIVACY"
+            android:textColor="@color/premium_login_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="4dp" />
+            
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_premium_input_normal"
+            android:layout_marginBottom="24dp">
+            
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_privacy_settings" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_location_privacy" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_contact_permissions" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_privacy_policy" />
+        </LinearLayout>
+
+        <!-- SUPPORT Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUPPORT"
             android:textColor="@color/premium_login_text_secondary"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -156,27 +337,42 @@
             android:background="@drawable/bg_premium_input_normal"
             android:layout_marginBottom="32dp">
             
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_notifications" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_help_center" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_appearance" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_contact_support" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_language" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_report_problem" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_help" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_rate_app" />
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/premium_login_input_bg" android:layout_marginHorizontal="16dp"/>
-            <include layout="@layout/item_profile_menu" android:id="@+id/menu_about" />
+            <include layout="@layout/item_profile_menu" android:id="@+id/menu_about_app" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="Sign Out"
-            android:textColor="?attr/colorError"
+            android:textColor="@color/premium_login_text_main"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:padding="12dp"
+            android:padding="16dp"
+            android:background="@drawable/bg_premium_input_normal"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/btn_delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Delete Account"
+            android:textColor="?attr/colorError"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="32dp"/>
 
     </LinearLayout>

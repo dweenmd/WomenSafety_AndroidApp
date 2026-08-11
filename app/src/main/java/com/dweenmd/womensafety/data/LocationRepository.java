@@ -56,22 +56,36 @@ public class LocationRepository {
 
         LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000)
                 .setMaxUpdates(1)
-                .setDurationMillis(10000) // 10 second timeout
                 .build();
+                
+        final boolean[] callbackTriggered = {false};
 
         LocationCallback locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
+                if (callbackTriggered[0]) return;
+                callbackTriggered[0] = true;
+                
+                fusedLocationClient.removeLocationUpdates(this);
+                
                 if (locationResult == null || locationResult.getLastLocation() == null) {
                     callback.onFailure("Unable to retrieve fresh location within timeout.");
                 } else {
                     callback.onSuccess(locationResult.getLastLocation());
                 }
-                fusedLocationClient.removeLocationUpdates(this);
             }
         };
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+        
+        // Explicit timeout fallback
+        new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (!callbackTriggered[0]) {
+                callbackTriggered[0] = true;
+                fusedLocationClient.removeLocationUpdates(locationCallback);
+                callback.onFailure("Location request timed out.");
+            }
+        }, 5000); // 5 seconds timeout
     }
 
     public interface LocationCallbackResult {

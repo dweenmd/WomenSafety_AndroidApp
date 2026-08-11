@@ -63,8 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
             etPhone.setError("Phone is required");
             return;
         }
-        if (TextUtils.isEmpty(password) || password.length() < 6) {
-            etPassword.setError("Password must be at least 6 characters");
+        if (!isValidPassword(password)) {
+            etPassword.setError("Password must be at least 6 characters and include uppercase, lowercase, number, and special character");
             return;
         }
 
@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onSuccess(FirebaseUser user) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, R.string.toast_registration_successful, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 finishAffinity();
             }
@@ -87,5 +87,24 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private boolean isValidPassword(String password) {
+        if (password == null || password.length() < 6 || password.length() > 4096) {
+            return false;
+        }
+        boolean hasUpper = false;
+        boolean hasLower = false;
+        boolean hasNumber = false;
+        boolean hasSpecial = false;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) hasUpper = true;
+            else if (Character.isLowerCase(c)) hasLower = true;
+            else if (Character.isDigit(c)) hasNumber = true;
+            else hasSpecial = true;
+        }
+
+        return hasUpper && hasLower && hasNumber && hasSpecial;
     }
 }

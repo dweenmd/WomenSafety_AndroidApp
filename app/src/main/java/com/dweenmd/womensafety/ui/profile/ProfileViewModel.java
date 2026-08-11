@@ -20,6 +20,7 @@ public class ProfileViewModel extends AndroidViewModel {
     private final MutableLiveData<String> nameLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> emailLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> phoneLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> photoUrlLiveData = new MutableLiveData<>();
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
@@ -28,11 +29,12 @@ public class ProfileViewModel extends AndroidViewModel {
         fetchUserProfile();
     }
 
-    private void fetchUserProfile() {
+    public void fetchUserProfile() {
         if (authRepository.isDemoUser()) {
             nameLiveData.setValue("Demo User");
             emailLiveData.setValue("demo@app.com");
             phoneLiveData.setValue("+1234567890");
+            photoUrlLiveData.setValue(null);
             return;
         }
 
@@ -44,6 +46,7 @@ public class ProfileViewModel extends AndroidViewModel {
             emailLiveData.setValue(user.getEmail() != null ? user.getEmail() : "No Email");
             phoneLiveData.setValue(user.getPhoneNumber() != null ? user.getPhoneNumber() : "No Phone");
             nameLiveData.setValue(user.getDisplayName() != null ? user.getDisplayName() : "Unknown User");
+            photoUrlLiveData.setValue(user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null);
 
             // Fetch extra details from Firestore
             db.collection("users").document(uid).get()
@@ -57,6 +60,9 @@ public class ProfileViewModel extends AndroidViewModel {
                             }
                             if (documentSnapshot.contains("phone")) {
                                 phoneLiveData.setValue(documentSnapshot.getString("phone"));
+                            }
+                            if (documentSnapshot.contains("photoUrl")) {
+                                photoUrlLiveData.setValue(documentSnapshot.getString("photoUrl"));
                             }
                         }
                     })
@@ -74,5 +80,44 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public LiveData<String> getPhone() {
         return phoneLiveData;
+    }
+    
+    public LiveData<String> getPhotoUrl() {
+        return photoUrlLiveData;
+    }
+
+    public void updateName(String newName, com.dweenmd.womensafety.data.AuthRepository.AuthCallback callback) {
+        if (authRepository.isDemoUser()) {
+            nameLiveData.setValue(newName);
+            callback.onSuccess(null);
+            return;
+        }
+
+        FirebaseUser user = authRepository.getCurrentUser().getValue();
+        if (user != null) {
+            // Update FirebaseAuth profile
+            com.google.firebase.auth.UserProfileChangeRequest profileUpdates = new com.google.firebase.auth.UserProfileChangeRequest.Builder()
+                    .setDisplayName(newName)
+                    .build();
+            
+            user.updateProfile(profileUpdates).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Update Firestore
+                    db.collection("users").document(user.getUid())
+                            .update("name", newName)
+                            .addOnSuccessListener(aVoid -> {
+                                nameLiveData.setValue(newName);
+                                callback.onSuccess(user);
+                            })
+                            .addOnFailureListener(e -> {
+                                // Fallback to setting live data anyway
+                                nameLiveData.setValue(newName);
+                                callback.onSuccess(user);
+                            });
+                } else {
+                    callback.onFailure(task.getException());
+                }
+            });
+        }
     }
 }

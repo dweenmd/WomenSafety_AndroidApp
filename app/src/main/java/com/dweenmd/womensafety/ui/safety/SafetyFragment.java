@@ -35,15 +35,12 @@ public class SafetyFragment extends Fragment {
         MaterialSwitch switchShake = view.findViewById(R.id.switch_shake_detection);
         MaterialSwitch switchAutoNotify = view.findViewById(R.id.switch_auto_notify);
         MaterialSwitch switchSilentSos = view.findViewById(R.id.switch_silent_sos);
-        MaterialSwitch switchLanguage = view.findViewById(R.id.switch_language);
-
         // Observe ViewModel
         viewModel.getBackgroundProtection().observe(getViewLifecycleOwner(), switchBackground::setChecked);
         viewModel.getLiveLocationOnSos().observe(getViewLifecycleOwner(), switchLiveLocation::setChecked);
         viewModel.getShakeDetection().observe(getViewLifecycleOwner(), switchShake::setChecked);
         viewModel.getAutoNotify().observe(getViewLifecycleOwner(), switchAutoNotify::setChecked);
         viewModel.getSilentSos().observe(getViewLifecycleOwner(), switchSilentSos::setChecked);
-        viewModel.getLanguageBangla().observe(getViewLifecycleOwner(), switchLanguage::setChecked);
 
         // Update ViewModel on change
         switchBackground.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -72,13 +69,6 @@ public class SafetyFragment extends Fragment {
         });
         switchSilentSos.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (buttonView.isPressed()) viewModel.setSetting("silentSos", isChecked);
-        });
-        switchLanguage.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isPressed()) {
-                viewModel.setSetting("languageBangla", isChecked);
-                // In a real app, this would change the locale and recreate the activity
-                android.widget.Toast.makeText(requireContext(), "Language change requires app restart.", android.widget.Toast.LENGTH_SHORT).show();
-            }
         });
 
     }

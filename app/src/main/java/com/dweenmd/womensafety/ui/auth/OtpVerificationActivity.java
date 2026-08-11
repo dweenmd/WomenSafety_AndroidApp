@@ -58,7 +58,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
             @Override
             public void onSuccess(FirebaseUser user) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(OtpVerificationActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OtpVerificationActivity.this, R.string.toast_login_successful, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(OtpVerificationActivity.this, MainActivity.class));
                 finishAffinity();
             }

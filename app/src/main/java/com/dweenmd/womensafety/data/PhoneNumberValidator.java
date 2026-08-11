@@ -1,21 +1,35 @@
 package com.dweenmd.womensafety.data;
 
 import android.text.TextUtils;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
+import java.util.Locale;
 
 public class PhoneNumberValidator {
 
     /**
-     * Validates a phone number.
-     * Currently implemented as a simple 11-digit regex for BD numbers,
-     * as requested in the plan (wrap current 11-digit regex now, pull in libphonenumber later if needed).
+     * Validates a phone number using libphonenumber.
      */
     public static boolean isValid(String phoneNumber) {
         if (TextUtils.isEmpty(phoneNumber)) {
             return false;
         }
         
-        // simple validation for bd 11 digit numbers starting with 01
-        String regex = "^01[3-9]\\d{8}$";
-        return phoneNumber.matches(regex);
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            String defaultRegion = Locale.getDefault().getCountry().toUpperCase(Locale.US);
+            if (defaultRegion.isEmpty()) {
+                defaultRegion = "US"; // Fallback
+            }
+            
+            Phonenumber.PhoneNumber number = phoneUtil.parse(phoneNumber, defaultRegion);
+            return phoneUtil.isValidNumber(number);
+        } catch (NumberParseException e) {
+            // If it fails parsing, fallback to basic length check to not break completely
+            // if users enter local shortcodes or weirdly formatted numbers that libphonenumber rejects.
+            String cleaned = phoneNumber.replaceAll("[\\s\\-\\(\\)]", "");
+            return cleaned.matches("^\\+?[0-9]{3,15}$");
+        }
     }
 }

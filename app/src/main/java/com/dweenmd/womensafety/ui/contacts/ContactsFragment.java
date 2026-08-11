@@ -61,7 +61,7 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
     private void showContactForm(ContactsRepository.Contact contact) {
         ContactFormBottomSheet bottomSheet = ContactFormBottomSheet.newInstance(contact, newContact -> {
             viewModel.saveContact(newContact);
-            Toast.makeText(getContext(), "Contact saved successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.toast_contact_saved, Toast.LENGTH_SHORT).show();
         });
         bottomSheet.show(getParentFragmentManager(), "ContactForm");
     }
