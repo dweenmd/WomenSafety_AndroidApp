@@ -38,8 +38,25 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
 
         RecyclerView rvContacts = view.findViewById(R.id.rv_contacts);
         ProgressBar progressSync = view.findViewById(R.id.progress_sync);
-        tvStatus = view.findViewById(R.id.tv_contacts_status);
-        View btnAddContact = view.findViewById(R.id.btn_add_contact);
+        View cardEmptyTrusted = view.findViewById(R.id.card_empty_trusted);
+        View btnAddContactTop = view.findViewById(R.id.btn_add_contact_top);
+        View btnAddTrustedContact = view.findViewById(R.id.btn_add_trusted_contact);
+        View btnSearch = view.findViewById(R.id.btn_search);
+
+        android.widget.ImageButton btnMenu = view.findViewById(R.id.btn_menu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (requireActivity() instanceof com.dweenmd.womensafety.ui.MainActivity) {
+                    ((com.dweenmd.womensafety.ui.MainActivity) requireActivity()).openDrawer();
+                }
+            });
+        }
+
+        if (btnSearch != null) {
+            btnSearch.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "Search not implemented yet", Toast.LENGTH_SHORT).show();
+            });
+        }
 
         rvContacts.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ContactsAdapter(this);
@@ -47,15 +64,22 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
 
         viewModel.getContacts().observe(getViewLifecycleOwner(), contacts -> {
             adapter.setContacts(contacts);
-            int count = contacts.size();
-            tvStatus.setText(count + " contact" + (count == 1 ? "" : "s") + " available");
+            if (contacts.isEmpty()) {
+                rvContacts.setVisibility(View.GONE);
+                cardEmptyTrusted.setVisibility(View.VISIBLE);
+            } else {
+                rvContacts.setVisibility(View.VISIBLE);
+                cardEmptyTrusted.setVisibility(View.GONE);
+            }
         });
 
         viewModel.getIsSyncing().observe(getViewLifecycleOwner(), isSyncing -> {
-            progressSync.setVisibility(isSyncing ? View.VISIBLE : View.INVISIBLE);
+            progressSync.setVisibility(isSyncing ? View.VISIBLE : View.GONE);
         });
 
-        btnAddContact.setOnClickListener(v -> showContactForm(null));
+        View.OnClickListener addContactListener = v -> showContactForm(null);
+        if (btnAddContactTop != null) btnAddContactTop.setOnClickListener(addContactListener);
+        if (btnAddTrustedContact != null) btnAddTrustedContact.setOnClickListener(addContactListener);
     }
 
     private void showContactForm(ContactsRepository.Contact contact) {

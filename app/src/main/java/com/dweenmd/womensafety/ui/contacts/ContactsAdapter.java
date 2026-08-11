@@ -49,28 +49,20 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        return contacts.get(position).isPrimary ? VIEW_TYPE_PRIMARY : VIEW_TYPE_OTHER;
+        return VIEW_TYPE_OTHER;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        if (viewType == VIEW_TYPE_PRIMARY) {
-            return new PrimaryContactViewHolder(inflater.inflate(R.layout.item_contact_primary, parent, false));
-        } else {
-            return new OtherContactViewHolder(inflater.inflate(R.layout.item_contact, parent, false));
-        }
+        return new ContactViewHolder(inflater.inflate(R.layout.item_contact, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ContactsRepository.Contact contact = contacts.get(position);
-        if (holder instanceof PrimaryContactViewHolder) {
-            ((PrimaryContactViewHolder) holder).bind(contact);
-        } else if (holder instanceof OtherContactViewHolder) {
-            ((OtherContactViewHolder) holder).bind(contact);
-        }
+        ((ContactViewHolder) holder).bind(contact);
     }
 
     @Override
@@ -103,50 +95,43 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         popup.show();
     }
 
-    class PrimaryContactViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvRelationship, tvPhone;
-        View btnCall, btnMessage, btnMenu;
+    class ContactViewHolder extends RecyclerView.ViewHolder {
+        TextView tvName, tvSubtitle, tvInitials;
+        View btnCall, btnMessage, btnMenu, ivAvatar, vAvatarBg;
 
-        PrimaryContactViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvName = itemView.findViewById(R.id.tv_name_primary);
-            tvRelationship = itemView.findViewById(R.id.tv_relationship_primary);
-            tvPhone = itemView.findViewById(R.id.tv_phone_primary);
-            btnCall = itemView.findViewById(R.id.btn_call_primary);
-            btnMessage = itemView.findViewById(R.id.btn_message_primary);
-            btnMenu = itemView.findViewById(R.id.btn_menu_primary);
-        }
-
-        void bind(ContactsRepository.Contact contact) {
-            tvName.setText(contact.name);
-            tvRelationship.setText(contact.relationship);
-            tvPhone.setText(contact.phone);
-
-            btnCall.setOnClickListener(v -> listener.onCall(contact));
-            btnMessage.setOnClickListener(v -> listener.onMessage(contact));
-            btnMenu.setOnClickListener(v -> showPopupMenu(v, contact));
-        }
-    }
-
-    class OtherContactViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvRelationship, tvPhone;
-        View btnCall, btnMenu;
-
-        OtherContactViewHolder(@NonNull View itemView) {
+        ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name_other);
-            tvRelationship = itemView.findViewById(R.id.tv_relationship_other);
-            tvPhone = itemView.findViewById(R.id.tv_phone_other);
+            tvSubtitle = itemView.findViewById(R.id.tv_subtitle_other);
+            tvInitials = itemView.findViewById(R.id.tv_initials);
+            ivAvatar = itemView.findViewById(R.id.iv_avatar);
+            vAvatarBg = itemView.findViewById(R.id.v_avatar_bg);
             btnCall = itemView.findViewById(R.id.btn_call_other);
+            btnMessage = itemView.findViewById(R.id.btn_message_other);
             btnMenu = itemView.findViewById(R.id.btn_menu_other);
         }
 
         void bind(ContactsRepository.Contact contact) {
             tvName.setText(contact.name);
-            tvRelationship.setText(contact.relationship);
-            tvPhone.setText(contact.phone);
+            tvSubtitle.setText(contact.relationship + " • " + contact.phone);
+            
+            if (contact.name != null && contact.name.length() > 0) {
+                tvInitials.setText(contact.name.substring(0, 1).toUpperCase());
+                tvInitials.setVisibility(View.VISIBLE);
+                vAvatarBg.setVisibility(View.VISIBLE);
+                ivAvatar.setVisibility(View.GONE);
+            } else {
+                tvInitials.setVisibility(View.GONE);
+                vAvatarBg.setVisibility(View.GONE);
+                ivAvatar.setVisibility(View.VISIBLE);
+            }
+
+            if (contact.isPrimary) {
+                tvName.setText(contact.name + " (Primary)");
+            }
 
             btnCall.setOnClickListener(v -> listener.onCall(contact));
+            btnMessage.setOnClickListener(v -> listener.onMessage(contact));
             btnMenu.setOnClickListener(v -> showPopupMenu(v, contact));
         }
     }

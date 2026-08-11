@@ -46,6 +46,17 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Top App Bar
+        View btnMenu = view.findViewById(R.id.btn_menu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (requireActivity() instanceof com.dweenmd.womensafety.ui.MainActivity) {
+                    ((com.dweenmd.womensafety.ui.MainActivity) requireActivity()).openDrawer();
+                }
+            });
+        }
+        ImageView ivTopAvatar = view.findViewById(R.id.iv_top_avatar);
+
         // Header Views
         TextView tvName = view.findViewById(R.id.tv_profile_header_name);
         TextView tvEmail = view.findViewById(R.id.tv_profile_header_email);
@@ -54,7 +65,6 @@ public class ProfileFragment extends Fragment {
         View btnEditAvatar = view.findViewById(R.id.btn_edit_avatar_header);
         View btnCompleteProfile = view.findViewById(R.id.btn_complete_profile);
         View cardProfileCompletion = view.findViewById(R.id.card_profile_completion);
-        View btnDismissCompletion = view.findViewById(R.id.btn_dismiss_completion);
 
         // Initialize header data
         viewModel.getName().observe(getViewLifecycleOwner(), tvName::setText);
@@ -73,49 +83,34 @@ public class ProfileFragment extends Fragment {
                         .circleCrop()
                         .placeholder(R.drawable.ic_person)
                         .into(ivAvatar);
+                if (ivTopAvatar != null) {
+                    Glide.with(this)
+                            .load(photoUrl)
+                            .circleCrop()
+                            .placeholder(R.drawable.ic_person)
+                            .into(ivTopAvatar);
+                }
             }
         });
 
         View.OnClickListener editProfileListener = v -> startActivity(new Intent(requireContext(), EditProfileActivity.class));
         btnEditAvatar.setOnClickListener(editProfileListener);
         btnCompleteProfile.setOnClickListener(editProfileListener);
-        
-        if (btnDismissCompletion != null && cardProfileCompletion != null) {
-            btnDismissCompletion.setOnClickListener(v -> cardProfileCompletion.setVisibility(View.GONE));
-        }
 
         // ACCOUNT
-        setupMenuItem(view.findViewById(R.id.menu_personal_info), android.R.drawable.ic_menu_info_details, "Personal Information", "Name, phone & email", R.color.tint_account_bg, R.color.tint_account_icon, v -> showPersonalInfoBottomSheet());
-        setupMenuItem(view.findViewById(R.id.menu_security), android.R.drawable.ic_lock_idle_lock, "Password & Security", "Password, 2FA & devices", R.color.tint_account_bg, R.color.tint_account_icon, v -> startActivity(new Intent(requireContext(), SecurityActivity.class)));
-        setupMenuItem(view.findViewById(R.id.menu_login_activity), android.R.drawable.ic_menu_recent_history, "Login Activity", "", R.color.tint_account_bg, R.color.tint_account_icon, v -> startActivity(new Intent(requireContext(), LoginActivityHistoryActivity.class)));
+        setupMenuItem(view.findViewById(R.id.menu_personal_info), android.R.drawable.ic_menu_info_details, "Personal Information", "", R.color.tint_account_bg, R.color.tint_account_icon, v -> showPersonalInfoBottomSheet());
+        setupMenuItem(view.findViewById(R.id.menu_security), android.R.drawable.ic_lock_idle_lock, "Password & Security", "", R.color.tint_account_bg, R.color.tint_account_icon, v -> startActivity(new Intent(requireContext(), SecurityActivity.class)));
         setupMenuItem(view.findViewById(R.id.menu_verification), android.R.drawable.checkbox_on_background, "Verification", "", R.color.tint_account_bg, R.color.tint_account_icon, v -> Toast.makeText(requireContext(), "Verification settings", Toast.LENGTH_SHORT).show());
 
-        // SAFETY
-        setupMenuItem(view.findViewById(R.id.menu_emergency_contacts), android.R.drawable.ic_menu_call, "Emergency Contacts", "Manage trusted emergency contacts", R.color.tint_safety_bg, R.color.tint_safety_icon, v -> Toast.makeText(requireContext(), "Go to Contacts tab", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_sos_settings), android.R.drawable.ic_menu_help, "SOS Settings", "Configure emergency/SOS preferences", R.color.tint_safety_bg, R.color.tint_safety_icon, v -> Toast.makeText(requireContext(), "SOS settings", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_location_sharing), android.R.drawable.ic_menu_mylocation, "Location Sharing", "Manage location sharing permissions", R.color.tint_safety_bg, R.color.tint_safety_icon, v -> Toast.makeText(requireContext(), "Location sharing", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_safety_notifications), android.R.drawable.ic_dialog_alert, "Safety Notifications", "Manage safety alerts and notifications", R.color.tint_safety_bg, R.color.tint_safety_icon, v -> Toast.makeText(requireContext(), "Safety notifications", Toast.LENGTH_SHORT).show());
-
-        // APP & SETTINGS
-        setupMenuItem(view.findViewById(R.id.menu_notifications), android.R.drawable.ic_popup_reminder, "Notifications", "Manage app notifications", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "Notifications", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_appearance), android.R.drawable.ic_menu_view, "Appearance", "Light / Dark / System", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "Appearance", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_language), android.R.drawable.ic_menu_sort_alphabetically, "Language", "Choose application language", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "Language", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_app_preferences), android.R.drawable.ic_menu_preferences, "App Preferences", "Manage general application preferences", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "App Preferences", Toast.LENGTH_SHORT).show());
+        // APP
+        setupMenuItem(view.findViewById(R.id.menu_notifications), android.R.drawable.ic_popup_reminder, "Notifications", "", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "Notifications", Toast.LENGTH_SHORT).show());
+        setupMenuItem(view.findViewById(R.id.menu_app_preferences), android.R.drawable.ic_menu_preferences, "App Preferences", "", R.color.tint_settings_bg, R.color.tint_settings_icon, v -> Toast.makeText(requireContext(), "App Preferences", Toast.LENGTH_SHORT).show());
 
         // PRIVACY
-        setupMenuItem(view.findViewById(R.id.menu_privacy_settings), android.R.drawable.ic_secure, "Privacy Settings", "Control your profile and data visibility", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PrivacySettingsActivity.class)));
-        setupMenuItem(view.findViewById(R.id.menu_location_privacy), android.R.drawable.ic_menu_mylocation, "Location Privacy", "Manage location access and sharing", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PrivacySettingsActivity.class)));
-        setupMenuItem(view.findViewById(R.id.menu_contact_permissions), android.R.drawable.ic_menu_recent_history, "Contact Permissions", "Manage contact access", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PrivacySettingsActivity.class)));
-        setupMenuItem(view.findViewById(R.id.menu_privacy_policy), android.R.drawable.ic_menu_info_details, "Privacy Policy", "View privacy policy", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> showPrivacyPolicyDialog());
+        setupMenuItem(view.findViewById(R.id.menu_privacy_settings), android.R.drawable.ic_secure, "Settings", "", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PrivacySettingsActivity.class)));
+        setupMenuItem(view.findViewById(R.id.menu_location_permissions), android.R.drawable.ic_menu_mylocation, "Permissions", "", R.color.tint_privacy_bg, R.color.tint_privacy_icon, v -> startActivity(new Intent(requireContext(), PrivacySettingsActivity.class)));
 
-        // SUPPORT
-        setupMenuItem(view.findViewById(R.id.menu_help_center), android.R.drawable.ic_menu_help, "Help Center", "Get help and find answers", R.color.tint_support_bg, R.color.tint_support_icon, v -> Toast.makeText(requireContext(), "Help Center", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_contact_support), android.R.drawable.ic_dialog_email, "Contact Support", "Send us a message", R.color.tint_support_bg, R.color.tint_support_icon, v -> Toast.makeText(requireContext(), "Contact Support", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_report_problem), android.R.drawable.ic_menu_report_image, "Report a Problem", "Report bugs or issues", R.color.tint_support_bg, R.color.tint_support_icon, v -> Toast.makeText(requireContext(), "Report a Problem", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_rate_app), android.R.drawable.star_on, "Rate the App", "Rate us on the Play Store", R.color.tint_support_bg, R.color.tint_support_icon, v -> Toast.makeText(requireContext(), "Rate the App", Toast.LENGTH_SHORT).show());
-        setupMenuItem(view.findViewById(R.id.menu_about_app), android.R.drawable.ic_dialog_info, "About the App", "", R.color.tint_support_bg, R.color.tint_support_icon, v -> Toast.makeText(requireContext(), "About Women Safety", Toast.LENGTH_SHORT).show());
-
-        // BOTTOM ACTIONS
+        // ACTIONS
         view.findViewById(R.id.btn_logout).setOnClickListener(v -> showLogoutDialog());
         view.findViewById(R.id.btn_delete_account).setOnClickListener(v -> showDeleteAccountDialog());
     }
@@ -148,16 +143,6 @@ public class ProfileFragment extends Fragment {
     private void showPersonalInfoBottomSheet() {
         BottomSheetPersonalInfo bottomSheet = new BottomSheetPersonalInfo();
         bottomSheet.show(getParentFragmentManager(), "PersonalInfoBottomSheet");
-    }
-
-    private void showPrivacyPolicyDialog() {
-        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Privacy Policy")
-                .setMessage("Your privacy is important to us.\n\n" +
-                        "This app collects location data in the background to provide live tracking during emergencies. Your data is stored securely using Firebase and is only shared with your selected emergency contacts when an SOS is triggered.\n\n" +
-                        "By using this app, you agree to our data collection and sharing practices as outlined.")
-                .setPositiveButton("Close", null)
-                .show();
     }
 
     private void showLogoutDialog() {
@@ -198,3 +183,4 @@ public class ProfileFragment extends Fragment {
         return prefix + "******" + suffix;
     }
 }
+

@@ -105,7 +105,11 @@ public class SosForegroundService extends Service {
                     .build();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                startForeground(115, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);
+                int serviceType = ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    serviceType |= ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
+                }
+                startForeground(115, notification, serviceType);
             } else {
                 startForeground(115, notification);
             }

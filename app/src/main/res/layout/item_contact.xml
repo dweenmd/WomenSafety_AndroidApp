@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    android:background="@drawable/bg_premium_input_normal">
+    style="@style/Widget.SereneGuardian.CardView.Standard">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,70 +15,98 @@
         android:padding="16dp">
 
         <FrameLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_premium_social_btn">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp">
+            
+            <!-- Avatar background if initials are used (optional) -->
+            <View
+                android:id="@+id/v_avatar_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_bg_secondary"
+                android:backgroundTint="#F0E8FF" />
+
+            <TextView
+                android:id="@+id/tv_initials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/m3_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="AH" />
+                
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_person"
-                android:importantForAccessibility="no"
-                app:tint="@color/premium_login_text_secondary" />
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="16dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_name_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Father"
-                android:textColor="@color/premium_login_text_main"
-                android:textSize="16sp"
+                tools:text="Sarah Rahman"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/m3_on_surface"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_relationship_other"
+                android:id="@+id/tv_subtitle_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Parent"
-                android:textColor="@color/premium_login_text_secondary"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp" />
-
-            <TextView
-                android:id="@+id/tv_phone_other"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="+880 1XXXXXXXXX"
-                android:textColor="@color/premium_login_text_secondary"
+                tools:text="Sister • +1 (555) 123-4567"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/m3_on_surface_variant"
                 android:textSize="12sp"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/btn_call_other"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_premium_social_btn"
-            android:src="@android:drawable/ic_menu_call"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/circle_bg_secondary"
+            android:backgroundTint="#F0E8FF"
+            android:src="@android:drawable/stat_sys_phone_call"
+            android:padding="6dp"
+            android:scaleType="centerInside"
             android:contentDescription="@string/contact_action_call"
-            app:tint="@color/premium_login_primary"
+            app:tint="@color/m3_primary"
+            android:layout_marginEnd="8dp" />
+            
+        <ImageButton
+            android:id="@+id/btn_message_other"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/circle_bg_secondary"
+            android:backgroundTint="#F0E8FF"
+            android:src="@android:drawable/stat_notify_chat"
+            android:padding="6dp"
+            android:scaleType="centerInside"
+            android:contentDescription="Message Contact"
+            app:tint="@color/m3_primary"
             android:layout_marginEnd="8dp" />
 
         <ImageButton
             android:id="@+id/btn_menu_other"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_more"
+            android:src="@drawable/baseline_more_vert_24"
             android:contentDescription="@string/cd_contact_menu"
-            app:tint="@color/premium_login_text_secondary" />
+            app:tint="@color/m3_on_surface_variant" />
     </LinearLayout>
-</FrameLayout>
+</com.google.android.material.card.MaterialCardView>

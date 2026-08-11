@@ -8,43 +8,166 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
-    <!-- Phase 2: Typography (Roboto is default sans-serif in Android) -->
+    <!-- Serene Guardian: Typography (Inter) -->
+    <!-- Display Large -->
+    <style name="TextAppearance.SereneGuardian.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">57sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">700</item>
+        <item name="android:letterSpacing">-0.004</item> <!-- ~ -0.25px / 57px -->
+    </style>
+
+    <!-- Headline Large -->
+    <style name="TextAppearance.SereneGuardian.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <!-- Headline Medium -->
+    <style name="TextAppearance.SereneGuardian.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <!-- Title Large -->
+    <style name="TextAppearance.SereneGuardian.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <!-- Title Medium -->
+    <style name="TextAppearance.SereneGuardian.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:letterSpacing">0.009</item> <!-- ~ 0.15px / 16px -->
+    </style>
+
+    <!-- Body Large -->
+    <style name="TextAppearance.SereneGuardian.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:letterSpacing">0.031</item> <!-- ~ 0.5px / 16px -->
+    </style>
+
+    <!-- Body Medium -->
+    <style name="TextAppearance.SereneGuardian.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:letterSpacing">0.017</item> <!-- ~ 0.25px / 14px -->
+    </style>
+
+    <!-- Label Large -->
+    <style name="TextAppearance.SereneGuardian.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:letterSpacing">0.007</item> <!-- ~ 0.1px / 14px -->
+    </style>
+
+    <!-- Label Small -->
+    <style name="TextAppearance.SereneGuardian.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:letterSpacing">0.045</item> <!-- ~ 0.5px / 11px -->
+    </style>
+
+    <!-- Serene Guardian: Cards & Shapes -->
+    <!-- Primary Cards (24dp rounding, 1px border) -->
+    <style name="Widget.SereneGuardian.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/m3_surface_container_lowest</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/m3_outline</item>
+    </style>
+    
+    <!-- Standard Containers (16dp) -->
+    <style name="Widget.SereneGuardian.CardView.Standard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/m3_surface_container_lowest</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/m3_outline</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="Widget.SereneGuardian.Button.Primary" parent="Widget.Material3.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="backgroundTint">@color/m3_primary</item>
+        <item name="android:textColor">@color/m3_on_primary</item>
+        <item name="android:textAppearance">@style/TextAppearance.SereneGuardian.LabelLarge</item>
+    </style>
+    
+    <style name="Widget.SereneGuardian.Button.Secondary" parent="Widget.Material3.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="backgroundTint">@color/m3_secondary</item>
+        <item name="android:textColor">@color/m3_on_secondary</item>
+        <item name="android:textAppearance">@style/TextAppearance.SereneGuardian.LabelLarge</item>
+    </style>
+    
+    <style name="Widget.SereneGuardian.Button.Emergency" parent="Widget.Material3.Button">
+        <item name="cornerRadius">100dp</item> <!-- Perfect circle/pill -->
+        <item name="backgroundTint">@color/m3_error</item>
+        <item name="android:textColor">@color/m3_on_error</item>
+        <item name="android:textAppearance">@style/TextAppearance.SereneGuardian.TitleLarge</item>
+        <item name="android:shadowColor">@color/sos_red_glow</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">16</item>
+    </style>
+
+    <!-- Shape overlays -->
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    
+    <!-- Maintain Legacy Text Appearances for unchanged layouts -->
     <style name="TextAppearance.WomenSafety.AppTitle" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="TextAppearance.WomenSafety.ScreenTitle" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">22sp</item>
-        <item name="android:textStyle">bold</item> <!-- No semibold in standard sans-serif before Android 9, bold is fallback -->
-        <item name="android:textFontWeight">600</item> <!-- SemiBold for API 28+ -->
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">600</item>
     </style>
 
     <style name="TextAppearance.WomenSafety.CardTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textFontWeight">500</item> <!-- Medium for API 28+ -->
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">500</item>
     </style>
 
     <style name="TextAppearance.WomenSafety.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="TextAppearance.WomenSafety.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <!-- Phase 2: Card Style -->
-    <style name="Widget.WomenSafety.CardView" parent="Widget.Material3.CardView.Elevated">
-        <item name="cardCornerRadius">18dp</item>
-        <item name="cardElevation">2dp</item>
-        <item name="cardBackgroundColor">?attr/colorSurface</item>
-        <item name="strokeWidth">1dp</item>
-        <item name="strokeColor">@color/border</item>
-    </style>
+    <style name="Widget.WomenSafety.CardView" parent="Widget.SereneGuardian.CardView" />
 </resources>

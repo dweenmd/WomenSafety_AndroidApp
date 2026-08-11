@@ -67,10 +67,6 @@
             android:exported="false" />
             
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-            
-        <activity
             android:name=".ui.auth.RegisterActivity"
             android:exported="false" />
             
@@ -102,7 +98,7 @@
             android:name=".service.SosForegroundService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="location"
+            android:foregroundServiceType="location|microphone"
             tools:ignore="ForegroundServicePermission"/>
 
         <!-- Boot Receiver -->

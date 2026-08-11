@@ -30,46 +30,37 @@ public class SafetyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(SafetyViewModel.class);
 
-        MaterialSwitch switchBackground = view.findViewById(R.id.switch_background_protection);
-        MaterialSwitch switchLiveLocation = view.findViewById(R.id.switch_live_location);
-        MaterialSwitch switchShake = view.findViewById(R.id.switch_shake_detection);
-        MaterialSwitch switchAutoNotify = view.findViewById(R.id.switch_auto_notify);
-        MaterialSwitch switchSilentSos = view.findViewById(R.id.switch_silent_sos);
-        // Observe ViewModel
-        viewModel.getBackgroundProtection().observe(getViewLifecycleOwner(), switchBackground::setChecked);
-        viewModel.getLiveLocationOnSos().observe(getViewLifecycleOwner(), switchLiveLocation::setChecked);
-        viewModel.getShakeDetection().observe(getViewLifecycleOwner(), switchShake::setChecked);
-        viewModel.getAutoNotify().observe(getViewLifecycleOwner(), switchAutoNotify::setChecked);
-        viewModel.getSilentSos().observe(getViewLifecycleOwner(), switchSilentSos::setChecked);
+        // Switches removed for new dashboard design
 
-        // Update ViewModel on change
-        switchBackground.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isPressed()) {
-                viewModel.setSetting("backgroundProtection", isChecked);
-                Intent serviceIntent = new Intent(requireContext(), com.dweenmd.womensafety.service.SosForegroundService.class);
-                if (isChecked) {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        requireContext().startForegroundService(serviceIntent);
-                    } else {
-                        requireContext().startService(serviceIntent);
-                    }
-                } else {
-                    requireContext().stopService(serviceIntent);
+        android.widget.ImageButton btnMenu = view.findViewById(R.id.btn_menu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (requireActivity() instanceof com.dweenmd.womensafety.ui.MainActivity) {
+                    ((com.dweenmd.womensafety.ui.MainActivity) requireActivity()).openDrawer();
                 }
-            }
-        });
-        switchLiveLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isPressed()) viewModel.setSetting("liveLocationOnSos", isChecked);
-        });
-        switchShake.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isPressed()) viewModel.setSetting("shakeDetection", isChecked);
-        });
-        switchAutoNotify.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isPressed()) viewModel.setSetting("autoNotify", isChecked);
-        });
-        switchSilentSos.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isPressed()) viewModel.setSetting("silentSos", isChecked);
-        });
+            });
+        }
+        
+        com.google.android.material.button.MaterialButton btnSos = view.findViewById(R.id.btn_sos_main);
+        if (btnSos != null) {
+            btnSos.setOnClickListener(v -> {
+                android.widget.Toast.makeText(requireContext(), R.string.toast_triggering_sos, android.widget.Toast.LENGTH_SHORT).show();
+                new com.dweenmd.womensafety.sos.SosMessenger(requireContext()).triggerSos(new com.dweenmd.womensafety.sos.SosMessenger.SosCallback() {
+                    @Override
+                    public void onSosTriggered(String status) {
+                        android.widget.Toast.makeText(requireContext(), status, android.widget.Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_LONG).show();
+                    }
+                });
+            });
+        }
+
+        // Observe ViewModel
+        // ViewModel updates for switches removed
 
     }
 }

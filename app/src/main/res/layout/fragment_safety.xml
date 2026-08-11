@@ -1,126 +1,713 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/premium_login_bg"
+    android:background="@color/m3_background"
     tools:context=".ui.safety.SafetyFragment">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:background="@color/m3_surface"
+        app:elevation="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/safety_title"
-            android:textColor="@color/premium_login_text_main"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/m3_surface"
+            app:contentInsetStart="0dp"
+            app:elevation="0dp">
+            
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp">
 
-        <FrameLayout
+                <ImageButton
+                    android:id="@+id/btn_menu"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_menu"
+                    app:tint="@color/m3_on_surface_variant"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:text="Women Safety"
+                    android:textColor="@color/m3_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_menu"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_person"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                    app:strokeColor="@color/m3_outline_variant"
+                    app:strokeWidth="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/m3_outline_variant" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_premium_input_normal">
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="100dp">
 
-            <LinearLayout
+            <!-- Status Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Background Protection -->
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_background_protection"
+                style="@style/Widget.SereneGuardian.CardView"
+                android:layout_marginBottom="24dp">
+                
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/safety_bg_protection"
-                    android:textColor="@color/premium_login_text_main"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/safety_bg_protection_desc"
-                    android:textColor="@color/premium_login_text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp"/>
+                    android:padding="24dp">
+                    
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/ic_shield"
+                        app:tint="@color/m3_on_surface"
+                        android:alpha="0.05"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="-40dp"
+                        android:layout_marginEnd="-40dp" />
 
-                <!-- Live Location on SOS -->
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_live_location"
+                    <FrameLayout
+                        android:id="@+id/icon_status_bg"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/circle_bg_secondary"
+                        android:backgroundTint="@color/m3_surface_container"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_shield"
+                            app:tint="@color/m3_primary_container" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_protection_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/inter"
+                        android:text="Protection Active"
+                        android:textColor="@color/m3_on_surface"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/icon_status_bg"
+                        app:layout_constraintTop_toTopOf="@id/icon_status_bg" />
+                        
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/green_clr"
+                        app:layout_constraintStart_toEndOf="@id/tv_protection_title"
+                        app:layout_constraintTop_toTopOf="@id/tv_protection_title"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_protection_title" />
+
+                    <TextView
+                        android:id="@+id/tv_protection_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/inter"
+                        android:text="You are currently protected"
+                        android:textColor="@color/m3_on_surface_variant"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@id/icon_status_bg"
+                        app:layout_constraintTop_toBottomOf="@id/tv_protection_title" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/green_clr"
+                        android:backgroundTint="#1A4CAF50"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_protection_desc">
+                        
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="#4CAF50" />
+                            
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/inter"
+                            android:text="System Secure"
+                            android:textColor="#4CAF50"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- SOS Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.SereneGuardian.CardView"
+                android:layout_marginBottom="24dp">
+                
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/safety_live_location"
-                    android:textColor="@color/premium_login_text_main"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/safety_live_location_desc"
-                    android:textColor="@color/premium_login_text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp"/>
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="32dp">
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="Emergency"
+                        android:textColor="@color/m3_on_surface"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                        
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="24dp"
+                        android:fontFamily="@font/inter"
+                        android:text="Hold for emergency"
+                        android:textColor="@color/m3_on_surface_variant"
+                        android:textSize="14sp" />
 
-                <!-- Shake Detection -->
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_shake_detection"
+                    <!-- Using the custom pill style for SOS button -->
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        
+                        <View
+                            android:id="@+id/pulse_bg"
+                            android:layout_width="192dp"
+                            android:layout_height="192dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/pulse_circle"
+                            android:backgroundTint="@color/sos_red"
+                            android:alpha="0.2" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_sos_main"
+                            style="@style/Widget.SereneGuardian.Button.Emergency"
+                            android:layout_width="192dp"
+                            android:layout_height="192dp"
+                            android:layout_gravity="center"
+                            android:text="SOS"
+                            android:textSize="28sp"
+                            app:icon="@drawable/ic_warning"
+                            app:iconGravity="textTop"
+                            app:iconPadding="8dp"
+                            app:iconSize="32dp"
+                            app:iconTint="@color/m3_on_error"
+                            app:strokeWidth="4dp"
+                            app:strokeColor="@color/m3_surface_container_lowest" />
+                    </FrameLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Quick Actions -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.SereneGuardian.CardView"
+                android:layout_marginBottom="16dp">
+                
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/safety_shake_sos"
-                    android:textColor="@color/premium_login_text_main"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/safety_shake_sos_desc"
-                    android:textColor="@color/premium_login_text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp"/>
+                    android:orientation="vertical"
+                    android:padding="24dp">
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="Quick Actions"
+                        android:textColor="@color/m3_on_surface"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+                        
+                    <!-- Share Live Location -->
+                    <LinearLayout
+                        android:id="@+id/btn_share_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+                        
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_secondary_container">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_menu_mylocation"
+                                app:tint="@color/m3_primary_container" />
+                        </FrameLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Share Live Location"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Share tracking link with contacts"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/m3_on_surface_variant" />
+                    </LinearLayout>
+                    
+                    <!-- Safety Timer -->
+                    <LinearLayout
+                        android:id="@+id/btn_safety_timer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+                        
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_secondary_container">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_safety"
+                                app:tint="@color/m3_primary_container" />
+                        </FrameLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Safety Timer"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Auto-alert if you don't check in"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/m3_on_surface_variant" />
+                    </LinearLayout>
+                    
+                    <!-- Check In -->
+                    <LinearLayout
+                        android:id="@+id/btn_check_in"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+                        
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_secondary_container">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_check"
+                                app:tint="@color/m3_primary_container" />
+                        </FrameLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Check In"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mark yourself as safe"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/m3_on_surface_variant" />
+                    </LinearLayout>
+                    
+                    <!-- Emergency Contacts -->
+                    <LinearLayout
+                        android:id="@+id/btn_manage_contacts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+                        
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_secondary_container">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_person"
+                                app:tint="@color/m3_primary_container" />
+                        </FrameLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Emergency Contacts"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Manage trusted circle"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/m3_on_surface_variant" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <!-- Auto Notify Low Battery -->
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_auto_notify"
+            <!-- Info Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.SereneGuardian.CardView.Standard"
+                app:cardBackgroundColor="#4DE6E1FF"
+                app:strokeColor="#335D3FD3"
+                android:layout_marginBottom="24dp">
+                
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/safety_low_battery"
-                    android:textColor="@color/premium_login_text_main"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/safety_low_battery_desc"
-                    android:textColor="@color/premium_login_text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp"/>
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+                    
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_dialog_info"
+                        app:tint="@color/m3_primary_container" />
+                        
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/inter"
+                        android:text="Your trusted contacts can be notified when you activate an emergency feature."
+                        android:textColor="@color/m3_on_surface_variant"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <!-- Silent SOS Mode -->
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_silent_sos"
+            <!-- Safety History -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.SereneGuardian.CardView"
+                android:layout_marginBottom="24dp">
+                
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/safety_silent_sos"
-                    android:textColor="@color/premium_login_text_main"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/safety_silent_sos_desc"
-                    android:textColor="@color/premium_login_text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp"/>
+                    android:orientation="vertical"
+                    android:padding="24dp">
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/inter"
+                            android:text="Safety History"
+                            android:textColor="@color/m3_on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                            
+                        <TextView
+                            android:id="@+id/btn_view_all_history"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter"
+                            android:text="View All"
+                            android:textColor="@color/m3_primary_container"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true" />
+                    </LinearLayout>
+                    
+                    <!-- Timeline Items -->
+                    <!-- Event 1 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp">
+                        
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_surface_container_lowest"
+                            android:padding="2dp">
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/circle_bg_secondary"
+                                android:backgroundTint="@color/m3_surface" />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_check"
+                                app:tint="@color/m3_on_surface_variant" />
+                        </FrameLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/rounded_bg_gray"
+                            android:backgroundTint="@color/m3_surface_container_low"
+                            android:padding="16dp">
+                            
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Checked In Safe"
+                                    android:textColor="@color/m3_on_surface"
+                                    android:textStyle="bold"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Today, 2:30 PM"
+                                    android:textColor="@color/m3_on_surface_variant"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+                            
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Location: Downtown Office"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="12sp"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                    </LinearLayout>
 
-            </LinearLayout>
-        </FrameLayout>
+                    <!-- Event 2 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_surface_container_lowest"
+                            android:padding="2dp">
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/circle_bg_secondary"
+                                android:backgroundTint="@color/m3_surface" />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_safety"
+                                app:tint="@color/m3_on_surface_variant" />
+                        </FrameLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/rounded_bg_gray"
+                            android:backgroundTint="@color/m3_surface_container_low"
+                            android:padding="16dp">
+                            
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Timer Completed"
+                                    android:textColor="@color/m3_on_surface"
+                                    android:textStyle="bold"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Yesterday, 9:15 PM"
+                                    android:textColor="@color/m3_on_surface_variant"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+                            
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Evening run completed safely."
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="12sp"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

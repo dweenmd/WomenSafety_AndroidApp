@@ -13,9 +13,14 @@
     <color name="sos">#EF4444</color>
     <color name="sos_dark">#DC2626</color>
     <color name="sos_background">#450a0a</color>
-    
+    <color name="sos_red">#EF4444</color>
+    <color name="sos_red_glow">#33EF4444</color>
+
     <color name="status_safe">#22C55E</color>
+    <color name="status_safe_green">#22C55E</color>
+    <color name="status_safe_bg">#064E3B</color>
     <color name="status_warning">#FBBF24</color>
+    <color name="status_warning_bg">#451A03</color>
 
     <!-- Phase 3: Premium Login System Colors (Dark Mode) -->
     <color name="premium_login_bg">#0B0910</color>

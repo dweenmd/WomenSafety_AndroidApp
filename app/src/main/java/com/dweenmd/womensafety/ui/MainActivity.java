@@ -13,6 +13,13 @@ import androidx.navigation.ui.NavigationUI;
 import com.dweenmd.womensafety.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import android.view.View;
+import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.bumptech.glide.Glide;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_NOTIFICATION_PERMISSION = 1001;
@@ -35,10 +42,104 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = navHostFragment.getNavController();
             BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
             NavigationUI.setupWithNavController(bottomNav, navController);
+            
+            com.google.android.material.navigation.NavigationView navView = findViewById(R.id.nav_view);
+            NavigationUI.setupWithNavController(navView, navController);
+
+            // Handle custom clicks in Navigation Drawer
+            navView.setNavigationItemSelectedListener(item -> {
+                int id = item.getItemId();
+                boolean handled;
+                
+                if (id == R.id.nav_settings) {
+                    startActivity(new android.content.Intent(this, com.dweenmd.womensafety.ui.profile.SettingsActivity.class));
+                    handled = true;
+                } else if (id == R.id.nav_signout) {
+                    new com.dweenmd.womensafety.data.AuthRepository(this).signOut();
+                    startActivity(new android.content.Intent(this, com.dweenmd.womensafety.ui.auth.LoginActivity.class));
+                    finish();
+                    handled = true;
+                } else if (id == R.id.nav_emergency_sos) {
+                    navController.navigate(R.id.homeFragment);
+                    handled = true;
+                } else if (id == R.id.nav_activity_log) {
+                    startActivity(new android.content.Intent(this, com.dweenmd.womensafety.ui.profile.LoginActivityHistoryActivity.class));
+                    handled = true;
+                } else if (id == R.id.nav_about) {
+                    showAboutDialog();
+                    handled = true;
+                } else {
+                    // Let NavigationUI handle standard fragment navigation
+                    handled = NavigationUI.onNavDestinationSelected(item, navController);
+                }
+                
+                if (handled) {
+                    androidx.drawerlayout.widget.DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                    if (drawer != null) {
+                        drawer.closeDrawer(androidx.core.view.GravityCompat.START);
+                    }
+                }
+                return handled;
+            });
+
+            setupNavHeader(navView, navController);
+
+            // Make the "Sign Out" item red to match the design
+            android.view.Menu menu = navView.getMenu();
+            android.view.MenuItem logoutItem = menu.findItem(R.id.nav_signout);
+            if (logoutItem != null) {
+                android.text.SpannableString s = new android.text.SpannableString(logoutItem.getTitle());
+                s.setSpan(new android.text.style.ForegroundColorSpan(androidx.core.content.ContextCompat.getColor(this, R.color.m3_error)), 0, s.length(), 0);
+                logoutItem.setTitle(s);
+            }
         }
         
         checkAndRequestPermissions();
         checkAndStartService();
+    }
+
+    private void setupNavHeader(com.google.android.material.navigation.NavigationView navView, NavController navController) {
+        View headerView = navView.getHeaderView(0);
+        if (headerView == null) return;
+
+        TextView nameText = headerView.findViewById(R.id.drawer_name);
+        TextView emailText = headerView.findViewById(R.id.drawer_email);
+        ShapeableImageView avatarImage = headerView.findViewById(R.id.drawer_avatar);
+        android.widget.Button viewProfileBtn = headerView.findViewById(R.id.drawer_view_profile);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            nameText.setText(user.getDisplayName() != null ? user.getDisplayName() : "User");
+            emailText.setText(user.getEmail());
+            if (user.getPhotoUrl() != null) {
+                Glide.with(this).load(user.getPhotoUrl()).into(avatarImage);
+            }
+        }
+
+        viewProfileBtn.setOnClickListener(v -> {
+            navController.navigate(R.id.profileFragment);
+            androidx.drawerlayout.widget.DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            if (drawer != null) {
+                drawer.closeDrawer(androidx.core.view.GravityCompat.START);
+            }
+        });
+    }
+
+    private void showAboutDialog() {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("About WomenSafety")
+                .setMessage("WomenSafety is your personal safety companion. " +
+                        "\n\nVersion: 1.0" +
+                        "\nDeveloped with ❤️ for safety.")
+                .setPositiveButton("OK", null)
+                .show();
+    }
+    
+    public void openDrawer() {
+        androidx.drawerlayout.widget.DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer != null) {
+            drawer.openDrawer(androidx.core.view.GravityCompat.START);
+        }
     }
     
     private void checkAndRequestPermissions() {
@@ -74,12 +175,23 @@ public class MainActivity extends AppCompatActivity {
         boolean isProtectionEnabled = prefs.getBoolean("backgroundProtection", true);
         
         if (isProtectionEnabled) {
-            android.content.Intent serviceIntent = new android.content.Intent(this, com.dweenmd.womensafety.service.SosForegroundService.class);
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                startForegroundService(serviceIntent);
-            } else {
-                startService(serviceIntent);
+            // Check for location permission before starting location FGS to prevent Android 14 crashes
+            if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                android.content.Intent serviceIntent = new android.content.Intent(this, com.dweenmd.womensafety.service.SosForegroundService.class);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent);
+                } else {
+                    startService(serviceIntent);
+                }
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            checkAndStartService();
         }
     }
 }
