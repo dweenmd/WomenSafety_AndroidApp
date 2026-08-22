@@ -112,7 +112,7 @@ public class SosMessenger {
         String message = "Emergency! I'm in trouble!\nPlease help me ASAP.\nMy current location: " + locationText;
 
         // TODO: push alerts via a real backend (AlertBackendClient/FCM) are not implemented yet.
-        SmsManager smsManager = context.getSystemService(SmsManager.class);
+        SmsManager smsManager = SmsSimManager.resolveSmsManager(context);
         int sentCount = 0;
 
         for (ContactsRepository.Contact contact : contacts) {

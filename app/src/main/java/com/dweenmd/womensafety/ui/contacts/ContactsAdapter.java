@@ -25,6 +25,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
     public interface OnContactActionListener {
         void onCall(ContactsRepository.Contact contact);
         void onMessage(ContactsRepository.Contact contact);
+        void onShareWhatsApp(ContactsRepository.Contact contact);
         void onEdit(ContactsRepository.Contact contact);
         void onSetPrimary(ContactsRepository.Contact contact);
         void onDelete(ContactsRepository.Contact contact);
@@ -65,11 +66,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
     private void showPopupMenu(View anchor, ContactsRepository.Contact contact) {
         PopupMenu popup = new PopupMenu(anchor.getContext(), anchor);
         popup.getMenu().add(0, 1, 0, "Edit Contact");
+        popup.getMenu().add(0, 4, 0, "Share Location via WhatsApp");
         if (!contact.isPrimary) {
             popup.getMenu().add(0, 2, 0, "Set as Primary");
         }
         popup.getMenu().add(0, 3, 0, "Delete");
-        
+
         popup.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case 1:
@@ -80,6 +82,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
                     return true;
                 case 3:
                     listener.onDelete(contact);
+                    return true;
+                case 4:
+                    listener.onShareWhatsApp(contact);
                     return true;
             }
             return false;

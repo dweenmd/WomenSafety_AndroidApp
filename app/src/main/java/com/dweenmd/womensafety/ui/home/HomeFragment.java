@@ -135,20 +135,8 @@ public class HomeFragment extends Fragment {
     private void setupQuickActions(View view) {
         View btnShareLoc = view.findViewById(R.id.btn_share_location_home);
         if (btnShareLoc != null) {
-            btnShareLoc.setOnClickListener(v -> {
-                Toast.makeText(requireContext(), "Sharing location...", Toast.LENGTH_SHORT).show();
-                sosMessenger.shareLocationOnly(new SosMessenger.SosCallback() {
-                    @Override
-                    public void onSosTriggered(String status) {
-                        Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
-                    }
-                });
-            });
+            btnShareLoc.setOnClickListener(v ->
+                    com.dweenmd.womensafety.sos.LiveShareUi.handle(HomeFragment.this));
         }
 
         View btnTimer = view.findViewById(R.id.btn_safety_timer_home);

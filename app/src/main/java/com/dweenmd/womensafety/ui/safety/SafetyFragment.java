@@ -106,28 +106,15 @@ public class SafetyFragment extends Fragment {
     private void setupQuickActions(View view) {
         view.findViewById(R.id.btn_emergency_call).setOnClickListener(v -> sosMessenger.dialEmergencyNumber());
 
-        view.findViewById(R.id.btn_share_location).setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "Sharing location...", Toast.LENGTH_SHORT).show();
-            sosMessenger.shareLocationOnly(new SosMessenger.SosCallback() {
-                @Override
-                public void onSosTriggered(String status) {
-                    Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
-                }
-            });
-        });
-
-        view.findViewById(R.id.btn_manage_contacts).setOnClickListener(v -> 
+        view.findViewById(R.id.btn_share_location).setOnClickListener(v ->
+                com.dweenmd.womensafety.sos.LiveShareUi.handle(SafetyFragment.this));
+        view.findViewById(R.id.btn_manage_contacts).setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.contactsFragment));
-        
-        view.findViewById(R.id.btn_check_in).setOnClickListener(v -> 
+
+        view.findViewById(R.id.btn_check_in).setOnClickListener(v ->
                 Toast.makeText(requireContext(), "Safety Check-in completed", Toast.LENGTH_SHORT).show());
-                
-        view.findViewById(R.id.btn_safety_timer).setOnClickListener(v -> 
+
+        view.findViewById(R.id.btn_safety_timer).setOnClickListener(v ->
                 Toast.makeText(requireContext(), "Safety Timer coming soon", Toast.LENGTH_SHORT).show());
     }
 
@@ -151,15 +138,67 @@ public class SafetyFragment extends Fragment {
 
         if (switchShake != null) {
             switchShake.setChecked(prefs.getBoolean("shakeDetection", true));
-            switchShake.setOnCheckedChangeListener((btn, isChecked) -> 
+            switchShake.setOnCheckedChangeListener((btn, isChecked) ->
                     prefs.edit().putBoolean("shakeDetection", isChecked).apply());
         }
 
         if (switchLiveLoc != null) {
             switchLiveLoc.setChecked(prefs.getBoolean("liveLocationOnSos", true));
-            switchLiveLoc.setOnCheckedChangeListener((btn, isChecked) -> 
+            switchLiveLoc.setOnCheckedChangeListener((btn, isChecked) ->
                     prefs.edit().putBoolean("liveLocationOnSos", isChecked).apply());
         }
+
+        setupSimSelector(view);
+    }
+
+    private void setupSimSelector(View view) {
+        TextView tvSimValue = view.findViewById(R.id.tv_sms_sim_value);
+        View rowSim = view.findViewById(R.id.row_sms_sim);
+        if (tvSimValue == null || rowSim == null) return;
+
+        tvSimValue.setText(com.dweenmd.womensafety.sos.SmsSimManager.getPreferredSimLabel(requireContext()));
+
+        rowSim.setOnClickListener(v -> {
+            java.util.List<com.dweenmd.womensafety.sos.SmsSimManager.SimInfo> sims =
+                    com.dweenmd.womensafety.sos.SmsSimManager.getActiveSims(requireContext());
+
+            if (sims.isEmpty()) {
+                // Single SIM or no permission — offer to request permission when needed
+                if (!com.dweenmd.womensafety.sos.SmsSimManager.hasPhoneStatePermission(requireContext())) {
+                    androidx.core.app.ActivityCompat.requestPermissions(requireActivity(),
+                            new String[]{android.Manifest.permission.READ_PHONE_STATE}, 200);
+                    Toast.makeText(requireContext(), "Grant Phone permission to pick a SIM", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Only one SIM is active on this device", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            long current = com.dweenmd.womensafety.sos.SmsSimManager.getPreferredSubId(requireContext());
+            java.util.List<String> labels = new java.util.ArrayList<>();
+            labels.add(getString(R.string.safety_sim_default));
+            for (com.dweenmd.womensafety.sos.SmsSimManager.SimInfo sim : sims) {
+                labels.add(sim.label());
+            }
+            int checked = 0;
+            for (int i = 0; i < sims.size(); i++) {
+                if (sims.get(i).subId == current) {
+                    checked = i + 1;
+                    break;
+                }
+            }
+
+            new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.safety_sim_select_title)
+                    .setSingleChoiceItems(labels.toArray(new String[0]), checked, (dialog, which) -> {
+                        long subId = (which == 0) ? -1L : sims.get(which - 1).subId;
+                        com.dweenmd.womensafety.sos.SmsSimManager.setPreferredSubId(requireContext(), subId);
+                        tvSimValue.setText(com.dweenmd.womensafety.sos.SmsSimManager.getPreferredSimLabel(requireContext()));
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+        });
     }
 
     private void startSafetyService() {

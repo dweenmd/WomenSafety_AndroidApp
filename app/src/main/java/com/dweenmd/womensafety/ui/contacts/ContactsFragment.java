@@ -107,6 +107,44 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
     }
 
     @Override
+    public void onShareWhatsApp(ContactsRepository.Contact contact) {
+        if (contact.phone == null || contact.phone.isEmpty()) return;
+        com.dweenmd.womensafety.sos.LiveSessionManager manager =
+                new com.dweenmd.womensafety.sos.LiveSessionManager(requireContext());
+
+        if (com.dweenmd.womensafety.sos.LiveSessionManager.isSharing(requireContext())) {
+            manager.shareViaWhatsApp(contact.phone,
+                    manager.buildShareUrl(requireContext()
+                            .getSharedPreferences("app_settings", android.content.Context.MODE_PRIVATE)
+                            .getString(com.dweenmd.womensafety.service.LiveLocationService.PREF_SESSION_ID, "")));
+        } else {
+            // No live session: send the current location as a one-time map link
+            new com.dweenmd.womensafety.data.LocationRepository(requireContext())
+                    .getCurrentLocation(new com.dweenmd.womensafety.data.LocationRepository.LocationCallbackResult() {
+                        @Override
+                        public void onSuccess(android.location.Location location) {
+                            if (!isAdded()) return;
+                            String url = "https://www.google.com/maps/search/?api=1&query="
+                                    + location.getLatitude() + "," + location.getLongitude();
+                            String e164 = contact.phone.replaceAll("[^0-9]", "");
+                            String msg = "My current location: " + url;
+                            try {
+                                startActivity(new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse("https://wa.me/" + e164 + "?text=" + Uri.encode(msg))));
+                            } catch (Exception e) {
+                                Toast.makeText(requireContext(), "WhatsApp is not installed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(String reason) {
+                            if (isAdded()) Toast.makeText(requireContext(), "Could not get location: " + reason, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    @Override
     public void onEdit(ContactsRepository.Contact contact) {
         showContactForm(contact);
     }

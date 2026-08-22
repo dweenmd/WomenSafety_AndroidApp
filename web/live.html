@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live Location — Women Safety</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root { color-scheme: light dark; }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; }
+  html, body { height: 100%; }
+  body { display: flex; flex-direction: column; background: #1B1E2E; color: #E6E8F2; }
+  header {
+    padding: 14px 16px; background: #232840; border-bottom: 1px solid #3C4258;
+    display: flex; align-items: center; gap: 12px; z-index: 1000;
+  }
+  header .dot {
+    width: 12px; height: 12px; border-radius: 50%; background: #22C55E;
+    animation: pulse 1.5s infinite; flex: none;
+  }
+  header .dot.ended { background: #EF4444; animation: none; }
+  header .dot.expired { background: #FBBF24; animation: none; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: .35; } 100% { opacity: 1; } }
+  header h1 { font-size: 15px; font-weight: 600; }
+  header small { display: block; font-size: 12px; color: #B8BCCD; font-weight: 400; margin-top: 2px; }
+  #map { flex: 1; min-height: 0; }
+  footer {
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: #232840;
+    border-top: 1px solid #3C4258; font-size: 12px; color: #B8BCCD;
+    display: flex; justify-content: space-between; gap: 8px; z-index: 1000;
+  }
+  #status { text-align: center; padding: 40px 20px; font-size: 15px; color: #B8BCCD; }
+  .btn {
+    background: #C6BFF5; color: #1B1E2E; border: none; border-radius: 10px;
+    padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="dot" id="dot"></div>
+  <div>
+    <h1 id="title">Live Location</h1>
+    <small id="subtitle">Connecting…</small>
+  </div>
+</header>
+
+<div id="map"></div>
+
+<footer>
+  <span id="accuracy">—</span>
+  <span id="updated">—</span>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var sessionId = params.get('session');
+  var mapEl = document.getElementById('map');
+
+  if (!sessionId) {
+    mapEl.innerHTML = '<div id="status">Missing session id in the link.</div>';
+    document.getElementById('subtitle').textContent = 'Invalid link';
+    return;
+  }
+
+  firebase.initializeApp({
+    apiKey: 'AIzaSyDIc-ewUvprZkC-s0hFYlz_hO64-9ym8wY',
+    projectId: 'women-safety-6af54'
+  });
+  var db = firebase.firestore();
+
+  var map = L.map(mapEl, { zoomControl: true });
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var marker = null;
+  var circle = null;
+  var trail = null;
+  var firstPoint = true;
+  var lastUpdate = null;
+
+  var dot = document.getElementById('dot');
+  var title = document.getElementById('title');
+  var subtitle = document.getElementById('subtitle');
+  var updatedEl = document.getElementById('updated');
+  var accuracyEl = document.getElementById('accuracy');
+
+  function fmtAgo(ms) {
+    var s = Math.floor(ms / 1000);
+    if (s < 60) return s + 's ago';
+    if (s < 3600) return Math.floor(s / 60) + 'm ago';
+    return Math.floor(s / 3600) + 'h ago';
+  }
+  setInterval(function () {
+    if (lastUpdate) updatedEl.textContent = 'Updated ' + fmtAgo(Date.now() - lastUpdate);
+  }, 1000);
+
+  db.collection('live_sessions').doc(sessionId)
+    .onSnapshot(function (snap) {
+      if (!snap.exists) {
+        dot.className = 'dot expired';
+        title.textContent = 'Link expired';
+        subtitle.textContent = 'This tracking session no longer exists.';
+        if (marker) { map.removeLayer(marker); marker = null; }
+        return;
+      }
+      var d = snap.data();
+      if (d.ownerName) title.textContent = d.ownerName + ' — Live Location';
+
+      if (d.active === false) {
+        dot.className = 'dot ended';
+        subtitle.textContent = 'Sharing has ended. Last known position shown.';
+      } else {
+        subtitle.textContent = 'Sharing in real time…';
+      }
+
+      var latest = d.latest;
+      if (!latest) return;
+      lastUpdate = latest.t || d.updatedAt || Date.now();
+      updatedEl.textContent = 'Updated just now';
+
+      var latlng = [latest.lat, latest.lng];
+      if (!marker) {
+        marker = L.marker(latlng).addTo(map);
+        circle = L.circle(latlng, { radius: 60, color: '#C6BFF5', weight: 1, fillOpacity: 0.15 }).addTo(map);
+      } else {
+        marker.setLatLng(latlng);
+        circle.setLatLng(latlng);
+      }
+      if (firstPoint) {
+        map.setView(latlng, 16);
+        firstPoint = false;
+      } else {
+        map.panTo(latlng, { animate: true });
+      }
+
+      if (Array.isArray(d.path) && d.path.length > 1) {
+        var pts = d.path.map(function (p) { return [p.lat, p.lng]; });
+        if (trail) map.removeLayer(trail);
+        trail = L.polyline(pts, { color: '#C6BFF5', weight: 4, opacity: 0.8 }).addTo(map);
+      }
+
+      var speedKmh = null;
+      if (Array.isArray(d.path) && d.path.length >= 2) {
+        var a = d.path[d.path.length - 2], b = d.path[d.path.length - 1];
+        var dt = (b.t - a.t) / 1000;
+        if (dt > 1) {
+          var R = 6371000;
+          var dLat = (b.lat - a.lat) * Math.PI / 180;
+          var dLng = (b.lng - a.lng) * Math.PI / 180;
+          var x = Math.sin(dLat/2)**2 + Math.cos(a.lat*Math.PI/180) * Math.cos(b.lat*Math.PI/180) * Math.sin(dLng/2)**2;
+          var dist = 2 * R * Math.asin(Math.sqrt(x));
+          speedKmh = (dist / dt) * 3.6;
+        }
+      }
+      accuracyEl.textContent = speedKmh !== null ? ('Moving ' + speedKmh.toFixed(1) + ' km/h') : 'Waiting for movement';
+    }, function (err) {
+      dot.className = 'dot expired';
+      subtitle.textContent = 'Could not load this session.';
+      mapEl.insertAdjacentHTML('beforeend', '<div id="status">Could not load this tracking session.<br><br>' +
+        '<button class="btn" onclick="location.reload()">Retry</button></div>');
+      console.error(err);
+    });
+})();
+</script>
+</body>
+</html>

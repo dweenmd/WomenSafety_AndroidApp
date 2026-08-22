@@ -239,9 +239,16 @@
     <string name="menu_contacts">Contacts</string>
     <string name="menu_profile">Profile</string>
     <string name="drawer_menu_safety_check_in">Safety Check-in</string>
+    <string name="drawer_menu_live_location">Share Live Location</string>
+    <string name="drawer_menu_fake_call">Fake Incoming Call</string>
+    <string name="drawer_sos_confirm_title">Trigger SOS now?</string>
+    <string name="drawer_sos_confirm_message">An emergency SMS with your location will be sent to all saved contacts immediately.</string>
     <string name="drawer_menu_emergency_sos">Emergency SOS</string>
     <string name="drawer_menu_trusted_circles">Trusted Circles</string>
     <string name="drawer_menu_activity_log">Activity Log</string>
     <string name="drawer_menu_about_app">About App</string>
     <string name="popup_change_number">Change Number</string>
+    <string name="safety_sim_for_sms">SIM for SOS SMS</string>
+    <string name="safety_sim_default">Default SIM (system)</string>
+    <string name="safety_sim_select_title">Choose SIM for SOS SMS</string>
 </resources>

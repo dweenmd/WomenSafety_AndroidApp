@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -60,7 +61,13 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     handled = true;
                 } else if (id == R.id.nav_emergency_sos) {
-                    navController.navigate(R.id.homeFragment);
+                    confirmTriggerSos();
+                    handled = true;
+                } else if (id == R.id.nav_fake_call) {
+                    startActivity(new android.content.Intent(this, com.dweenmd.womensafety.ui.features.FakeCallActivity.class));
+                    handled = true;
+                } else if (id == R.id.nav_live_location) {
+                    navController.navigate(R.id.safetyFragment);
                     handled = true;
                 } else if (id == R.id.nav_activity_log) {
                     startActivity(new android.content.Intent(this, com.dweenmd.womensafety.ui.profile.LoginActivityHistoryActivity.class));
@@ -144,6 +151,31 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("OK", null)
                 .show();
     }
+
+    private void confirmTriggerSos() {
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.drawer_sos_confirm_title)
+                .setMessage(R.string.drawer_sos_confirm_message)
+                .setPositiveButton(R.string.drawer_menu_emergency_sos, (dialog, which) -> triggerSosFromDrawer())
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void triggerSosFromDrawer() {
+        com.dweenmd.womensafety.sos.SosMessenger messenger = new com.dweenmd.womensafety.sos.SosMessenger(this);
+        Toast.makeText(this, "🚨 SOS TRIGGERED! 🚨", Toast.LENGTH_SHORT).show();
+        messenger.triggerSos(new com.dweenmd.womensafety.sos.SosMessenger.SosCallback() {
+            @Override
+            public void onSosTriggered(String status) {
+                Toast.makeText(MainActivity.this, status, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(MainActivity.this, "SOS failed: " + error, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
     
     public void openDrawer() {
         androidx.drawerlayout.widget.DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -165,7 +197,8 @@ public class MainActivity extends AppCompatActivity {
             android.Manifest.permission.CALL_PHONE,
             android.Manifest.permission.SEND_SMS,
             android.Manifest.permission.ACCESS_FINE_LOCATION,
-            android.Manifest.permission.ACCESS_COARSE_LOCATION
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.READ_PHONE_STATE
         };
         
         for (String perm : requiredPermissions) {

@@ -18,6 +18,14 @@
             android:icon="@drawable/ic_contacts"
             android:title="@string/drawer_menu_trusted_circles" />
         <item
+            android:id="@+id/nav_live_location"
+            android:icon="@drawable/ic_location"
+            android:title="@string/drawer_menu_live_location" />
+        <item
+            android:id="@+id/nav_fake_call"
+            android:icon="@drawable/ic_phone"
+            android:title="@string/drawer_menu_fake_call" />
+        <item
             android:id="@+id/nav_activity_log"
             android:icon="@drawable/ic_history"
             android:title="@string/drawer_menu_activity_log" />
