@@ -16,7 +16,7 @@
             android:id="@+id/toolbar_notifications"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Notification Settings"
+            app:title="@string/notifications_settings_notification_settings"
             app:navigationIcon="@drawable/ic_chevron_right"
             app:navigationIconTint="@color/m3_on_surface" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -48,7 +48,7 @@
                         android:id="@+id/switch_sos_sound"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Play Sound on SOS"
+                        android:text="@string/notifications_settings_play_sound_on_sos"
                         android:padding="16dp"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
@@ -59,7 +59,7 @@
                         android:id="@+id/switch_sos_vibrate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Vibrate on SOS"
+                        android:text="@string/notifications_settings_vibrate_on_sos"
                         android:padding="16dp"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
@@ -70,7 +70,7 @@
                         android:id="@+id/switch_sos_flashlight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Flashlight Alert"
+                        android:text="@string/notifications_settings_flashlight_alert"
                         android:padding="16dp"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
                 </LinearLayout>
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="System Notification Settings" />
+                android:text="@string/notifications_settings_system_notification_settings" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

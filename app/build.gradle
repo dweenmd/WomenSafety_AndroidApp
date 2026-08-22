@@ -52,6 +52,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+    lint {
+        // Locale folders (values-bn/hi/es/fr/ar/pt) are partially translated by design;
+        // missing keys fall back to the default English strings.
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies {

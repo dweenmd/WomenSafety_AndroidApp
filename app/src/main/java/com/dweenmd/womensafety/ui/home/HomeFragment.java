@@ -1,17 +1,11 @@
 package com.dweenmd.womensafety.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,14 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.dweenmd.womensafety.R;
 import com.dweenmd.womensafety.data.ContactsRepository;
+import com.dweenmd.womensafety.service.SosForegroundService;
+import com.dweenmd.womensafety.sos.SosButtonController;
 import com.dweenmd.womensafety.sos.SosMessenger;
 import com.dweenmd.womensafety.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
@@ -37,12 +31,9 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel viewModel;
     private SosMessenger sosMessenger;
     private ContactsRepository contactsRepository;
-    private Handler longPressHandler;
-    private Runnable longPressRunnable;
-    private boolean isHolding = false;
+    private SosButtonController sosButtonController;
 
     @Nullable
     @Override
@@ -52,10 +43,8 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         sosMessenger = new SosMessenger(requireContext());
         contactsRepository = new ContactsRepository(requireContext());
-        longPressHandler = new Handler(Looper.getMainLooper());
 
         setupToolbar(view);
         setupGreeting(view);
@@ -63,6 +52,15 @@ public class HomeFragment extends Fragment {
         setupSosButton(view);
         setupQuickActions(view);
         setupEmergencyContacts(view);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (sosButtonController != null) {
+            sosButtonController.destroy();
+            sosButtonController = null;
+        }
+        super.onDestroyView();
     }
 
     private void setupToolbar(View view) {
@@ -99,7 +97,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupStatusCard(View view) {
-        boolean isRunning = isServiceRunning(com.dweenmd.womensafety.service.SosForegroundService.class);
+        boolean isRunning = SosForegroundService.isProtectionRunning(requireContext());
         
         TextView tvTitle = view.findViewById(R.id.tv_status_title);
         TextView tvDesc = view.findViewById(R.id.tv_status_desc);
@@ -125,38 +123,12 @@ public class HomeFragment extends Fragment {
         MaterialButton btnSos = view.findViewById(R.id.btn_sos);
         View pulseBg = view.findViewById(R.id.pulse_bg);
 
-        if (pulseBg != null) {
-            Animation pulse = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse);
-            pulseBg.startAnimation(pulse);
-        }
-
-        longPressRunnable = () -> {
-            if (isHolding) {
-                triggerSos();
-                isHolding = false;
-            }
-        };
-
         if (btnSos != null) {
-            btnSos.setOnTouchListener((v, event) -> {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        isHolding = true;
-                        btnSos.animate().scaleX(0.92f).scaleY(0.92f).setDuration(150).start();
-                        longPressHandler.postDelayed(longPressRunnable, 1500);
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        isHolding = false;
-                        btnSos.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).start();
-                        longPressHandler.removeCallbacks(longPressRunnable);
-                        if (event.getAction() == MotionEvent.ACTION_UP) v.performClick();
-                        return true;
-                }
-                return false;
-            });
-            
-            btnSos.setOnClickListener(v -> Toast.makeText(requireContext(), "Hold for 1.5 seconds to SOS", Toast.LENGTH_SHORT).show());
+            sosButtonController = new SosButtonController(
+                    btnSos,
+                    pulseBg,
+                    this::triggerSos,
+                    v -> Toast.makeText(requireContext(), "Hold for 1.5 seconds to SOS", Toast.LENGTH_SHORT).show());
         }
     }
 
@@ -182,6 +154,12 @@ public class HomeFragment extends Fragment {
         View btnTimer = view.findViewById(R.id.btn_safety_timer_home);
         if (btnTimer != null) {
             btnTimer.setOnClickListener(v -> Toast.makeText(requireContext(), "Safety Timer coming soon!", Toast.LENGTH_SHORT).show());
+        }
+
+        View btnFakeCall = view.findViewById(R.id.btn_fake_call_home);
+        if (btnFakeCall != null) {
+            btnFakeCall.setOnClickListener(v ->
+                    startActivity(new Intent(requireContext(), com.dweenmd.womensafety.ui.features.FakeCallActivity.class)));
         }
     }
 
@@ -227,15 +205,5 @@ public class HomeFragment extends Fragment {
                 if (isAdded()) Toast.makeText(requireContext(), "Failed: " + error, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private boolean isServiceRunning(Class<?> serviceClass) {
-        android.app.ActivityManager manager = (android.app.ActivityManager) requireContext().getSystemService(Context.ACTIVITY_SERVICE);
-        for (android.app.ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

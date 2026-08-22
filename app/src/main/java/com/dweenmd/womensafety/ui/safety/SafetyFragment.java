@@ -5,14 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.service.SosForegroundService;
+import com.dweenmd.womensafety.sos.SosButtonController;
 import com.dweenmd.womensafety.sos.SosMessenger;
 import com.dweenmd.womensafety.ui.MainActivity;
 import com.google.android.material.button.MaterialButton;
@@ -34,9 +31,7 @@ public class SafetyFragment extends Fragment {
     private SafetyViewModel viewModel;
     private SharedPreferences prefs;
     private SosMessenger sosMessenger;
-    private Handler longPressHandler;
-    private Runnable longPressRunnable;
-    private boolean isHolding = false;
+    private SosButtonController sosButtonController;
 
     @Nullable
     @Override
@@ -49,13 +44,21 @@ public class SafetyFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(SafetyViewModel.class);
         prefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE);
         sosMessenger = new SosMessenger(requireContext());
-        longPressHandler = new Handler(Looper.getMainLooper());
 
         setupToolbar(view);
         setupStatusCard(view);
         setupSosButton(view);
         setupQuickActions(view);
         setupSwitches(view);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (sosButtonController != null) {
+            sosButtonController.destroy();
+            sosButtonController = null;
+        }
+        super.onDestroyView();
     }
 
     private void setupToolbar(View view) {
@@ -70,7 +73,7 @@ public class SafetyFragment extends Fragment {
     }
 
     private void setupStatusCard(View view) {
-        boolean isRunning = isServiceRunning(com.dweenmd.womensafety.service.SosForegroundService.class);
+        boolean isRunning = SosForegroundService.isProtectionRunning(requireContext());
         
         TextView tvTitle = view.findViewById(R.id.tv_protection_title);
         TextView tvDesc = view.findViewById(R.id.tv_protection_desc);
@@ -91,42 +94,18 @@ public class SafetyFragment extends Fragment {
         MaterialButton btnSos = view.findViewById(R.id.btn_sos_main);
         View pulseBg = view.findViewById(R.id.pulse_bg);
 
-        if (pulseBg != null) {
-            Animation pulse = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse);
-            pulseBg.startAnimation(pulse);
-        }
-
-        longPressRunnable = () -> {
-            if (isHolding) {
-                triggerSos();
-                isHolding = false;
-            }
-        };
-
         if (btnSos != null) {
-            btnSos.setOnTouchListener((v, event) -> {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        isHolding = true;
-                        btnSos.animate().scaleX(0.92f).scaleY(0.92f).setDuration(150).start();
-                        longPressHandler.postDelayed(longPressRunnable, 1500);
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        isHolding = false;
-                        btnSos.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).start();
-                        longPressHandler.removeCallbacks(longPressRunnable);
-                        if (event.getAction() == MotionEvent.ACTION_UP) v.performClick();
-                        return true;
-                }
-                return false;
-            });
-            
-            btnSos.setOnClickListener(v -> Toast.makeText(requireContext(), "Hold to SOS", Toast.LENGTH_SHORT).show());
+            sosButtonController = new SosButtonController(
+                    btnSos,
+                    pulseBg,
+                    this::triggerSos,
+                    v -> Toast.makeText(requireContext(), "Hold to SOS", Toast.LENGTH_SHORT).show());
         }
     }
 
     private void setupQuickActions(View view) {
+        view.findViewById(R.id.btn_emergency_call).setOnClickListener(v -> sosMessenger.dialEmergencyNumber());
+
         view.findViewById(R.id.btn_share_location).setOnClickListener(v -> {
             Toast.makeText(requireContext(), "Sharing location...", Toast.LENGTH_SHORT).show();
             sosMessenger.shareLocationOnly(new SosMessenger.SosCallback() {
@@ -184,7 +163,7 @@ public class SafetyFragment extends Fragment {
     }
 
     private void startSafetyService() {
-        Intent intent = new Intent(requireContext(), com.dweenmd.womensafety.service.SosForegroundService.class);
+        Intent intent = new Intent(requireContext(), SosForegroundService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             requireContext().startForegroundService(intent);
         } else {
@@ -193,9 +172,9 @@ public class SafetyFragment extends Fragment {
     }
 
     private void stopSafetyService() {
-        Intent intent = new Intent(requireContext(), com.dweenmd.womensafety.service.SosForegroundService.class);
-        intent.setAction("stop");
-        requireContext().startService(intent);
+        // Direct stopService: the old start-with-"stop"-action approach created the
+        // service (registering receivers) even when it wasn't running.
+        requireContext().stopService(new Intent(requireContext(), SosForegroundService.class));
     }
 
     private void triggerSos() {
@@ -211,15 +190,5 @@ public class SafetyFragment extends Fragment {
                 if (isAdded()) Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private boolean isServiceRunning(Class<?> serviceClass) {
-        android.app.ActivityManager manager = (android.app.ActivityManager) requireContext().getSystemService(Context.ACTIVITY_SERVICE);
-        for (android.app.ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

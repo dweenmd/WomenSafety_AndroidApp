@@ -17,3 +17,8 @@ app/keystore.properties
 womensafety-release
 app/release/
 *.apk
+
+# Local agent/tool artifacts and review screenshots
+.zcode/
+design_review/
+*.hprof

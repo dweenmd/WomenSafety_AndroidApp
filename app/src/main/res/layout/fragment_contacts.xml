@@ -24,7 +24,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="16dp">
+                android:paddingHorizontal="@dimen/screen_padding">
 
                 <ImageButton
                     android:id="@+id/btn_menu"
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Women\nSafety"
+                    android:text="@string/contacts_women_nsafety"
                     android:textColor="@color/m3_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -58,7 +58,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@android:drawable/ic_menu_search"
+                    android:src="@drawable/ic_search"
                     android:layout_marginEnd="8dp"
                     app:tint="@color/m3_on_surface_variant"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -80,8 +80,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@android:drawable/ic_input_add"
-                        app:tint="#FFFFFF" />
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/on_media_text" />
                 </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -102,15 +102,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="@dimen/screen_padding"
             android:paddingTop="24dp"
-            android:paddingBottom="100dp">
+            android:paddingBottom="@dimen/scroll_clearance_bottom">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Emergency Contacts"
+                android:text="@string/contacts_title"
                 android:textColor="@color/m3_on_surface"
                 android:textStyle="bold"
                 android:textSize="18sp"
@@ -139,7 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Trusted Contacts"
+                android:text="@string/contacts_trusted_contacts"
                 android:textColor="@color/m3_on_surface"
                 android:textStyle="bold"
                 android:textSize="18sp"
@@ -149,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="People you trust to receive safety alerts."
+                android:text="@string/contacts_people_you_trust_to_receive"
                 android:textColor="@color/m3_on_surface_variant"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp"
@@ -174,7 +174,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@drawable/circle_bg_secondary"
-                        android:backgroundTint="#F2F2F2">
+                        android:backgroundTint="@color/neutral_chip_bg">
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
@@ -185,10 +185,10 @@
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:layout_gravity="bottom|end"
-                            android:src="@android:drawable/ic_input_add"
+                            android:src="@drawable/ic_add"
                             app:tint="@color/m3_on_surface_variant"
                             android:background="@drawable/circle_bg_secondary"
-                            android:backgroundTint="#F2F2F2"
+                            android:backgroundTint="@color/neutral_chip_bg"
                             android:padding="2dp" />
                     </FrameLayout>
                     
@@ -196,7 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
-                        android:text="No trusted contacts added yet."
+                        android:text="@string/contacts_no_trusted_contacts_added_yet"
                         android:textColor="@color/m3_on_surface_variant"
                         android:textSize="14sp"
                         android:layout_marginTop="16dp"
@@ -207,7 +207,7 @@
                         style="@style/Widget.SereneGuardian.Button.Primary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add Trusted Contact"
+                        android:text="@string/contacts_add_trusted_contact"
                         android:layout_marginTop="16dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

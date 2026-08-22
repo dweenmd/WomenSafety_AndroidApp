@@ -12,15 +12,10 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <!-- Foreground Service Permissions -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
-
-    <uses-permission android:name="android.permission.CALL_PRIVILEGED"
-        tools:ignore="ProtectedPermissions" />
 
     <!-- Telephony Feature -->
     <uses-feature
@@ -95,7 +90,7 @@
             android:exported="false" />
         
         <activity android:name=".ui.features.FakeCallActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/Theme.WomenSafety"
             android:showOnLockScreen="true"
             android:exported="false" />
 
@@ -114,8 +109,7 @@
             android:name=".service.SosForegroundService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="location|microphone"
-            tools:ignore="ForegroundServicePermission"/>
+            android:foregroundServiceType="location"/>
 
         <!-- Boot Receiver -->
         <receiver

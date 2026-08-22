@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Personal Information"
+        android:text="@string/personal_info_personal_information"
         android:textColor="@color/premium_login_text_main"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile information"
+        android:text="@string/personal_info_profile_information"
         android:textColor="@color/premium_login_text_secondary"
         android:textSize="14sp"
         android:layout_marginBottom="24dp" />
@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Full Name"
+                android:text="@string/edit_profile_full_name"
                 android:textColor="@color/premium_login_text_secondary"
                 android:textSize="12sp" />
             <TextView
@@ -78,7 +78,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@android:drawable/ic_dialog_email"
+            android:src="@drawable/ic_email_elegant"
             app:tint="@color/premium_login_text_secondary" />
         <LinearLayout
             android:layout_width="0dp"
@@ -89,7 +89,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
+                android:text="@string/login_email"
                 android:textColor="@color/premium_login_text_secondary"
                 android:textSize="12sp" />
             <TextView
@@ -103,7 +103,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Verified"
+                android:text="@string/personal_info_verified"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -119,7 +119,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@android:drawable/stat_sys_phone_call"
+            android:src="@drawable/ic_phone"
             app:tint="@color/premium_login_text_secondary" />
         <LinearLayout
             android:layout_width="0dp"
@@ -130,7 +130,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone"
+                android:text="@string/personal_info_phone"
                 android:textColor="@color/premium_login_text_secondary"
                 android:textSize="12sp" />
             <TextView
@@ -144,7 +144,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Verified"
+                android:text="@string/personal_info_verified"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -161,8 +161,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Edit Information"
-            android:textColor="#FFFFFF"
+            android:text="@string/personal_info_edit_information"
+            android:textColor="@color/on_media_text"
             android:textSize="16sp"
             android:textStyle="bold" />
     </FrameLayout>

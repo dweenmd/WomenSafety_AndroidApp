@@ -188,6 +188,9 @@ public class AuthRepository {
         if (user != null) {
             String uid = user.getUid();
             db.collection("users").document(uid).delete().addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    Log.e(TAG, "Failed to delete Firestore profile; continuing with auth delete", task.getException());
+                }
                 user.delete().addOnCompleteListener(deleteTask -> {
                     if (deleteTask.isSuccessful()) {
                         currentUserLiveData.setValue(null);

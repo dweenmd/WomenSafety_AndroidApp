@@ -43,6 +43,11 @@ public class OtpVerificationActivity extends AppCompatActivity {
     }
 
     private void verifyOtp() {
+        if (verificationId == null) {
+            Toast.makeText(this, "Verification session expired. Please request a new code.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String code = etOtp.getText().toString().trim();
         if (TextUtils.isEmpty(code) || code.length() < 6) {
             etOtp.setError("Enter 6-digit OTP");

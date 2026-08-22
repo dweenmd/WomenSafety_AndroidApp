@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Standard spacing tokens (use these in new layouts) -->
+    <dimen name="screen_padding">16dp</dimen>
+    <!-- Extra bottom padding on fragment scroll content so it clears the bottom navigation bar -->
+    <dimen name="scroll_clearance_bottom">100dp</dimen>
+    <dimen name="card_radius">16dp</dimen>
+    <dimen name="card_radius_large">24dp</dimen>
+    <dimen name="touch_target_min">48dp</dimen>
+</resources>

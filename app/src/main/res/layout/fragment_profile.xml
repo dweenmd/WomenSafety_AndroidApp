@@ -25,7 +25,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="16dp">
+                android:paddingHorizontal="@dimen/screen_padding">
 
                 <ImageButton
                     android:id="@+id/btn_menu"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Women Safety"
+                    android:text="@string/app_name"
                     android:textColor="@color/m3_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -85,9 +85,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="@dimen/screen_padding"
             android:paddingTop="24dp"
-            android:paddingBottom="100dp"
+            android:paddingBottom="@dimen/scroll_clearance_bottom"
             android:gravity="center_horizontal">
 
             <!-- PROFILE HEADER -->
@@ -122,8 +122,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@android:drawable/checkbox_on_background"
-                        app:tint="#FFFFFF"
+                        android:src="@drawable/ic_check"
+                        app:tint="@color/on_media_text"
                         android:scaleType="centerInside" />
                 </FrameLayout>
                 
@@ -136,7 +136,7 @@
                     android:layout_marginTop="-4dp"
                     android:layout_marginEnd="-4dp"
                     android:background="@drawable/circle_bg_secondary"
-                    android:backgroundTint="#F0E8FF"
+                    android:backgroundTint="@color/contact_avatar_bg"
                     android:clickable="true"
                     android:focusable="true">
                     
@@ -144,7 +144,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:src="@android:drawable/ic_menu_edit"
+                        android:src="@drawable/ic_edit"
                         app:tint="@color/m3_primary" />
                 </FrameLayout>
             </FrameLayout>
@@ -193,7 +193,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Profile 80% complete"
+                        android:text="@string/profile_profile_80_complete"
                         android:fontFamily="@font/inter"
                         android:textColor="@color/m3_on_surface"
                         android:textSize="16sp"
@@ -204,7 +204,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Complete your profile to enhance your safety."
+                        android:text="@string/profile_complete_your_profile_to_enhance"
                         android:fontFamily="@font/inter"
                         android:textColor="@color/m3_on_surface_variant"
                         android:textSize="14sp" />
@@ -232,14 +232,14 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@android:drawable/ic_input_add"
+                            android:src="@drawable/ic_add"
                             app:tint="@color/m3_primary" />
                             
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Add your phone number"
+                            android:text="@string/profile_add_your_phone_number"
                             android:fontFamily="@font/inter"
                             android:textColor="@color/m3_primary"
                             android:textSize="14sp"
@@ -258,7 +258,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Account &amp; Security"
+                    android:text="@string/profile_account_amp_security"
                     android:fontFamily="@font/inter"
                     android:textColor="@color/m3_on_surface_variant"
                     android:textSize="12sp"
@@ -295,7 +295,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="App Preferences"
+                    android:text="@string/app_preferences_app_preferences"
                     android:fontFamily="@font/inter"
                     android:textColor="@color/m3_on_surface_variant"
                     android:textSize="12sp"
@@ -330,7 +330,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Settings &amp; Permissions"
+                    android:text="@string/profile_settings_amp_permissions"
                     android:fontFamily="@font/inter"
                     android:textColor="@color/m3_on_surface_variant"
                     android:textSize="12sp"
@@ -361,7 +361,7 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Sign Out"
+                android:text="@string/profile_btn_sign_out"
                 android:textColor="@color/m3_on_surface"
                 app:strokeColor="@color/m3_outline"
                 android:fontFamily="@font/inter"
@@ -373,7 +373,7 @@
                 android:id="@+id/btn_delete_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete Account"
+                android:text="@string/profile_delete_account"
                 android:fontFamily="@font/inter"
                 android:textColor="@color/m3_error"
                 android:textSize="14sp"

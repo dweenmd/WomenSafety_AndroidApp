@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private CountDownTimer timer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,28 +23,42 @@ public class SplashActivity extends AppCompatActivity {
 
         AuthRepository authRepository = new AuthRepository(this);
 
-        new CountDownTimer(1000, 500) {
+        timer = new CountDownTimer(1000, 500) {
             @Override
             public void onTick(long millisUntilFinished) {}
 
             @Override
             public void onFinish() {
-                if (authRepository.isDemoUser()) {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                } else {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if (user != null) {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    } else {
-                        if (!com.dweenmd.womensafety.ui.auth.PrivacyConsentActivity.hasConsent(SplashActivity.this)) {
-                            startActivity(new Intent(SplashActivity.this, com.dweenmd.womensafety.ui.auth.PrivacyConsentActivity.class));
-                        } else {
-                            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                        }
-                    }
+                if (!isFinishing()) {
+                    routeToNextScreen(authRepository);
                 }
-                finish();
             }
         }.start();
+    }
+
+    private void routeToNextScreen(AuthRepository authRepository) {
+        Class<?> next;
+
+        if (authRepository.isDemoUser()) {
+            next = MainActivity.class;
+        } else if (!com.dweenmd.womensafety.ui.auth.PrivacyConsentActivity.hasConsent(this)) {
+            // Consent must be collected before any session, including
+            // pre-existing logins, which previously bypassed it.
+            next = com.dweenmd.womensafety.ui.auth.PrivacyConsentActivity.class;
+        } else {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            next = (user != null) ? MainActivity.class : LoginActivity.class;
+        }
+
+        startActivity(new Intent(this, next));
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        super.onDestroy();
     }
 }

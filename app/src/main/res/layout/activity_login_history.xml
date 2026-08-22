@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/premium_login_bg"
@@ -11,24 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/premium_login_bg"
-        app:title="Login Activity"
+        app:title="@string/login_history_login_activity"
         app:titleTextColor="@color/premium_login_text_main" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
 
+            <!-- The one honest entry: the current session on this device -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TODAY"
+                android:text="@string/login_history_this_device"
                 android:textColor="@color/premium_login_text_secondary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -44,13 +46,14 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="16dp"
                 android:layout_marginBottom="24dp">
-                
+
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@android:drawable/ic_dialog_info"
+                    android:src="@drawable/ic_info"
+                    android:contentDescription="@string/app_name"
                     app:tint="?attr/colorPrimary" />
-                    
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -58,22 +61,24 @@
                     android:orientation="vertical"
                     android:layout_marginStart="16dp">
                     <TextView
+                        android:id="@+id/tv_current_device_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Android Device"
+                        android:text=""
+                        tools:text="Android Device"
                         android:textColor="@color/premium_login_text_main"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dhaka • 5:24 PM"
+                        android:text="@string/login_history_current_session"
                         android:textColor="@color/premium_login_text_secondary"
                         android:textSize="14sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Current device"
+                        android:text="@string/login_history_active_now"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="12sp"
                         android:textStyle="bold"
@@ -81,52 +86,38 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="YESTERDAY"
-                android:textColor="@color/premium_login_text_secondary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="4dp" />
-
+            <!-- Honest empty state: past sign-in history is not tracked yet -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@drawable/bg_premium_input_normal"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
-                android:layout_marginBottom="24dp">
-                
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="32dp">
+
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_menu_agenda"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_history"
+                    android:contentDescription="@string/app_name"
                     app:tint="@color/premium_login_text_secondary" />
-                    
-                <LinearLayout
-                    android:layout_width="0dp"
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chrome on Windows"
-                        android:textColor="@color/premium_login_text_main"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Unknown location • 10:32 PM"
-                        android:textColor="@color/premium_login_text_secondary"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                    android:layout_marginTop="16dp"
+                    android:text="@string/login_history_no_past_login_history"
+                    android:textColor="@color/premium_login_text_main"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/login_history_sign_ins_from_other_devices"
+                    android:textColor="@color/premium_login_text_secondary"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>

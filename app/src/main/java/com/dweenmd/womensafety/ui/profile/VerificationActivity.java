@@ -7,27 +7,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.ui.BaseActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class VerificationActivity extends AppCompatActivity {
+public class VerificationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_verification);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        setupToolbar(R.id.toolbar_verification);
 
         findViewById(R.id.verify_email).setOnClickListener(v -> {}); // Placeholder to prevent crash if layout logic changes
         findViewById(R.id.verify_phone).setOnClickListener(v -> {});
@@ -71,7 +65,7 @@ public class VerificationActivity extends AppCompatActivity {
         // to show "Verified" if signed in via Email/Google as requested.
         boolean emailVerified = user.isEmailVerified() || isGoogleProvider || isEmailProvider;
         
-        setupVerificationItem(findViewById(R.id.verify_email), android.R.drawable.ic_dialog_email, 
+        setupVerificationItem(findViewById(R.id.verify_email), R.drawable.ic_email_elegant, 
                 "Email Verification", 
                 emailVerified ? "Verified (" + user.getEmail() + ")" : "Not Verified", 
                 emailVerified,
@@ -91,7 +85,7 @@ public class VerificationActivity extends AppCompatActivity {
         // Verified if signed in via phone or has a phone number linked
         boolean phoneVerified = isPhoneProvider || (user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty());
         
-        setupVerificationItem(findViewById(R.id.verify_phone), android.R.drawable.ic_menu_call, 
+        setupVerificationItem(findViewById(R.id.verify_phone), R.drawable.ic_phone, 
                 "Phone Verification", 
                 phoneVerified ? "Verified (" + user.getPhoneNumber() + ")" : "Not Linked", 
                 phoneVerified,
@@ -118,7 +112,7 @@ public class VerificationActivity extends AppCompatActivity {
             ivStatus.setImageResource(R.drawable.ic_check);
             ivStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_safe_green)));
         } else {
-            ivStatus.setImageResource(android.R.drawable.ic_dialog_alert);
+            ivStatus.setImageResource(R.drawable.ic_warning);
             ivStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.m3_error)));
         }
 

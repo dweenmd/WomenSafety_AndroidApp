@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -18,14 +20,14 @@
         android:background="@color/m3_surface_container_lowest"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:strokeWidth="2dp"
-        app:strokeColor="@color/m3_surface_container_lowest"
-        xmlns:app="http://schemas.android.com/apk/res-auto" />
+        app:strokeColor="@color/m3_surface_container_lowest" />
 
     <TextView
         android:id="@+id/drawer_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Alex Johnson"
+        android:text=""
+        tools:text="Alex Johnson"
         android:textColor="@color/m3_on_surface"
         android:textSize="22sp"
         android:fontFamily="@font/inter"
@@ -36,7 +38,8 @@
         android:id="@+id/drawer_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="alex.johnson@example.com"
+        android:text=""
+        tools:text="alex.johnson@example.com"
         android:textColor="@color/m3_on_surface_variant"
         android:textSize="14sp"
         android:fontFamily="@font/inter"
@@ -47,14 +50,13 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Profile"
+        android:text="@string/header_view_profile"
         android:textColor="@color/m3_primary_container"
         android:textSize="14sp"
         android:fontFamily="@font/inter"
         app:strokeColor="@android:color/transparent"
-        android:layout_marginLeft="-16dp"
-        android:layout_marginBottom="24dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto" />
+        android:layout_marginStart="-16dp"
+        android:layout_marginBottom="24dp" />
 
     <View
         android:layout_width="match_parent"

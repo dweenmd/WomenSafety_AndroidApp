@@ -54,7 +54,14 @@ public class PrivacyConsentActivity extends AppCompatActivity {
     }
 
     private void proceedToLogin() {
-        startActivity(new Intent(this, LoginActivity.class));
+        // Already-authenticated users (e.g. routed here from splash for a pending
+        // consent) should land on the app, not the login screen.
+        com.google.firebase.auth.FirebaseUser user =
+                com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        Intent intent = new Intent(this, user != null
+                ? com.dweenmd.womensafety.ui.MainActivity.class
+                : LoginActivity.class);
+        startActivity(intent);
         finish();
     }
     

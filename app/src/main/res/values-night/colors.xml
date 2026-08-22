@@ -1,37 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Phase 2: New Design System Colors (Dark) -->
+    <!-- Serene Guardian Design System Colors (Dark) — cool, calm slate + soft lavender.
+         Deliberately lifted away from near-black so cards stay readable. -->
+    <!-- Primary Colors -->
+    <color name="m3_primary">#C6BFF5</color>
+    <color name="m3_on_primary">#2B2452</color>
+    <color name="m3_primary_container">#3F3A73</color>
+    <color name="m3_on_primary_container">#E4DEFF</color>
+    <color name="m3_inverse_primary">#5D3FD3</color>
+
+    <!-- Secondary Colors -->
+    <color name="m3_secondary">#C3C5E8</color>
+    <color name="m3_on_secondary">#2B2F4A</color>
+    <color name="m3_secondary_container">#41466A</color>
+    <color name="m3_on_secondary_container">#DFE1FF</color>
+
+    <!-- Tertiary Colors -->
+    <color name="m3_tertiary">#F0B7B4</color>
+    <color name="m3_on_tertiary">#4A1120</color>
+    <color name="m3_tertiary_container">#6D2A34</color>
+    <color name="m3_on_tertiary_container">#FFDADD</color>
+
+    <!-- Error/Destructive Colors -->
+    <color name="m3_error">#FFB4AB</color>
+    <color name="m3_on_error">#690005</color>
+    <color name="m3_error_container">#93000A</color>
+    <color name="m3_on_error_container">#FFDAD6</color>
+
+    <!-- Background & Surface -->
+    <color name="m3_background">#1B1E2E</color>
+    <color name="m3_on_background">#E6E8F2</color>
+
+    <color name="m3_surface">#1F2333</color>
+    <color name="m3_on_surface">#E6E8F2</color>
+    <color name="m3_surface_variant">#2C3148</color>
+    <color name="m3_on_surface_variant">#B8BCCD</color>
+
+    <!-- Surface Containers (lighter than the background, not darker) -->
+    <color name="m3_surface_container_lowest">#232840</color>
+    <color name="m3_surface_container_low">#262B44</color>
+    <color name="m3_surface_container">#2A3049</color>
+    <color name="m3_surface_container_high">#2F3550</color>
+    <color name="m3_surface_container_highest">#343B58</color>
+
+    <color name="m3_inverse_surface">#E6E8F2</color>
+    <color name="m3_inverse_on_surface">#1B1E2E</color>
+
+    <!-- Outline & Borders -->
+    <color name="m3_outline">#4A5069</color>
+    <color name="m3_outline_variant">#3C4258</color>
+    <color name="m3_outline_focus">#C6BFF5</color>
+    <color name="m3_surface_tint">#C6BFF5</color>
+
+    <!-- Semantic helper colors (dark) -->
+    <color name="contact_avatar_bg">#343A5C</color>
+    <color name="neutral_chip_bg">#2A2F42</color>
+    <color name="scrim_safe_green_10">#1A22C55E</color>
+    <color name="info_card_bg">#262B44</color>
+    <color name="info_card_stroke">#565C87</color>
+
+    <!-- Profile menu icon tints used by ProfileFragment (dark) -->
+    <color name="tint_account_bg">#3A4066</color>
+    <color name="tint_account_icon">#C6BFF5</color>
+    <color name="tint_settings_bg">#3A4066</color>
+    <color name="tint_settings_icon">#C6BFF5</color>
+    <color name="tint_privacy_bg">#3A4066</color>
+    <color name="tint_privacy_icon">#C6BFF5</color>
+
+    <!-- Legacy palette (dark) -->
     <color name="primary">#9353D3</color>
     <color name="primary_dark">#7C3AED</color>
-    <color name="background">#121212</color>
-    <color name="surface">#1E1E1E</color>
-    
-    <color name="on_surface">#E0E0E0</color>
-    <color name="on_surface_secondary">#A0A0A0</color>
-    <color name="border">#333333</color>
-    
+    <color name="background">#1B1E2E</color>
+    <color name="surface">#232740</color>
+    <color name="on_surface">#E4E6F0</color>
+    <color name="on_surface_secondary">#B0B4C8</color>
+    <color name="border">#3C425C</color>
+
+    <!-- Status & SOS Colors -->
     <color name="sos">#EF4444</color>
     <color name="sos_dark">#DC2626</color>
-    <color name="sos_background">#450a0a</color>
+    <color name="sos_background">#450A0A</color>
     <color name="sos_red">#EF4444</color>
     <color name="sos_red_glow">#33EF4444</color>
 
     <color name="status_safe">#22C55E</color>
     <color name="status_safe_green">#22C55E</color>
-    <color name="status_safe_bg">#064E3B</color>
+    <color name="status_safe_bg">#0E3D2E</color>
     <color name="status_warning">#FBBF24</color>
-    <color name="status_warning_bg">#451A03</color>
+    <color name="status_warning_bg">#3D2E10</color>
 
-    <!-- Phase 3: Premium Login System Colors (Dark Mode) -->
-    <color name="premium_login_bg">#0B0910</color>
-    <color name="premium_login_surface">#15121C</color>
-    <color name="premium_login_input_bg">#1A1622</color>
+    <!-- Premium Login System Colors (Dark) — lifted from near-black to cool slate -->
+    <color name="premium_login_bg">#16182A</color>
+    <color name="premium_login_surface">#1F2336</color>
+    <color name="premium_login_input_bg">#262B42</color>
     <color name="premium_login_primary">#9B5DE5</color>
     <color name="premium_login_secondary">#E85AAD</color>
     <color name="premium_login_grad_start">#8B5CF6</color>
     <color name="premium_login_grad_end">#EC4899</color>
-    <color name="premium_login_text_main">#F8F7FA</color>
-    <color name="premium_login_text_secondary">#A9A3B2</color>
-    <color name="premium_login_border">#37313F</color>
+    <color name="premium_login_text_main">#E8EAF4</color>
+    <color name="premium_login_text_secondary">#B4B8CD</color>
+    <color name="premium_login_border">#3C425C</color>
     <color name="premium_login_focus_border">#A855F7</color>
 </resources>

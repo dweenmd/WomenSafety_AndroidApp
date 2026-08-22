@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/premium_login_bg"
-    tools:context=".SplashScreen">
+    tools:context=".ui.splash.SplashActivity">
 
     <ImageView
         android:id="@+id/girlVector"
         android:layout_width="140dp"
         android:layout_height="213dp"
-        android:layout_centerInParent="true"
         android:layout_marginBottom="20dp"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,11 +26,8 @@
         android:fontFamily="sans-serif-black"
         android:textSize="22sp"
         android:textColor="@color/premium_login_text_main"
-        android:layout_below="@id/girlVector"
         app:layout_constraintTop_toBottomOf="@id/girlVector"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_centerHorizontal="true"/>
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

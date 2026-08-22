@@ -16,7 +16,7 @@
             android:id="@+id/toolbar_verification"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Verification"
+            app:title="@string/verification_verification"
             app:navigationIcon="@drawable/ic_chevron_right"
             app:navigationIconTint="@color/m3_on_surface" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Why verify?"
+                android:text="@string/verification_why_verify"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="@color/m3_primary" />
 
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Verified accounts ensure that your emergency alerts are trusted and help us prevent spam. It also allows you to recover your account easily."
+                android:text="@string/verification_verified_accounts_ensure_that_your"
                 android:textAppearance="?attr/textAppearanceBodySmall" />
 
         </LinearLayout>

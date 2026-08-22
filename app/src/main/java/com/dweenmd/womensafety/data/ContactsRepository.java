@@ -50,7 +50,10 @@ public class ContactsRepository {
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );
         } catch (GeneralSecurityException | IOException e) {
-            Log.e(TAG, "Error initializing EncryptedSharedPreferences", e);
+            // A corrupted keyset (e.g. after backup/restore) would otherwise leave
+            // sharedPreferences null and silently break every contact feature.
+            Log.e(TAG, "EncryptedSharedPreferences failed; falling back to plain prefs", e);
+            sharedPreferences = context.getSharedPreferences(PREF_NAME + "_plain", Context.MODE_PRIVATE);
         }
         
         loadLocalContacts();
@@ -94,17 +97,7 @@ public class ContactsRepository {
 
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
-            Map<String, Object> contactData = new HashMap<>();
-            contactData.put("name", contact.name);
-            contactData.put("phone", contact.phone);
-            contactData.put("relationship", contact.relationship);
-            contactData.put("isPrimary", contact.isPrimary);
-            contactData.put("updatedAt", System.currentTimeMillis());
-
-            db.collection("users").document(user.getUid())
-                    .collection("contacts").document(contact.id)
-                    .set(contactData, SetOptions.merge())
-                    .addOnFailureListener(e -> Log.e(TAG, "Error saving contact to Firestore", e));
+            uploadContact(contact, user);
         }
     }
 
@@ -155,7 +148,8 @@ public class ContactsRepository {
             if (user != null) {
                 db.collection("users").document(user.getUid())
                         .collection("contacts").document(contactId)
-                        .delete();
+                        .delete()
+                        .addOnFailureListener(e -> Log.e(TAG, "Error deleting contact on Firestore", e));
             }
         }
     }
@@ -199,34 +193,13 @@ public class ContactsRepository {
 
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) return;
-        
+
         isSyncing.setValue(true);
         db.collection("users").document(user.getUid()).collection("contacts")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (sharedPreferences != null) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        StringBuilder ids = new StringBuilder();
-                        queryDocumentSnapshots.forEach(doc -> {
-                            String id = doc.getId();
-                            String name = doc.getString("name");
-                            String phone = doc.getString("phone");
-                            String relationship = doc.getString("relationship");
-                            if (relationship == null) relationship = "Other";
-                            Boolean isPrimaryObj = doc.getBoolean("isPrimary");
-                            boolean isPrimary = isPrimaryObj != null && isPrimaryObj;
-                            
-                            if (ids.length() > 0) ids.append(",");
-                            ids.append(id);
-                            
-                            editor.putString(id + "_name", name);
-                            editor.putString(id + "_phone", phone);
-                            editor.putString(id + "_relationship", relationship);
-                            editor.putBoolean(id + "_isPrimary", isPrimary);
-                        });
-                        editor.putString("contact_ids", ids.toString());
-                        editor.apply();
-                        loadLocalContacts();
+                        mergeWithServer(queryDocumentSnapshots.getDocuments(), user);
                     }
                     isSyncing.setValue(false);
                 })
@@ -234,6 +207,69 @@ public class ContactsRepository {
                     Log.e(TAG, "Failed to sync contacts from Firestore", e);
                     isSyncing.setValue(false);
                 });
+    }
+
+    /**
+     * Merges server contacts into the local store instead of replacing them.
+     * A plain replace erased contacts saved locally while the sync query was in
+     * flight, and wiped all local contacts when Firestore returned zero docs.
+     * Server data wins per-contact; local-only contacts are pushed back up.
+     */
+    private void mergeWithServer(List<com.google.firebase.firestore.DocumentSnapshot> serverDocs, FirebaseUser user) {
+        Map<String, Contact> merged = new java.util.LinkedHashMap<>();
+        for (Contact local : getLocalContactsSync()) {
+            merged.put(local.id, local);
+        }
+
+        java.util.Set<String> serverIds = new java.util.HashSet<>();
+        for (com.google.firebase.firestore.DocumentSnapshot doc : serverDocs) {
+            String id = doc.getId();
+            serverIds.add(id);
+            String name = doc.getString("name");
+            String phone = doc.getString("phone");
+            if (name == null && phone == null) continue; // empty doc — keep the local copy
+            String relationship = doc.getString("relationship");
+            if (relationship == null) relationship = "Other";
+            Boolean isPrimaryObj = doc.getBoolean("isPrimary");
+            boolean isPrimary = isPrimaryObj != null && isPrimaryObj;
+            merged.put(id, new Contact(id, name, phone, relationship, isPrimary));
+        }
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        StringBuilder ids = new StringBuilder();
+        for (Contact c : merged.values()) {
+            if (ids.length() > 0) ids.append(",");
+            ids.append(c.id);
+            editor.putString(c.id + "_name", c.name);
+            editor.putString(c.id + "_phone", c.phone);
+            editor.putString(c.id + "_relationship", c.relationship);
+            editor.putBoolean(c.id + "_isPrimary", c.isPrimary);
+        }
+        editor.putString("contact_ids", ids.toString());
+        editor.apply();
+
+        // Contacts added locally (offline or mid-sync) get uploaded now.
+        for (Contact c : merged.values()) {
+            if (!serverIds.contains(c.id)) {
+                uploadContact(c, user);
+            }
+        }
+
+        loadLocalContacts();
+    }
+
+    private void uploadContact(Contact contact, FirebaseUser user) {
+        Map<String, Object> contactData = new HashMap<>();
+        contactData.put("name", contact.name);
+        contactData.put("phone", contact.phone);
+        contactData.put("relationship", contact.relationship);
+        contactData.put("isPrimary", contact.isPrimary);
+        contactData.put("updatedAt", System.currentTimeMillis());
+
+        db.collection("users").document(user.getUid())
+                .collection("contacts").document(contact.id)
+                .set(contactData, SetOptions.merge())
+                .addOnFailureListener(e -> Log.e(TAG, "Error saving contact to Firestore", e));
     }
 
     public static class Contact {

@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Full Name"
+            android:hint="@string/edit_profile_full_name"
             app:hintTextColor="@color/premium_login_text_secondary"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="12dp"
@@ -53,8 +53,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
             android:background="@drawable/bg_premium_social_btn"
-            android:src="@android:drawable/ic_menu_myplaces"
-            android:contentDescription="Pick from contacts"
+            android:src="@drawable/ic_person"
+            android:contentDescription="@string/contact_form_pick_from_contacts"
             app:tint="@color/premium_login_primary" />
     </LinearLayout>
 
@@ -62,7 +62,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Phone Number"
+        android:hint="@string/edit_profile_phone_number"
         app:hintTextColor="@color/premium_login_text_secondary"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusTopStart="12dp"
@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/contact_form_btn_save"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/on_media_text"
             android:textStyle="bold"
             android:textSize="16sp" />
     </FrameLayout>

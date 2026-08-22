@@ -9,11 +9,10 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.ui.BaseActivity;
 import com.dweenmd.womensafety.data.AuthRepository;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends BaseActivity {
 
     private ImageView ivAvatar;
     private TextInputEditText etName, etPhone, etEmail, etDob;
@@ -54,15 +53,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
         authRepository = new AuthRepository(this);
         db = FirebaseFirestore.getInstance();
+        // Default bucket from google-services.json — same as the project's bucket.
         storage = FirebaseStorage.getInstance();
 
-        Toolbar toolbar = findViewById(R.id.toolbar_edit_profile);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        setupToolbar(R.id.toolbar_edit_profile);
 
         ivAvatar = findViewById(R.id.iv_edit_profile_avatar);
         etName = findViewById(R.id.et_edit_name);
@@ -149,33 +143,39 @@ public class EditProfileActivity extends AppCompatActivity {
         setLoading(true);
 
         if (selectedImageUri != null) {
-            // Upload image first using stream for better compatibility
-            StorageReference profileRef = storage.getReference()
+            // Upload image first using a more robust task chaining approach
+            final StorageReference profileRef = storage.getReference()
                     .child("users")
                     .child(user.getUid())
-                    .child("profile_" + System.currentTimeMillis() + ".jpg");
+                    .child("profile_photo.jpg"); // Use a fixed name for simpler management
 
-            try {
-                java.io.InputStream stream = getContentResolver().openInputStream(selectedImageUri);
-                if (stream == null) throw new java.io.IOException("Stream is null");
+            // putFile manages the content resolver stream itself; putStream left
+            // the stream open forever on failure.
+            com.google.firebase.storage.UploadTask uploadTask = profileRef.putFile(selectedImageUri);
 
-                profileRef.putStream(stream)
-                        .addOnSuccessListener(taskSnapshot -> {
-                            profileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                                updateAuthAndFirestore(user, newName, newPhone, newDob, newGender, uri);
-                            });
-                        })
-                        .addOnFailureListener(e -> {
-                            setLoading(false);
-                            Toast.makeText(this, "Upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        });
-            } catch (java.io.FileNotFoundException e) {
-                setLoading(false);
-                Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
-            } catch (java.io.IOException e) {
-                setLoading(false);
-                Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
-            }
+            uploadTask.continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    throw task.getException() != null ? task.getException() : new IllegalStateException("Upload failed");
+                }
+                // Continue with the task to get the download URL
+                return profileRef.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    updateAuthAndFirestore(user, newName, newPhone, newDob, newGender, downloadUri);
+                } else {
+                    setLoading(false);
+                    Exception e = task.getException();
+                    String errorMsg = (e != null && e.getMessage() != null) ? e.getMessage() : "Unknown error";
+
+                    if (errorMsg.contains("does not exist")) {
+                        errorMsg = "Storage bucket configuration error or permissions missing.";
+                    }
+
+                    Toast.makeText(this, "Upload error: " + errorMsg, Toast.LENGTH_LONG).show();
+                    android.util.Log.e("EditProfile", "Detailed Upload Error", e);
+                }
+            });
         } else {
             updateAuthAndFirestore(user, newName, newPhone, newDob, newGender, user.getPhotoUrl());
         }

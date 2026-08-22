@@ -12,26 +12,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.ui.BaseActivity;
 
-public class PermissionsActivity extends AppCompatActivity {
+public class PermissionsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_permissions);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        setupToolbar(R.id.toolbar_permissions);
 
         updateUI();
 
@@ -50,16 +44,13 @@ public class PermissionsActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        setupPermissionItem(findViewById(R.id.perm_location), android.R.drawable.ic_menu_mylocation, 
+        setupPermissionItem(findViewById(R.id.perm_location), R.drawable.ic_location, 
                 "Location", "Access live GPS for SOS sharing", Manifest.permission.ACCESS_FINE_LOCATION);
         
-        setupPermissionItem(findViewById(R.id.perm_sms), R.drawable.ic_sos, 
+        setupPermissionItem(findViewById(R.id.perm_sms), R.drawable.ic_sos,
                 "SMS", "Send emergency messages to contacts", Manifest.permission.SEND_SMS);
-        
-        setupPermissionItem(findViewById(R.id.perm_audio), android.R.drawable.ic_btn_speak_now, 
-                "Microphone", "Record ambient audio during SOS", Manifest.permission.RECORD_AUDIO);
-        
-        setupPermissionItem(findViewById(R.id.perm_phone), android.R.drawable.ic_menu_call, 
+
+        setupPermissionItem(findViewById(R.id.perm_phone), R.drawable.ic_phone,
                 "Phone", "Instantly dial emergency services", Manifest.permission.CALL_PHONE);
         
         setupPermissionItem(findViewById(R.id.perm_contacts), R.drawable.ic_contacts, 
@@ -89,7 +80,7 @@ public class PermissionsActivity extends AppCompatActivity {
             ivStatus.setImageResource(R.drawable.ic_check);
             ivStatus.setImageTintList(android.content.res.ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_safe_green)));
         } else {
-            ivStatus.setImageResource(android.R.drawable.ic_dialog_alert);
+            ivStatus.setImageResource(R.drawable.ic_warning);
             ivStatus.setImageTintList(android.content.res.ColorStateList.valueOf(ContextCompat.getColor(this, R.color.m3_error)));
         }
 

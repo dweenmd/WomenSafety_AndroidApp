@@ -16,7 +16,7 @@
             android:id="@+id/toolbar_permissions"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="System Permissions"
+            app:title="@string/permissions_system_permissions"
             app:navigationIcon="@drawable/ic_chevron_right"
             app:navigationIconTint="@color/m3_on_surface" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Required Permissions"
+                android:text="@string/permissions_required_permissions"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="@color/m3_primary"
                 android:layout_marginBottom="8dp" />
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="For WomenSafety to protect you effectively, the following permissions are essential. Please ensure they are granted."
+                android:text="@string/permissions_for_womensafety_to_protect_you"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:layout_marginBottom="24dp" />
 
@@ -64,9 +64,6 @@
                     <include layout="@layout/item_permission" android:id="@+id/perm_sms" />
                     <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" />
 
-                    <include layout="@layout/item_permission" android:id="@+id/perm_audio" />
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" />
-
                     <include layout="@layout/item_permission" android:id="@+id/perm_phone" />
                     <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/m3_outline_variant" />
 
@@ -83,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
-                android:text="Open System Settings"
+                android:text="@string/permissions_open_system_settings"
                 app:cornerRadius="16dp" />
 
         </LinearLayout>

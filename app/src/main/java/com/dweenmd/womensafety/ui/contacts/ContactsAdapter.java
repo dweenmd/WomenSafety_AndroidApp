@@ -17,10 +17,7 @@ import com.dweenmd.womensafety.data.ContactsRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private static final int VIEW_TYPE_PRIMARY = 1;
-    private static final int VIEW_TYPE_OTHER = 2;
+public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactViewHolder> {
 
     private final List<ContactsRepository.Contact> contacts = new ArrayList<>();
     private final OnContactActionListener listener;
@@ -42,27 +39,22 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         contacts.addAll(newContacts);
         notifyDataSetChanged();
     }
-    
+
     public List<ContactsRepository.Contact> getContacts() {
         return contacts;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return VIEW_TYPE_OTHER;
-    }
-
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new ContactViewHolder(inflater.inflate(R.layout.item_contact, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         ContactsRepository.Contact contact = contacts.get(position);
-        ((ContactViewHolder) holder).bind(contact);
+        holder.bind(contact);
     }
 
     @Override

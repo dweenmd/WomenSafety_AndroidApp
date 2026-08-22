@@ -24,7 +24,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="16dp">
+                android:paddingHorizontal="@dimen/screen_padding">
 
                 <ImageButton
                     android:id="@+id/btn_menu"
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Women Safety"
+                    android:text="@string/app_name"
                     android:textColor="@color/m3_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -94,9 +94,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="@dimen/screen_padding"
             android:paddingTop="24dp"
-            android:paddingBottom="100dp">
+            android:paddingBottom="@dimen/scroll_clearance_bottom">
 
             <!-- Greeting -->
             <TextView
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Hello, Safe Guardian"
+                android:text="@string/home_hello_safe_guardian"
                 android:textColor="@color/m3_on_background"
                 android:textSize="28sp"
                 android:textStyle="bold" />
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/inter"
-                android:text="Stay connected and protected."
+                android:text="@string/home_stay_connected_and_protected"
                 android:textColor="@color/m3_on_surface_variant"
                 android:textSize="14sp" />
 
@@ -126,7 +126,7 @@
                 android:layout_marginTop="24dp"
                 style="@style/Widget.SereneGuardian.CardView"
                 app:cardBackgroundColor="@color/m3_primary_container"
-                app:strokeColor="#1AFFFFFF">
+                app:strokeColor="@color/hero_overlay_10">
                 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@drawable/circle_bg_secondary"
-                        android:backgroundTint="#33FFFFFF">
+                        android:backgroundTint="@color/hero_overlay_20">
                         <ImageView
                             android:id="@+id/iv_status_icon"
                             android:layout_width="28dp"
@@ -161,7 +161,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter"
-                            android:text="Loading..."
+                            android:text="@string/home_loading"
                             android:textColor="@color/m3_on_primary_container"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -183,8 +183,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:fontFamily="@font/inter"
-                                android:text="Checking protection..."
-                                android:textColor="#CCD8CEFF"
+                                android:text="@string/home_checking_protection"
+                                android:textColor="@color/hero_subtitle_text"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -208,7 +208,7 @@
                     android:layout_columnSpan="2"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    android:text="EMERGENCY SOS"
+                    android:text="@string/home_emergency_sos"
                     app:icon="@drawable/ic_sos"
                     app:iconGravity="textStart"
                     app:iconPadding="12dp"
@@ -240,7 +240,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:src="@android:drawable/ic_menu_mylocation"
+                                android:src="@drawable/ic_location"
                                 app:tint="@color/m3_primary" />
                         </FrameLayout>
                         <TextView
@@ -248,7 +248,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/inter"
-                            android:text="Share Location"
+                            android:text="@string/home_share_location"
                             android:textColor="@color/m3_on_surface"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -287,7 +287,48 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/inter"
-                            android:text="Safety Timer"
+                            android:text="@string/home_safety_timer"
+                            android:textColor="@color/m3_on_surface"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Fake Call -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_fake_call_home"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    style="@style/Widget.SereneGuardian.CardView.Standard"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="16dp">
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_secondary_container">
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_phone"
+                                app:tint="@color/m3_primary" />
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/inter"
+                            android:text="@string/home_fake_incoming_call"
                             android:textColor="@color/m3_on_surface"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -300,7 +341,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/inter"
-                android:text="Emergency Contacts"
+                android:text="@string/contacts_title"
                 android:textColor="@color/m3_on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -341,7 +382,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter"
-                            android:text="No contact set"
+                            android:text="@string/home_no_contact_set"
                             android:textColor="@color/m3_on_surface"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -350,7 +391,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter"
-                            android:text="Set emergency contact"
+                            android:text="@string/home_set_emergency_contact"
                             android:textColor="@color/m3_on_surface_variant"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -361,7 +402,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/circle_bg_secondary"
                         android:backgroundTint="@color/m3_surface_container_low"
-                        android:src="@android:drawable/stat_sys_phone_call"
+                        android:src="@drawable/ic_phone"
                         app:tint="@color/m3_primary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -372,7 +413,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/inter"
-                android:text="Recent Activity"
+                android:text="@string/home_recent_activity"
                 android:textColor="@color/m3_on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -415,14 +456,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/inter"
-                                android:text="Safety check-in completed"
+                                android:text="@string/home_safety_check_in_completed"
                                 android:textColor="@color/m3_on_surface"
                                 android:textSize="14sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/inter"
-                                android:text="Downtown area"
+                                android:text="@string/home_downtown_area"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -430,7 +471,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter"
-                            android:text="10m ago"
+                            android:text="@string/home_10m_ago"
                             android:textColor="@color/m3_on_surface_variant"
                             android:textSize="12sp" />
                     </LinearLayout>

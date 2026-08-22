@@ -6,13 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.ui.BaseActivity;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
-public class NotificationsSettingsActivity extends AppCompatActivity {
+public class NotificationsSettingsActivity extends BaseActivity {
 
     private SharedPreferences prefs;
 
@@ -23,12 +22,7 @@ public class NotificationsSettingsActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_notifications);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        setupToolbar(R.id.toolbar_notifications);
 
         MaterialSwitch switchSound = findViewById(R.id.switch_sos_sound);
         MaterialSwitch switchVibrate = findViewById(R.id.switch_sos_vibrate);

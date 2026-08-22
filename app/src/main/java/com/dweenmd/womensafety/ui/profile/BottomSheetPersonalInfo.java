@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.util.FormatUtils;
 import com.dweenmd.womensafety.data.AuthRepository;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,11 +37,11 @@ public class BottomSheetPersonalInfo extends BottomSheetDialogFragment {
 
         if (user != null) {
             tvName.setText(user.getDisplayName() != null ? user.getDisplayName() : "Unknown User");
-            tvEmail.setText(maskEmail(user.getEmail()));
+            tvEmail.setText(FormatUtils.maskEmail(user.getEmail()));
             
             String phone = user.getPhoneNumber();
             if (phone != null && !phone.isEmpty()) {
-                tvPhone.setText(maskPhone(phone));
+                tvPhone.setText(FormatUtils.maskPhone(phone));
             } else {
                 tvPhone.setText("Phone not set");
             }
@@ -52,17 +53,4 @@ public class BottomSheetPersonalInfo extends BottomSheetDialogFragment {
         });
     }
 
-    private String maskEmail(String email) {
-        if (email == null || !email.contains("@")) return email;
-        String[] parts = email.split("@");
-        if (parts[0].length() <= 2) return email;
-        return parts[0].charAt(0) + "***@" + parts[1];
-    }
-
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 6) return phone;
-        String prefix = phone.substring(0, 4);
-        String suffix = phone.substring(phone.length() - 2);
-        return prefix + "******" + suffix;
-    }
 }

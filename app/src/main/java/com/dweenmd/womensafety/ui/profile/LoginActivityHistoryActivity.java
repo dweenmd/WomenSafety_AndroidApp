@@ -1,25 +1,22 @@
 package com.dweenmd.womensafety.ui.profile;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.ui.BaseActivity;
 
-public class LoginActivityHistoryActivity extends AppCompatActivity {
+public class LoginActivityHistoryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_history);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_login_history);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        setupToolbar(R.id.toolbar_login_history);
+
+        TextView deviceName = findViewById(R.id.tv_current_device_name);
+        deviceName.setText("Android Device (" + android.os.Build.MODEL + ")");
     }
 }

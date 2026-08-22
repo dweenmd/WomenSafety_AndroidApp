@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.dweenmd.womensafety.R;
+import com.dweenmd.womensafety.util.FormatUtils;
 import com.dweenmd.womensafety.data.AuthRepository;
 import com.dweenmd.womensafety.ui.auth.LoginActivity;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,10 +69,10 @@ public class ProfileFragment extends Fragment {
 
         // Initialize header data
         viewModel.getName().observe(getViewLifecycleOwner(), tvName::setText);
-        viewModel.getEmail().observe(getViewLifecycleOwner(), email -> tvEmail.setText(maskEmail(email)));
+        viewModel.getEmail().observe(getViewLifecycleOwner(), email -> tvEmail.setText(FormatUtils.maskEmail(email)));
         viewModel.getPhone().observe(getViewLifecycleOwner(), phone -> {
             if (phone != null && !phone.isEmpty() && !phone.equals("No Phone")) {
-                tvPhone.setText(maskPhone(phone));
+                tvPhone.setText(FormatUtils.maskPhone(phone));
             } else {
                 tvPhone.setText("Phone not set");
             }
@@ -185,18 +186,5 @@ public class ProfileFragment extends Fragment {
                 .show();
     }
 
-    private String maskEmail(String email) {
-        if (email == null || !email.contains("@")) return email;
-        String[] parts = email.split("@");
-        if (parts[0].length() <= 2) return email;
-        return parts[0].charAt(0) + "***@" + parts[1];
-    }
-
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 6) return phone;
-        String prefix = phone.substring(0, 4);
-        String suffix = phone.substring(phone.length() - 2);
-        return prefix + "******" + suffix;
-    }
 }
 

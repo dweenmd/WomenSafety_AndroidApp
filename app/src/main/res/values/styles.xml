@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Legacy styles (keep temporarily) -->
-    <style name="NeonButton" parent="TextAppearance.MaterialComponents.Button">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">#00FF00</item>
-        <item name="android:shadowColor">#00FF00</item>
-        <item name="android:fontFamily">sans-serif-condensed</item>
-    </style>
-
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Serene Guardian: Typography (Inter) -->
     <!-- Display Large -->
-    <style name="TextAppearance.SereneGuardian.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">57sp</item>
         <item name="android:textStyle">bold</item>
@@ -19,7 +11,7 @@
     </style>
 
     <!-- Headline Large -->
-    <style name="TextAppearance.SereneGuardian.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
@@ -27,7 +19,7 @@
     </style>
 
     <!-- Headline Medium -->
-    <style name="TextAppearance.SereneGuardian.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
@@ -35,7 +27,7 @@
     </style>
 
     <!-- Title Large -->
-    <style name="TextAppearance.SereneGuardian.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
@@ -43,7 +35,7 @@
     </style>
 
     <!-- Title Medium -->
-    <style name="TextAppearance.SereneGuardian.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
@@ -52,7 +44,7 @@
     </style>
 
     <!-- Body Large -->
-    <style name="TextAppearance.SereneGuardian.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
@@ -61,7 +53,7 @@
     </style>
 
     <!-- Body Medium -->
-    <style name="TextAppearance.SereneGuardian.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">normal</item>
@@ -70,7 +62,7 @@
     </style>
 
     <!-- Label Large -->
-    <style name="TextAppearance.SereneGuardian.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">normal</item>
@@ -79,7 +71,7 @@
     </style>
 
     <!-- Label Small -->
-    <style name="TextAppearance.SereneGuardian.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+    <style tools:targetApi="28" name="TextAppearance.SereneGuardian.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">11sp</item>
         <item name="android:textStyle">normal</item>
@@ -145,14 +137,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextAppearance.WomenSafety.ScreenTitle" parent="TextAppearance.Material3.HeadlineMedium">
+    <style tools:targetApi="28" name="TextAppearance.WomenSafety.ScreenTitle" parent="TextAppearance.Material3.HeadlineMedium">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textFontWeight">600</item>
     </style>
 
-    <style name="TextAppearance.WomenSafety.CardTitle" parent="TextAppearance.Material3.TitleMedium">
+    <style tools:targetApi="28" name="TextAppearance.WomenSafety.CardTitle" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:fontFamily">@font/inter</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>

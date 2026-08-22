@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Phone Number"
+            android:hint="@string/edit_profile_phone_number"
             app:hintTextColor="@color/premium_login_text_secondary"
             app:boxBackgroundMode="filled"
             app:boxBackgroundColor="@color/premium_login_input_bg"
@@ -75,7 +75,7 @@
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="1dp"
             app:boxStrokeColor="@color/premium_login_focus_border"
-            app:startIconDrawable="@android:drawable/ic_menu_call"
+            app:startIconDrawable="@drawable/ic_phone"
             app:startIconTint="@color/premium_login_text_secondary">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_login_btn_send"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/on_media_text"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -117,10 +117,11 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
-            android:indeterminateTint="#FFFFFF"
+            android:indeterminateTint="@color/on_media_text"
             android:visibility="gone" />
         
         <Button
+        android:contentDescription="Send OTP"
             android:id="@+id/btnSendOtp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

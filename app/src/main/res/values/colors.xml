@@ -31,8 +31,6 @@
     <color name="m3_on_background">#1A1C1E</color>
     
     <color name="m3_surface">#FCF9F7</color>
-    <color name="m3_surface_dim">#DADADC</color>
-    <color name="m3_surface_bright">#F9F9FC</color>
     <color name="m3_on_surface">#1A1C1E</color>
     <color name="m3_surface_variant">#E2E2E5</color>
     <color name="m3_on_surface_variant">#484554</color>
@@ -55,6 +53,18 @@
     
     <color name="m3_scrim">#000000</color>
 
+    <!-- Semantic helper colors referenced from layouts (night variants in values-night) -->
+    <color name="contact_avatar_bg">#F0E8FF</color>
+    <color name="neutral_chip_bg">#F2F2F2</color>
+    <color name="scrim_safe_green_10">#1A4CAF50</color>
+    <color name="info_card_bg">#4DE6E1FF</color>
+    <color name="info_card_stroke">#335D3FD3</color>
+    <!-- White overlays / text sit on colored or gradient surfaces, so they stay constant in dark mode -->
+    <color name="on_media_text">#FFFFFF</color>
+    <color name="hero_overlay_10">#1AFFFFFF</color>
+    <color name="hero_overlay_20">#33FFFFFF</color>
+    <color name="hero_subtitle_text">#CCD8CEFF</color>
+
     <!-- Custom App Colors from Design Spec -->
     <color name="sos_red">#FF5A5F</color>
     <color name="sos_red_glow">#33FF5A5F</color>
@@ -71,10 +81,6 @@
     <color name="on_surface_secondary">#5F5E64</color>
     <color name="border">#E1E2E9</color>
     
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
@@ -100,12 +106,8 @@
     <!-- Profile Section Tint Colors (Legacy) -->
     <color name="tint_account_bg">#E6E1FF</color>
     <color name="tint_account_icon">#5D3FD3</color>
-    <color name="tint_safety_bg">#FFDAD6</color>
-    <color name="tint_safety_icon">#FF5A5F</color>
     <color name="tint_settings_bg">#E6E1FF</color>
     <color name="tint_settings_icon">#5D3FD3</color>
     <color name="tint_privacy_bg">#E6E1FF</color>
     <color name="tint_privacy_icon">#5D3FD3</color>
-    <color name="tint_support_bg">#E8F5E9</color>
-    <color name="tint_support_icon">#4CAF50</color>
 </resources>

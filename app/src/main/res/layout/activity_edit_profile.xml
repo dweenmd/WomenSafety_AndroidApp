@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/premium_login_bg"
-        app:title="Edit Profile"
+        app:title="@string/profile_btn_edit"
         app:titleTextColor="@color/premium_login_text_main" />
 
     <ScrollView
@@ -55,8 +55,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@android:drawable/ic_menu_camera"
-                        app:tint="#FFFFFF" />
+                        android:src="@drawable/ic_camera"
+                        app:tint="@color/on_media_text" />
                 </FrameLayout>
             </FrameLayout>
 
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Full Name"
+                android:hint="@string/edit_profile_full_name"
                 app:hintTextColor="@color/premium_login_text_secondary"
                 app:boxBackgroundMode="filled"
                 app:boxBackgroundColor="@color/premium_login_input_bg"
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Phone Number"
+                android:hint="@string/edit_profile_phone_number"
                 app:hintTextColor="@color/premium_login_text_secondary"
                 app:boxBackgroundMode="filled"
                 app:boxBackgroundColor="@color/premium_login_input_bg"
@@ -121,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
-                android:hint="Email (Read-only)"
+                android:hint="@string/edit_profile_email_read_only"
                 app:hintTextColor="@color/premium_login_text_secondary"
                 app:boxBackgroundMode="filled"
                 app:boxBackgroundColor="@color/premium_login_input_bg"
@@ -147,7 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Date of Birth"
+                android:hint="@string/edit_profile_date_of_birth"
                 app:hintTextColor="@color/premium_login_text_secondary"
                 app:boxBackgroundMode="filled"
                 app:boxBackgroundColor="@color/premium_login_input_bg"
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
-                android:hint="Gender"
+                android:hint="@string/edit_profile_gender"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 app:hintTextColor="@color/premium_login_text_secondary"
                 app:boxBackgroundMode="filled"
@@ -213,8 +213,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Save Changes"
-                        android:textColor="#FFFFFF"
+                        android:text="@string/edit_profile_save_changes"
+                        android:textColor="@color/on_media_text"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>

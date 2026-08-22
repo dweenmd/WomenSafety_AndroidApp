@@ -16,7 +16,7 @@
             android:id="@+id/toolbar_preferences"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="App Preferences"
+            app:title="@string/app_preferences_app_preferences"
             app:navigationIcon="@drawable/ic_chevron_right"
             app:navigationIconTint="@color/m3_on_surface" />
     </com.google.android.material.appbar.AppBarLayout>

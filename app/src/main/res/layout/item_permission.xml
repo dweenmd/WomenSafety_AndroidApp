@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:tint="@color/m3_on_surface_variant"
-        tools:src="@android:drawable/ic_menu_mylocation" />
+        tools:src="@drawable/ic_location" />
 
     <LinearLayout
         android:layout_width="0dp"

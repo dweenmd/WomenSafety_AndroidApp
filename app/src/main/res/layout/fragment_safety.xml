@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Women Safety"
+                    android:text="@string/app_name"
                     android:textColor="@color/m3_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/inter"
-                        android:text="Protection Active"
+                        android:text="@string/home_protection_active"
                         android:textColor="@color/m3_on_surface"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -155,7 +155,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/inter"
-                        android:text="You are currently protected"
+                        android:text="@string/safety_you_are_currently_protected"
                         android:textColor="@color/m3_on_surface_variant"
                         android:textSize="14sp"
                         app:layout_constraintStart_toEndOf="@id/icon_status_bg"
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/green_clr"
-                        android:backgroundTint="#1A4CAF50"
+                        android:backgroundTint="@color/scrim_safe_green_10"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="8dp"
                         android:orientation="horizontal"
@@ -178,15 +178,15 @@
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:src="@drawable/ic_check"
-                            app:tint="#4CAF50" />
+                            app:tint="@color/status_safe_green" />
                             
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/inter"
-                            android:text="System Secure"
-                            android:textColor="#4CAF50"
+                            android:text="@string/safety_system_secure"
+                            android:textColor="@color/status_safe_green"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
-                        android:text="Emergency"
+                        android:text="@string/safety_emergency"
                         android:textColor="@color/m3_on_surface"
                         android:textSize="22sp"
                         android:textStyle="bold" />
@@ -222,7 +222,7 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="24dp"
                         android:fontFamily="@font/inter"
-                        android:text="Hold for emergency"
+                        android:text="@string/safety_hold_for_emergency"
                         android:textColor="@color/m3_on_surface_variant"
                         android:textSize="14sp" />
 
@@ -245,7 +245,7 @@
                             android:layout_width="192dp"
                             android:layout_height="192dp"
                             android:layout_gravity="center"
-                            android:text="SOS"
+                            android:text="@string/safety_sos"
                             android:textSize="28sp"
                             app:icon="@drawable/ic_warning"
                             app:iconGravity="textTop"
@@ -275,11 +275,64 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
-                        android:text="Quick Actions"
+                        android:text="@string/safety_quick_actions"
                         android:textColor="@color/m3_on_surface"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp" />
+
+                    <!-- Emergency Call -->
+                    <LinearLayout
+                        android:id="@+id/btn_emergency_call"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/circle_bg_secondary"
+                            android:backgroundTint="@color/m3_error_container">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_sos"
+                                app:tint="@color/m3_error" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/safety_emergency_call"
+                                android:textColor="@color/m3_on_surface"
+                                android:textStyle="bold"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/safety_open_dialer_with_the_local"
+                                android:textColor="@color/m3_on_surface_variant"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/m3_on_surface_variant" />
+                    </LinearLayout>
 
                     <!-- Share Live Location -->
                     <LinearLayout
@@ -302,7 +355,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_gravity="center"
-                                android:src="@android:drawable/ic_menu_mylocation"
+                                android:src="@drawable/ic_location"
                                 app:tint="@color/m3_primary_container" />
                         </FrameLayout>
 
@@ -315,14 +368,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Share Live Location"
+                                android:text="@string/safety_share_live_location"
                                 android:textColor="@color/m3_on_surface"
                                 android:textStyle="bold"
                                 android:textSize="16sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Share tracking link with contacts"
+                                android:text="@string/safety_share_tracking_link_with_contacts"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -368,14 +421,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Safety Timer"
+                                android:text="@string/home_safety_timer"
                                 android:textColor="@color/m3_on_surface"
                                 android:textStyle="bold"
                                 android:textSize="16sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Auto-alert if you don't check in"
+                                android:text="@string/safety_auto_alert_if_you_dont_check_in"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -421,14 +474,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Check In"
+                                android:text="@string/safety_check_in"
                                 android:textColor="@color/m3_on_surface"
                                 android:textStyle="bold"
                                 android:textSize="16sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Mark yourself as safe"
+                                android:text="@string/safety_mark_yourself_as_safe"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -474,14 +527,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Emergency Contacts"
+                                android:text="@string/contacts_title"
                                 android:textColor="@color/m3_on_surface"
                                 android:textStyle="bold"
                                 android:textSize="16sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Manage trusted circle"
+                                android:text="@string/safety_manage_trusted_circle"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -512,7 +565,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
-                        android:text="Safety Settings"
+                        android:text="@string/safety_title"
                         android:textColor="@color/m3_on_surface"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -534,14 +587,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Background Protection"
+                                android:text="@string/safety_bg_protection"
                                 android:textColor="@color/m3_on_surface"
                                 android:textStyle="bold"
                                 android:textSize="16sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Keep detection active always"
+                                android:text="@string/safety_keep_detection_active_always"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -570,14 +623,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Shake to SOS"
+                                android:text="@string/safety_shake_sos"
                                 android:textColor="@color/m3_on_surface"
                                 android:textStyle="bold"
                                 android:textSize="16sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Shake device to trigger alert"
+                                android:text="@string/safety_shake_device_to_trigger_alert"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -606,14 +659,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Include Live Location"
+                                android:text="@string/safety_live_location"
                                 android:textColor="@color/m3_on_surface"
                                 android:textStyle="bold"
                                 android:textSize="16sp" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Send GPS link with SMS"
+                                android:text="@string/safety_send_gps_link_with_sms"
                                 android:textColor="@color/m3_on_surface_variant"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -631,8 +684,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.SereneGuardian.CardView.Standard"
-                app:cardBackgroundColor="#4DE6E1FF"
-                app:strokeColor="#335D3FD3"
+                app:cardBackgroundColor="@color/info_card_bg"
+                app:strokeColor="@color/info_card_stroke"
                 android:layout_marginBottom="24dp">
                 
                 <LinearLayout
@@ -644,7 +697,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@android:drawable/ic_dialog_info"
+                        android:src="@drawable/ic_info"
                         app:tint="@color/m3_primary_container" />
                         
                     <TextView
@@ -653,7 +706,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/inter"
-                        android:text="Your trusted contacts can be notified when you activate an emergency feature."
+                        android:text="@string/safety_your_trusted_contacts_can_be"
                         android:textColor="@color/m3_on_surface_variant"
                         android:textSize="14sp"
                         android:lineSpacingExtra="4dp" />

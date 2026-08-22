@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:hint="Email"
+                android:hint="@string/login_email"
                 app:hintTextColor="@color/premium_login_text_secondary"
                 app:boxBackgroundMode="filled"
                 app:boxBackgroundColor="@color/premium_login_input_bg"
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Password"
+                android:hint="@string/login_password"
                 app:hintTextColor="@color/premium_login_text_secondary"
                 app:boxBackgroundMode="filled"
                 app:boxBackgroundColor="@color/premium_login_input_bg"
@@ -143,6 +143,7 @@
             <!-- Login Button -->
             <FrameLayout
                 android:id="@+id/fl_login_button"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
@@ -159,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/login_btn_sign_in"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/on_media_text"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -169,12 +170,14 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-                    android:indeterminateTint="#FFFFFF"
+                    android:indeterminateTint="@color/on_media_text"
                     android:visibility="gone" />
                 
                 <!-- Invisible overlay button for click area to keep IDs compatible -->
                 <Button
+        android:contentDescription="Sign In"
                     android:id="@+id/btn_login"
+                    android:labelFor="@+id/tv_login_btn_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
@@ -249,6 +252,7 @@
                     </LinearLayout>
                     
                     <Button
+        android:contentDescription="Sign In"
                         android:id="@+id/btn_google_signin"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -272,7 +276,7 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@android:drawable/ic_menu_call"
+                            android:src="@drawable/ic_phone"
                             android:importantForAccessibility="no"
                             app:tint="@color/premium_login_text_main" />
                         <TextView
@@ -286,6 +290,7 @@
                     </LinearLayout>
                     
                     <Button
+        android:contentDescription="Sign In"
                         android:id="@+id/btn_phone_signin"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

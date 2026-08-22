@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         }
         
         String[] requiredPermissions = {
-            android.Manifest.permission.RECORD_AUDIO,
             android.Manifest.permission.CALL_PHONE,
             android.Manifest.permission.SEND_SMS,
             android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -201,6 +200,18 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            checkAndStartService();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // BootReceiver can't start the location FGS directly on Android 14+,
+        // so it sets a flag and we restart protection once the app is in the foreground.
+        android.content.SharedPreferences prefs = getSharedPreferences("app_settings", android.content.Context.MODE_PRIVATE);
+        if (prefs.getBoolean(com.dweenmd.womensafety.service.SosForegroundService.KEY_RESTART_PENDING, false)) {
+            prefs.edit().putBoolean(com.dweenmd.womensafety.service.SosForegroundService.KEY_RESTART_PENDING, false).apply();
             checkAndStartService();
         }
     }

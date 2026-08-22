@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/circle_bg_secondary"
-                android:backgroundTint="#F0E8FF" />
+                android:backgroundTint="@color/contact_avatar_bg" />
 
             <TextView
                 android:id="@+id/tv_initials"
@@ -76,12 +76,12 @@
 
         <ImageButton
             android:id="@+id/btn_call_other"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/circle_bg_secondary"
-            android:backgroundTint="#F0E8FF"
-            android:src="@android:drawable/stat_sys_phone_call"
-            android:padding="6dp"
+            android:backgroundTint="@color/contact_avatar_bg"
+            android:src="@drawable/ic_phone"
+            android:padding="12dp"
             android:scaleType="centerInside"
             android:contentDescription="@string/contact_action_call"
             app:tint="@color/m3_primary"
@@ -89,21 +89,21 @@
             
         <ImageButton
             android:id="@+id/btn_message_other"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/circle_bg_secondary"
-            android:backgroundTint="#F0E8FF"
-            android:src="@android:drawable/stat_notify_chat"
-            android:padding="6dp"
+            android:backgroundTint="@color/contact_avatar_bg"
+            android:src="@drawable/ic_message"
+            android:padding="12dp"
             android:scaleType="centerInside"
-            android:contentDescription="Message Contact"
+            android:contentDescription="@string/contact_message_contact"
             app:tint="@color/m3_primary"
             android:layout_marginEnd="8dp" />
 
         <ImageButton
             android:id="@+id/btn_menu_other"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/baseline_more_vert_24"
             android:contentDescription="@string/cd_contact_menu"
