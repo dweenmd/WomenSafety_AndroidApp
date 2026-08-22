@@ -22,3 +22,6 @@ app/release/
 .zcode/
 design_review/
 *.hprof
+
+# Firebase CLI cache
+.firebase/
