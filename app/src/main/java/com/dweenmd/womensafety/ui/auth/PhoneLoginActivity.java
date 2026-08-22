@@ -133,6 +133,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 authRepository.signInWithPhoneAuthCredential(credential, new AuthRepository.AuthCallback() {
                     @Override
                     public void onSuccess(FirebaseUser user) {
+                        OtpSessionHolder.clear();
                         progressBar.setVisibility(View.GONE);
                         startActivity(new Intent(PhoneLoginActivity.this, MainActivity.class));
                         finishAffinity();
@@ -142,7 +143,8 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     public void onFailure(Exception e) {
                         progressBar.setVisibility(View.GONE);
                         btnSendOtp.setEnabled(true);
-                        Toast.makeText(PhoneLoginActivity.this, "Login Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(PhoneLoginActivity.this,
+                                "Login failed: " + com.dweenmd.womensafety.data.FirebaseAuthErrors.friendly(e), Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -151,7 +153,15 @@ public class PhoneLoginActivity extends AppCompatActivity {
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 progressBar.setVisibility(View.GONE);
                 btnSendOtp.setEnabled(true);
-                Toast.makeText(PhoneLoginActivity.this, "Verification Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(PhoneLoginActivity.this,
+                        com.dweenmd.womensafety.data.FirebaseAuthErrors.friendly(e), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
+                // SMS auto-read did not happen in time — the user can still type it manually.
+                progressBar.setVisibility(View.GONE);
+                btnSendOtp.setEnabled(true);
             }
 
             @Override
@@ -159,7 +169,11 @@ public class PhoneLoginActivity extends AppCompatActivity {
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
                 progressBar.setVisibility(View.GONE);
                 btnSendOtp.setEnabled(true);
-                
+
+                OtpSessionHolder.phoneNumber = formattedPhone;
+                OtpSessionHolder.verificationId = verificationId;
+                OtpSessionHolder.resendToken = token;
+
                 Intent intent = new Intent(PhoneLoginActivity.this, OtpVerificationActivity.class);
                 intent.putExtra("verificationId", verificationId);
                 startActivity(intent);

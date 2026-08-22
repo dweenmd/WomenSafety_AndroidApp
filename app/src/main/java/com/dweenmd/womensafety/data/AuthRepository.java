@@ -103,6 +103,7 @@ public class AuthRepository {
                         FirebaseUser user = mAuth.getCurrentUser();
                         currentUserLiveData.setValue(user);
                         ensureUserProfileExists(user, null, null);
+                        sendVerificationEmailQuietly(user);
                         callback.onSuccess(user);
                     } else {
                         callback.onFailure(task.getException());
@@ -118,11 +119,19 @@ public class AuthRepository {
                         FirebaseUser user = mAuth.getCurrentUser();
                         currentUserLiveData.setValue(user);
                         ensureUserProfileExists(user, name, phone);
+                        sendVerificationEmailQuietly(user);
                         callback.onSuccess(user);
                     } else {
                         callback.onFailure(task.getException());
                     }
                 });
+    }
+
+    /** Fire-and-forget verification email right after signup. */
+    private void sendVerificationEmailQuietly(FirebaseUser user) {
+        if (user == null || user.getEmail() == null || user.isEmailVerified()) return;
+        user.sendEmailVerification().addOnFailureListener(e ->
+                Log.w(TAG, "Could not send verification email: " + e.getMessage()));
     }
 
     private void ensureUserProfileExists(FirebaseUser user, String name, String phone) {
@@ -158,14 +167,40 @@ public class AuthRepository {
     }
 
     public void verifyPhoneNumber(String phoneNumber, Activity activity, PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks) {
-        PhoneAuthOptions options =
-                PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(phoneNumber)
-                        .setTimeout(60L, TimeUnit.SECONDS)
-                        .setActivity(activity)
-                        .setCallbacks(callbacks)
-                        .build();
-        PhoneAuthProvider.verifyPhoneNumber(options);
+        verifyPhoneNumber(phoneNumber, activity, null, callbacks);
+    }
+
+    /** Re-sending variant: pass the ForceResendingToken from the original onCodeSent. */
+    public void verifyPhoneNumber(String phoneNumber, Activity activity,
+                                  PhoneAuthProvider.ForceResendingToken resendingToken,
+                                  PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks) {
+        PhoneAuthOptions.Builder builder = PhoneAuthOptions.newBuilder(mAuth)
+                .setPhoneNumber(phoneNumber)
+                .setTimeout(60L, TimeUnit.SECONDS)
+                .setActivity(activity)
+                .setCallbacks(callbacks);
+        if (resendingToken != null) {
+            builder.setForceResendingToken(resendingToken);
+        }
+        PhoneAuthProvider.verifyPhoneNumber(builder.build());
+    }
+
+    /** Sends (or re-sends) the verification email; reports outcome via the callback. */
+    public void sendVerificationEmail(AuthCallback callback) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null || user.getEmail() == null) {
+            callback.onFailure(new Exception("No signed-in email account"));
+            return;
+        }
+        if (user.isEmailVerified()) {
+            callback.onSuccess(user);
+            return;
+        }
+        user.sendEmailVerification()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) callback.onSuccess(user);
+                    else callback.onFailure(task.getException());
+                });
     }
 
     public void signInWithPhoneAuthCredential(PhoneAuthCredential credential, AuthCallback callback) {

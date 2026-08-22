@@ -60,25 +60,38 @@ public class VerificationActivity extends BaseActivity {
             else if (pid.equals("phone")) isPhoneProvider = true;
         }
 
-        // Email Verification Logic
-        // user.isEmailVerified() is the source of truth, but we can override UI 
-        // to show "Verified" if signed in via Email/Google as requested.
-        boolean emailVerified = user.isEmailVerified() || isGoogleProvider || isEmailProvider;
-        
-        setupVerificationItem(findViewById(R.id.verify_email), R.drawable.ic_email_elegant, 
-                "Email Verification", 
-                emailVerified ? "Verified (" + user.getEmail() + ")" : "Not Verified", 
+        // Email Verification: only truly verified accounts (or Google sign-in,
+        // which verifies upstream) count. Password sign-in alone must NOT show
+        // as verified — that defeated the whole purpose.
+        boolean emailVerified = user.isEmailVerified() || isGoogleProvider;
+
+        setupVerificationItem(findViewById(R.id.verify_email), R.drawable.ic_email_elegant,
+                "Email Verification",
+                emailVerified ? "Verified (" + user.getEmail() + ")" : "Tap to send verification email",
                 emailVerified,
                 () -> {
-                    if (!emailVerified && user.getEmail() != null) {
-                        user.sendEmailVerification().addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(this, "Verification email sent", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    } else if (user.getEmail() == null) {
-                        Toast.makeText(this, "Please add an email to your account", Toast.LENGTH_SHORT).show();
+                    if (emailVerified) {
+                        Toast.makeText(this, "Email already verified", Toast.LENGTH_SHORT).show();
+                        return;
                     }
+                    if (user.getEmail() == null) {
+                        Toast.makeText(this, "Please add an email to your account", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    new com.dweenmd.womensafety.data.AuthRepository(this).sendVerificationEmail(
+                            new com.dweenmd.womensafety.data.AuthRepository.AuthCallback() {
+                                @Override
+                                public void onSuccess(com.google.firebase.auth.FirebaseUser u) {
+                                    Toast.makeText(VerificationActivity.this,
+                                            "Verification email sent to " + u.getEmail() + " — check your inbox (and spam)", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Toast.makeText(VerificationActivity.this,
+                                            "Could not send: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
                 });
 
         // Phone Verification Logic

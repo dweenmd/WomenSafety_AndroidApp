@@ -116,4 +116,19 @@
             app:backgroundTint="@null" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tv_resend_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:text="@string/otp_resend_available"
+        android:textColor="@color/premium_login_text_secondary"
+        android:textSize="14sp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fl_verify_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

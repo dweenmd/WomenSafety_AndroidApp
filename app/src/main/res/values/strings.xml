@@ -251,4 +251,6 @@
     <string name="safety_sim_for_sms">SIM for SOS SMS</string>
     <string name="safety_sim_default">Default SIM (system)</string>
     <string name="safety_sim_select_title">Choose SIM for SOS SMS</string>
+    <string name="otp_resend_available">Resend code</string>
+    <string name="otp_resend_in">Resend in %1</string>
 </resources>
